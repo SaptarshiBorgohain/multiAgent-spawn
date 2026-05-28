@@ -1,0 +1,79 @@
+services:
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes
+
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: tripweave
+      POSTGRES_USER: tripweave
+      POSTGRES_PASSWORD: tripweave_secret
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.13.0
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ports:
+      - "9200:9200"
+    volumes:
+      - es_data:/usr/share/elasticsearch/data
+
+  api:
+    build:
+      context: ./app/backend
+      target: dev
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    depends_on:
+      - redis
+      - postgres
+      - elasticsearch
+    volumes:
+      - ./app/backend:/app
+    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload --reload-exclude '*.pyc' --reload-exclude '__pycache__' --reload-exclude 'workers/*' --reload-exclude 'worker_runner.py'
+
+  worker:
+    build:
+      context: ./app/backend
+      target: dev
+    env_file:
+      - .env
+    depends_on:
+      - redis
+      - postgres
+      - elasticsearch
+    volumes:
+      - ./app/backend:/app
+    command: python worker_runner.py
+
+  frontend:
+    build:
+      context: ./app/frontend
+      target: dev
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    depends_on:
+      - api
+    volumes:
+      - ./app/frontend:/app
+      - /app/node_modules
+
+volumes:
+  redis_data:
+  postgres_data:
+  es_data:

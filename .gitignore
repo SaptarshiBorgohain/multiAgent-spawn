@@ -1,1 +1,13 @@
 INTERVIEW_GUIDE.md
+
+# Python
+.venv/
+__pycache__/
+
+# Frontend build/deps
+app/frontend/node_modules/
+app/frontend/.next/
+
+# Graphify generated output
+graphify-out/
+app/graphify-out/

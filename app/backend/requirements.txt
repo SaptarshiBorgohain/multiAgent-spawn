@@ -1,0 +1,34 @@
+fastapi
+uvicorn[standard]
+websockets
+pydantic
+pydantic-settings
+
+# Database
+sqlalchemy
+asyncpg
+alembic
+
+# Redis
+redis
+
+# Elasticsearch
+elasticsearch[async]>=8,<9
+
+# LLM
+openai
+
+# HTTP
+httpx
+
+# Utils
+python-dotenv
+structlog
+
+# Auth
+PyJWT>=2.8
+resend>=0.7
+email-validator>=2.0
+
+# Sandbox execution
+RestrictedPython>=7.0

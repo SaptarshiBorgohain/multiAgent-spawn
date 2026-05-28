@@ -1,0 +1,1064 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TripWeave Architecture</title>
+  <style>
+    :root {
+      --bg: #f4f1ea;
+      --ink: #152028;
+      --muted: #4b5b66;
+      --card: #fffaf1;
+      --line: #c9bfae;
+      --accent: #0a6c5a;
+      --accent-2: #c6512f;
+      --good: #0a6c5a;
+      --warn: #a1611f;
+      --shadow: 0 8px 24px rgba(21, 32, 40, 0.12);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Avenir Next", "Segoe UI", "Helvetica Neue", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 15% 20%, rgba(198, 81, 47, 0.12), transparent 35%),
+        radial-gradient(circle at 85% 8%, rgba(10, 108, 90, 0.16), transparent 32%),
+        linear-gradient(180deg, #f8f4ec 0%, #f2ede4 100%);
+      line-height: 1.5;
+    }
+
+    .page {
+      width: min(1200px, 94vw);
+      margin: 24px auto 56px;
+      animation: fadeIn 700ms ease;
+    }
+
+    .hero {
+      border: 1px solid var(--line);
+      background: var(--card);
+      box-shadow: var(--shadow);
+      border-radius: 16px;
+      padding: 26px 28px;
+      margin-bottom: 20px;
+    }
+
+    .eyebrow {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(30px, 4vw, 54px);
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+    }
+
+    .sub {
+      margin-top: 12px;
+      color: var(--muted);
+      max-width: 80ch;
+      font-size: 16px;
+    }
+
+    .meta {
+      margin-top: 14px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .pill {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 12px;
+      background: #fff;
+    }
+
+    .diagram {
+      border: 1px solid var(--line);
+      background: #fff;
+      box-shadow: var(--shadow);
+      border-radius: 16px;
+      padding: 16px;
+      overflow: auto;
+      margin-bottom: 20px;
+    }
+
+    .diagram h2,
+    .grid h2 {
+      margin: 4px 0 14px;
+      font-size: 20px;
+    }
+
+    svg { min-width: 980px; width: 100%; height: auto; }
+
+    .node {
+      fill: #fffaf1;
+      stroke: #9f927d;
+      stroke-width: 1.2;
+      rx: 10;
+    }
+
+    .node.compute { fill: #eef8f5; stroke: #8cb7aa; }
+    .node.data { fill: #f6f0ff; stroke: #ad98d5; }
+    .node.control { fill: #fff1eb; stroke: #d59d8d; }
+
+    .label {
+      font-size: 12px;
+      fill: #1a2933;
+      font-weight: 600;
+    }
+
+    .small { font-size: 11px; fill: #4b5b66; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    code {
+      font-family: "SF Mono", "Fira Code", monospace;
+      font-size: 11.5px;
+      background: rgba(10, 108, 90, 0.08);
+      color: var(--accent);
+      padding: 1px 4px;
+      border-radius: 4px;
+    }
+
+    pre {
+      font-family: "SF Mono", "Fira Code", monospace;
+      font-size: 11.5px;
+      background: #f0ece3;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px 14px;
+      overflow-x: auto;
+      margin: 10px 0 0;
+      color: var(--ink);
+      line-height: 1.6;
+    }
+
+    pre .c { color: #7a9e7a; }
+    pre .k { color: var(--accent); font-weight: 600; }
+    pre .s { color: #c6512f; }
+
+    .subsection {
+      border: 1px solid var(--line);
+      background: var(--card);
+      border-radius: 14px;
+      padding: 18px 20px;
+      box-shadow: var(--shadow);
+      margin-bottom: 20px;
+    }
+
+    .subsection h2 {
+      margin: 0 0 14px;
+      font-size: 19px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .subsection h2 .badge {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: rgba(10,108,90,0.1);
+      color: var(--accent);
+      border: 1px solid rgba(10,108,90,0.2);
+    }
+
+    .flow-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0;
+      align-items: center;
+      margin: 10px 0;
+      font-size: 13px;
+    }
+
+    .flow-box {
+      background: #eef8f5;
+      border: 1px solid #8cb7aa;
+      border-radius: 8px;
+      padding: 6px 12px;
+      font-weight: 600;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .flow-box.data   { background: #f6f0ff; border-color: #ad98d5; }
+    .flow-box.warn   { background: #fff1eb; border-color: #d59d8d; }
+    .flow-box.ext    { background: #f7f2e7; border-color: #c9bfae; }
+
+    .flow-arrow {
+      padding: 0 6px;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .kv-grid {
+      display: grid;
+      grid-template-columns: max-content 1fr;
+      gap: 4px 16px;
+      font-size: 13px;
+      margin: 10px 0 0;
+    }
+
+    .kv-key {
+      font-weight: 600;
+      color: var(--accent);
+      white-space: nowrap;
+    }
+
+    .kv-val { color: var(--ink); }
+
+    .tag {
+      display: inline-block;
+      border-radius: 999px;
+      padding: 2px 8px;
+      font-size: 11px;
+      font-weight: 600;
+      border: 1px solid;
+      margin-right: 4px;
+    }
+
+    .tag-e { color: var(--accent); border-color: #8cb7aa; background: #eef8f5; }
+    .tag-i { color: #7a5ca0; border-color: #ad98d5; background: #f6f0ff; }
+
+    @media (max-width: 880px) {
+      .grid, .grid-3 { grid-template-columns: 1fr; }
+      .hero { padding: 20px; }
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      background: var(--card);
+      border-radius: 14px;
+      padding: 16px;
+      box-shadow: var(--shadow);
+      transform: translateY(0);
+      transition: transform 220ms ease, box-shadow 220ms ease;
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 14px 28px rgba(21, 32, 40, 0.14);
+    }
+
+    .card h3 {
+      margin: 2px 0 8px;
+      font-size: 16px;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .list {
+      margin: 10px 0 0;
+      padding-left: 18px;
+      color: var(--ink);
+      font-size: 14px;
+    }
+
+    .list li { margin: 4px 0; }
+
+    .table-wrap {
+      border: 1px solid var(--line);
+      background: #fff;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      margin-bottom: 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    th, td {
+      padding: 12px 14px;
+      text-align: left;
+      border-bottom: 1px solid #ebe3d4;
+      vertical-align: top;
+    }
+
+    th {
+      background: #f7f2e7;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: #3d4e59;
+    }
+
+    .status {
+      display: inline-block;
+      border-radius: 999px;
+      padding: 4px 8px;
+      font-size: 11px;
+      border: 1px solid;
+      background: #fff;
+    }
+
+    .ok { color: var(--good); border-color: #77b7a7; }
+    .warn { color: var(--warn); border-color: #d2a976; }
+
+    .footer {
+      font-size: 13px;
+      color: var(--muted);
+      text-align: center;
+      padding-top: 8px;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 880px) {
+      .grid, .grid-3 { grid-template-columns: 1fr; }
+      .hero { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+
+    <!-- ── HERO ──────────────────────────────────────────────────────────── -->
+    <section class="hero">
+      <div class="eyebrow">TripWeave / Low-Level System Design</div>
+      <h1>Complete Architecture Reference</h1>
+      <p class="sub">
+        Autonomous multi-agent travel orchestration. FastAPI backend, Next.js 14 frontend, Redis Streams task bus,
+        PostgreSQL + Elasticsearch persistence, RestrictedPython custom-agent sandbox, magic-link auth, and
+        Splitwise-style collaboration — all running in Docker Compose.
+      </p>
+      <div class="meta">
+        <span class="pill">FastAPI (Python 3.12)</span>
+        <span class="pill">Next.js 14 / React 18</span>
+        <span class="pill">Redis Streams + Pub/Sub</span>
+        <span class="pill">PostgreSQL 15 + SQLAlchemy async</span>
+        <span class="pill">Elasticsearch 8</span>
+        <span class="pill">RestrictedPython ≥ 7</span>
+        <span class="pill">DeepSeek LLM API</span>
+        <span class="pill">Magic Link + JWT (HS256)</span>
+      </div>
+    </section>
+
+    <!-- ── TOP-LEVEL DATA FLOW ────────────────────────────────────────────── -->
+    <section class="diagram">
+      <h2>End-to-End Request Flow</h2>
+      <svg viewBox="0 0 1220 520" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="arrow" markerWidth="10" markerHeight="8" refX="8" refY="4" orient="auto">
+            <path d="M0,0 L10,4 L0,8 z" fill="#4b5b66"/>
+          </marker>
+        </defs>
+
+        <!-- Column 1: User / Frontend -->
+        <rect class="node compute" x="20" y="30" width="170" height="55"/>
+        <text class="label" x="105" y="53" text-anchor="middle">Browser / Next.js</text>
+        <text class="small" x="105" y="70" text-anchor="middle">page.tsx + WebSocket</text>
+
+        <!-- Column 2: API -->
+        <rect class="node compute" x="240" y="30" width="190" height="55"/>
+        <text class="label" x="335" y="53" text-anchor="middle">FastAPI</text>
+        <text class="small" x="335" y="70" text-anchor="middle">trips · auth · ws · agents · expenses</text>
+
+        <!-- Column 3: Planner -->
+        <rect class="node control" x="490" y="30" width="190" height="55"/>
+        <text class="label" x="585" y="48" text-anchor="middle">Planner / Orchestrator</text>
+        <text class="small" x="585" y="65" text-anchor="middle">intent → DAG → publish tasks</text>
+
+        <!-- Column 4: Redis -->
+        <rect class="node control" x="740" y="30" width="170" height="55"/>
+        <text class="label" x="825" y="53" text-anchor="middle">Redis</text>
+        <text class="small" x="825" y="70" text-anchor="middle">Streams · Hash context · Pub/Sub</text>
+
+        <!-- Column 5: Worker -->
+        <rect class="node compute" x="970" y="30" width="210" height="55"/>
+        <text class="label" x="1075" y="48" text-anchor="middle">Dynamic Worker</text>
+        <text class="small" x="1075" y="65" text-anchor="middle">dep-check → tool → ACK → event</text>
+
+        <!-- Arrows top row -->
+        <line x1="190" y1="57" x2="240" y2="57" stroke="#4b5b66" stroke-width="1.5" marker-end="url(#arrow)"/>
+        <line x1="430" y1="57" x2="490" y2="57" stroke="#4b5b66" stroke-width="1.5" marker-end="url(#arrow)"/>
+        <line x1="680" y1="57" x2="740" y2="57" stroke="#4b5b66" stroke-width="1.5" marker-end="url(#arrow)"/>
+        <line x1="910" y1="57" x2="970" y2="57" stroke="#4b5b66" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+        <!-- Pub/Sub event back to browser -->
+        <line x1="825" y1="85" x2="825" y2="130" stroke="#4b5b66" stroke-width="1.2" stroke-dasharray="5,3"/>
+        <line x1="825" y1="130" x2="105" y2="130" stroke="#4b5b66" stroke-width="1.2" stroke-dasharray="5,3"/>
+        <line x1="105" y1="130" x2="105" y2="85" stroke="#4b5b66" stroke-width="1.2" marker-end="url(#arrow)" stroke-dasharray="5,3"/>
+        <text class="small" x="460" y="145" text-anchor="middle">Pub/Sub → WebSocket → frontend (real-time events)</text>
+
+        <!-- Worker writes back to Redis context -->
+        <line x1="1075" y1="85" x2="1075" y2="165" stroke="#4b5b66" stroke-width="1.2"/>
+        <line x1="1075" y1="165" x2="825" y2="165" stroke="#4b5b66" stroke-width="1.2" marker-end="url(#arrow)"/>
+        <text class="small" x="950" y="180" text-anchor="middle">update_trip_context()</text>
+
+        <!-- Storage row -->
+        <rect class="node data" x="20" y="220" width="170" height="60"/>
+        <text class="label" x="105" y="248" text-anchor="middle">PostgreSQL 15</text>
+        <text class="small" x="105" y="266" text-anchor="middle">Trip · User · Expense · CustomAgent</text>
+
+        <rect class="node data" x="240" y="220" width="190" height="60"/>
+        <text class="label" x="335" y="248" text-anchor="middle">Redis Hash (context)</text>
+        <text class="small" x="335" y="266" text-anchor="middle">trip:{id}:context · TTL 6 h</text>
+
+        <rect class="node data" x="490" y="220" width="190" height="60"/>
+        <text class="label" x="585" y="248" text-anchor="middle">Redis Hash (status)</text>
+        <text class="small" x="585" y="266" text-anchor="middle">trip:{id}:agents · per-task status</text>
+
+        <rect class="node data" x="740" y="220" width="170" height="60"/>
+        <text class="label" x="825" y="248" text-anchor="middle">Redis Stream</text>
+        <text class="small" x="825" y="266" text-anchor="middle">tripweave:tasks · group: workers</text>
+
+        <rect class="node data" x="970" y="220" width="210" height="60"/>
+        <text class="label" x="1075" y="248" text-anchor="middle">Elasticsearch 8</text>
+        <text class="small" x="1075" y="266" text-anchor="middle">places · hotels · food · transport</text>
+
+        <!-- API ↓ Postgres -->
+        <line x1="335" y1="85" x2="105" y2="220" stroke="#ad98d5" stroke-width="1.2" stroke-dasharray="4,3" marker-end="url(#arrow)"/>
+        <!-- Planner ↓ Redis context -->
+        <line x1="585" y1="85" x2="335" y2="220" stroke="#ad98d5" stroke-width="1.2" stroke-dasharray="4,3" marker-end="url(#arrow)"/>
+        <!-- Worker ↓ Redis status -->
+        <line x1="1075" y1="85" x2="585" y2="220" stroke="#ad98d5" stroke-width="1.2" stroke-dasharray="4,3" marker-end="url(#arrow)"/>
+        <!-- Planner → Redis stream -->
+        <line x1="585" y1="85" x2="825" y2="220" stroke="#8cb7aa" stroke-width="1.2" stroke-dasharray="4,3" marker-end="url(#arrow)"/>
+        <!-- Worker ↓ ES -->
+        <line x1="1075" y1="85" x2="1075" y2="220" stroke="#ad98d5" stroke-width="1.2" stroke-dasharray="4,3" marker-end="url(#arrow)"/>
+
+        <!-- External APIs row -->
+        <rect class="node" x="240" y="360" width="190" height="55"/>
+        <text class="label" x="335" y="383" text-anchor="middle">DeepSeek API</text>
+        <text class="small" x="335" y="400" text-anchor="middle">deepseek-chat · deepseek-v4-flash</text>
+
+        <rect class="node" x="490" y="360" width="190" height="55"/>
+        <text class="label" x="585" y="383" text-anchor="middle">Google Places API</text>
+        <text class="small" x="585" y="400" text-anchor="middle">textsearch/json (cache-miss only)</text>
+
+        <rect class="node" x="740" y="360" width="170" height="55"/>
+        <text class="label" x="825" y="383" text-anchor="middle">Resend (Email)</text>
+        <text class="small" x="825" y="400" text-anchor="middle">magic-link delivery</text>
+
+        <line x1="585" y1="280" x2="335" y2="360" stroke="#c9bfae" stroke-width="1.2" marker-end="url(#arrow)"/>
+        <line x1="1075" y1="280" x2="585" y2="360" stroke="#c9bfae" stroke-width="1.2" marker-end="url(#arrow)"/>
+        <line x1="335" y1="280" x2="825" y2="360" stroke="#c9bfae" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+        <!-- Legend -->
+        <rect x="20" y="450" width="12" height="12" fill="#eef8f5" stroke="#8cb7aa" stroke-width="1.2" rx="2"/>
+        <text class="small" x="36" y="461">Compute</text>
+        <rect x="110" y="450" width="12" height="12" fill="#f6f0ff" stroke="#ad98d5" stroke-width="1.2" rx="2"/>
+        <text class="small" x="126" y="461">Data store</text>
+        <rect x="210" y="450" width="12" height="12" fill="#fff1eb" stroke="#d59d8d" stroke-width="1.2" rx="2"/>
+        <text class="small" x="226" y="461">Control flow</text>
+        <rect x="310" y="450" width="12" height="12" fill="#fffaf1" stroke="#9f927d" stroke-width="1.2" rx="2"/>
+        <text class="small" x="326" y="461">External API</text>
+      </svg>
+    </section>
+
+    <!-- ── 1. PLANNER / ORCHESTRATOR ─────────────────────────────────────── -->
+    <section class="subsection">
+      <h2>1. Planner / Orchestrator <span class="badge">app/backend/orchestrator/planner.py</span></h2>
+
+      <p style="margin:0 0 12px;font-size:14px;color:var(--muted)">
+        Entry point for every trip. Parses intent via LLM, builds a dependency-ordered task DAG, publishes all tasks
+        to the Redis Stream, then fires a <code>planning_started</code> Pub/Sub event with full metadata.
+      </p>
+
+      <div class="grid">
+        <div>
+          <strong style="font-size:13px">Fixed DAG topology</strong>
+          <div class="flow-row" style="margin-top:8px">
+            <div class="flow-box">destination_research</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-box">transport_planning</div>
+            <div class="flow-arrow">+</div>
+            <div class="flow-box">hotel_planning</div>
+            <div class="flow-arrow">+</div>
+            <div class="flow-box">food_discovery</div>
+          </div>
+          <div class="flow-row" style="margin-top:4px;margin-left:12px">
+            <div class="flow-arrow">↓</div>
+            <div class="flow-box">itinerary_optimization</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-box">budget_optimizer</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-box warn">custom:{uuid} ×N</div>
+          </div>
+          <p style="font-size:12px;color:var(--muted);margin-top:6px">
+            Custom agents depend on <code>budget_optimizer</code> (last built-in stage).
+            Multiple custom agents can run in parallel after that gate.
+          </p>
+        </div>
+        <div>
+          <strong style="font-size:13px">Task envelope (published to Redis Stream)</strong>
+          <pre>{
+  <span class="s">"task_id"</span>:        <span class="s">"uuid4"</span>,
+  <span class="s">"session_id"</span>:     <span class="s">"&lt;trip_id&gt;"</span>,
+  <span class="s">"task_type"</span>:     <span class="s">"hotel_planning"</span>,  <span class="c">// or "custom:{uuid}"</span>
+  <span class="s">"depends_on"</span>:    [<span class="s">"destination_research"</span>],
+  <span class="s">"context_scope"</span>: <span class="s">"&lt;trip_id&gt;"</span>,
+  <span class="s">"intent"</span>: {
+    <span class="s">"destination"</span>:   <span class="s">"Kyoto"</span>,
+    <span class="s">"budget_inr"</span>:    <span class="s">"80000"</span>,
+    <span class="s">"travel_style"</span>:  <span class="s">"cultural"</span>,
+    <span class="s">"duration_days"</span>: <span class="s">"7"</span>,
+    <span class="s">"model"</span>:         <span class="s">"deepseek-v4-flash"</span>
+  }
+}</pre>
+        </div>
+      </div>
+
+      <div class="kv-grid" style="margin-top:12px">
+        <span class="kv-key">_extract_intent()</span>
+        <span class="kv-val">Calls DeepSeek (<code>deepseek-v4-flash</code>, <code>response_format: json_object</code>) to extract <code>destination / budget_inr / travel_style / duration_days</code> from free-form query.</span>
+        <span class="kv-key">_build_dag()</span>
+        <span class="kv-val">Sorts task types by <code>TASK_DEPENDENCY_MAP</code>, appends <code>custom:{ca_id}</code> with <code>dep_map["custom:{id}"] = ["budget_optimizer"]</code>. Returns list of task dicts.</span>
+        <span class="kv-key">handle_budget_exceeded()</span>
+        <span class="kv-val">Autonomous replanning: re-publishes a <code>hotel_planning</code> task with <code>intent.budget_constraint = "cheaper"</code> and fires <code>{"type":"replanning","reason":"budget_exceeded"}</code> event.</span>
+        <span class="kv-key">monitor_and_replan()</span>
+        <span class="kv-val">Reads agent statuses from Redis, calls <code>handle_budget_exceeded</code> if cost threshold breached.</span>
+      </div>
+    </section>
+
+    <!-- ── 2. REDIS ARCHITECTURE ─────────────────────────────────────────── -->
+    <section class="subsection">
+      <h2>2. Redis — Three Namespaces <span class="badge">app/backend/cache/redis_client.py</span></h2>
+
+      <div class="grid-3">
+        <div class="card">
+          <h3>Layer A — Context (Hash)</h3>
+          <div class="kv-grid">
+            <span class="kv-key">Key pattern</span><span class="kv-val"><code>trip:{id}:context</code></span>
+            <span class="kv-key">TTL</span><span class="kv-val">6 hours (<code>CONTEXT_TTL = 21600</code>)</span>
+            <span class="kv-key">Value format</span><span class="kv-val">Each field JSON-serialised; <code>hset</code> mapping</span>
+            <span class="kv-key">Fields stored</span><span class="kv-val"><code>destination, budget_inr, travel_style, status, attractions, transport, hotels, food, itinerary, …</code></span>
+            <span class="kv-key">Writes</span><span class="kv-val"><code>set_trip_context()</code> / <code>update_trip_context()</code></span>
+            <span class="kv-key">Reads</span><span class="kv-val"><code>get_trip_context()</code> → <code>hgetall</code> + JSON decode</span>
+          </div>
+        </div>
+        <div class="card">
+          <h3>Layer B — Task Stream</h3>
+          <div class="kv-grid">
+            <span class="kv-key">Stream key</span><span class="kv-val"><code>tripweave:tasks</code></span>
+            <span class="kv-key">Consumer group</span><span class="kv-val"><code>workers</code> (created via <code>xgroup_create …mkstream</code>)</span>
+            <span class="kv-key">Publish</span><span class="kv-val"><code>xadd tripweave:tasks {"payload": json(task)}</code></span>
+            <span class="kv-key">Consume</span><span class="kv-val"><code>xreadgroup … count=1 block=5000</code></span>
+            <span class="kv-key">ACK</span><span class="kv-val"><code>xack tripweave:tasks workers {msg_id}</code></span>
+            <span class="kv-key">Socket timeout</span><span class="kv-val"><code>socket_timeout=30</code> (must exceed <code>block_ms=5000</code>)</span>
+          </div>
+        </div>
+        <div class="card">
+          <h3>Layer C — Status + Pub/Sub</h3>
+          <div class="kv-grid">
+            <span class="kv-key">Status key</span><span class="kv-val"><code>trip:{id}:agents</code> (Hash, TTL 6 h)</span>
+            <span class="kv-key">Status values</span><span class="kv-val"><code>running | done | failed</code> per task type</span>
+            <span class="kv-key">Dep check</span><span class="kv-val"><code>hgetall trip:{id}:agents</code> → all deps == "done"?</span>
+            <span class="kv-key">Event channel</span><span class="kv-val"><code>trip:{id}:events</code></span>
+            <span class="kv-key">Events fired</span><span class="kv-val"><code>planning_started · task_started · task_completed · task_failed · replanning</code></span>
+            <span class="kv-key">Consumer</span><span class="kv-val">WebSocket handler subscribes via <code>redis.subscribe(channel)</code></span>
+          </div>
+        </div>
+      </div>
+
+      <strong style="font-size:13px">Connection singleton</strong>
+      <pre><span class="k">async def</span> get_redis() -> aioredis.Redis:
+    <span class="k">global</span> _redis
+    <span class="k">if</span> _redis <span class="k">is</span> None:
+        _redis = <span class="k">await</span> aioredis.from_url(
+            settings.redis_url,
+            decode_responses=<span class="k">True</span>,
+            socket_timeout=<span class="s">30</span>,        <span class="c"># CRITICAL: must exceed xreadgroup block_ms=5000</span>
+            socket_connect_timeout=<span class="s">5</span>,
+        )
+    <span class="k">return</span> _redis</pre>
+    </section>
+
+    <!-- ── 3. WORKER ──────────────────────────────────────────────────────── -->
+    <section class="subsection">
+      <h2>3. Dynamic Worker Loop <span class="badge">app/backend/workers/worker.py</span></h2>
+
+      <p style="margin:0 0 12px;font-size:14px;color:var(--muted)">
+        Ephemeral by design — <code>worker_runner.py</code> spawns a new coroutine per worker. Each worker blocks on the
+        Redis Stream, checks deps, dispatches via <code>TOOL_REGISTRY</code>, then ACKs.
+      </p>
+
+      <div class="flow-row">
+        <div class="flow-box">xreadgroup block=5s</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-box">JSON.loads(payload)</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-box">_check_dependencies()</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-box warn">ready / wait / cancel</div>
+      </div>
+      <div class="flow-row" style="margin-top:4px">
+        <div class="flow-box">TOOL_REGISTRY[task_type]</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-box">set_agent_status("running")</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-box">await handler(task)</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-box">set_agent_status("done") + publish_event + xack</div>
+      </div>
+
+      <div class="kv-grid" style="margin-top:14px">
+        <span class="kv-key">wait path</span>
+        <span class="kv-val">Re-publishes the task (<code>publish_task(task)</code>) then ACKs the original delivery to prevent PEL pile-up. <code>asyncio.sleep(1)</code> backoff.</span>
+        <span class="kv-key">cancel path</span>
+        <span class="kv-val">Marks task <code>failed</code>, publishes <code>task_failed</code> event with failed dep names. Cascade-fails all downstream tasks.</span>
+        <span class="kv-key">custom task dispatch</span>
+        <span class="kv-val"><code>if task_type.startswith("custom:"): handler = run_custom_agent</code> — dynamic lookup, not in static TOOL_REGISTRY.</span>
+        <span class="kv-key">TOOL_REGISTRY</span>
+        <span class="kv-val"><code>destination_research · transport_planning · hotel_planning · food_discovery · itinerary_optimization · budget_optimizer · places_search</code></span>
+      </div>
+    </section>
+
+    <!-- ── 4. ELASTICSEARCH CACHE ─────────────────────────────────────────── -->
+    <section class="subsection">
+      <h2>4. Cache-First Search (Elasticsearch) <span class="badge">app/backend/search/es_client.py</span></h2>
+
+      <div class="grid">
+        <div>
+          <strong style="font-size:13px">places_search() call chain</strong>
+          <div class="flow-row" style="margin-top:8px">
+            <div class="flow-box">search_knowledge(index, query, destination)</div>
+          </div>
+          <div class="flow-row" style="margin-top:4px;margin-left:8px">
+            <div class="flow-arrow">hit ↓ (< 7 days old)</div>
+          </div>
+          <div class="flow-row">
+            <div class="flow-box data">return {"source":"cache", "results":[…]}</div>
+          </div>
+          <div class="flow-row" style="margin-top:4px;margin-left:8px">
+            <div class="flow-arrow">miss ↓</div>
+          </div>
+          <div class="flow-row">
+            <div class="flow-box ext">Google Places textsearch/json API</div>
+          </div>
+          <div class="flow-row" style="margin-top:4px">
+            <div class="flow-arrow">→</div>
+            <div class="flow-box">index_result(index, place_id, item, destination)</div>
+          </div>
+          <p style="font-size:12px;color:var(--muted);margin-top:6px">
+            <code>place_id</code> = MD5 of place name. Freshness gate: <code>_source.indexed_at</code> within last 7 days.
+          </p>
+        </div>
+        <div>
+          <strong style="font-size:13px">Elasticsearch indexes</strong>
+          <ul class="list">
+            <li><code>attractions_index</code> — destination_research</li>
+            <li><code>transport_index</code> — transport_planning</li>
+            <li><code>hotels_index</code> — hotel_planning</li>
+            <li><code>food_index</code> / <code>places_index</code> — food_discovery</li>
+          </ul>
+          <strong style="font-size:13px;display:block;margin-top:12px">search_knowledge() query</strong>
+          <pre>{
+  <span class="s">"query"</span>: {
+    <span class="s">"bool"</span>: {
+      <span class="s">"must"</span>:   [{ <span class="s">"match"</span>: { <span class="s">"text"</span>: query } }],
+      <span class="s">"filter"</span>: [
+        { <span class="s">"term"</span>:  { <span class="s">"region"</span>: _region_for(destination) } },
+        { <span class="s">"range"</span>: { <span class="s">"indexed_at"</span>: { <span class="s">"gte"</span>: <span class="s">"now-7d"</span> } } }
+      ]
+    }
+  }
+}</pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 5. TOOL HANDLERS ───────────────────────────────────────────────── -->
+    <section class="subsection">
+      <h2>5. Tool Handlers — LLM Calls <span class="badge">app/backend/workers/tools.py</span></h2>
+
+      <div class="grid-3">
+        <div class="card">
+          <h3>destination_research</h3>
+          <p>Parallel execution: <code>asyncio.gather(places_search_coro, llm_coro)</code></p>
+          <ul class="list">
+            <li>Places: <code>attractions_index</code></li>
+            <li>LLM: <code>deepseek-v4-flash</code>, JSON response <code>{highlights, best_areas, tips}</code></li>
+            <li>Writes: <code>attractions</code> + <code>destination_highlights</code> to context</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>itinerary_optimization</h3>
+          <p>Reads full context; calls <code>deepseek-chat</code> (reliable JSON). Returns day-by-day plan.</p>
+          <ul class="list">
+            <li>Model: <code>deepseek-chat</code> (not flash — structured output)</li>
+            <li>Prompt includes actual venue names from context</li>
+            <li>Day schema: <code>day, theme, morning, afternoon, evening, tips</code></li>
+            <li>Strips markdown fences if present</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>budget_optimizer</h3>
+          <p>Reads finished itinerary + context. Calls <code>deepseek-chat</code> with <code>temperature=0.3, max_tokens=600</code>.</p>
+          <ul class="list">
+            <li>Returns: <code>estimated_total_inr, breakdown{}, savings_tips[], verdict</code></li>
+            <li>Graceful: strips <code>```json</code> fences; falls back to <code>{"verdict": raw[:300]}</code> on parse fail</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 6. CUSTOM AGENT SANDBOX ────────────────────────────────────────── -->
+    <section class="subsection">
+      <h2>6. Custom Agent Sandbox <span class="badge">workers/tools.py · api/custom_agents.py</span></h2>
+
+      <p style="margin:0 0 12px;font-size:14px;color:var(--muted)">
+        User-authored Python code runs inside a RestrictedPython jail. All subscript / iteration / write operations
+        require explicit hooks. After the sandbox executes, the result is passed to DeepSeek as context for an
+        LLM-enriched response.
+      </p>
+
+      <div class="grid">
+        <div>
+          <strong style="font-size:13px">Sandbox globals injected</strong>
+          <pre><span class="k">from</span> RestrictedPython.Guards <span class="k">import</span> guarded_iter_unpack_sequence
+<span class="c"># NOTE: renamed from safe_iter_unpack_sequence in RestrictedPython >= 7.0</span>
+
+glb = {
+  **safe_globals,
+  <span class="s">"__builtins__"</span>: safe_builtins,
+  <span class="s">"_getiter_"</span>:        iter,
+  <span class="s">"_getitem_"</span>:        <span class="k">lambda</span> obj, key: obj[key],  <span class="c"># obj["key"] access</span>
+  <span class="s">"_getattr_"</span>:        getattr,
+  <span class="s">"_write_"</span>:          <span class="k">lambda</span> obj: obj,            <span class="c"># assignment target</span>
+  <span class="s">"_inplacevar_"</span>:     <span class="k">lambda</span> op, x, y: x+y <span class="k">if</span> op==<span class="s">"+="</span> <span class="k">else</span> x-y,
+  <span class="s">"_unpack_sequence_"</span>: guarded_iter_unpack_sequence,
+  <span class="s">"json"</span>:    json,
+  <span class="s">"context"</span>: context,     <span class="c"># trip context dict (read-only by convention)</span>
+  <span class="s">"secrets"</span>: secrets,     <span class="c"># api_keys from CustomAgent.api_keys JSONB</span>
+  <span class="s">"http_get"</span>:  _safe_http_get,
+  <span class="s">"http_post"</span>: _safe_http_post,
+  <span class="s">"result"</span>:  {},            <span class="c"># user must set result = {...}</span>
+}</pre>
+        </div>
+        <div>
+          <strong style="font-size:13px">HTTP helpers (stdlib urllib, no requests)</strong>
+          <pre><span class="k">def</span> _safe_http_get(url, headers=None) -> dict:
+    merged = {**_DEFAULT_HEADERS, **(headers <span class="k">or</span> {})}
+    <span class="c"># User-Agent: TripWeave/1.0 (custom-agent; +https://tripweave.app)</span>
+    <span class="c"># Returns {"_text": "..."} if response is not JSON</span>
+
+<span class="k">def</span> _safe_http_post(url, data=None, headers=None) -> dict:
+    merged = {
+        <span class="s">"Content-Type"</span>: <span class="s">"application/json"</span>,
+        **_DEFAULT_HEADERS,
+        **(headers <span class="k">or</span> {}),
+    }
+    <span class="c"># Sends json.dumps(data) as body</span>
+    <span class="c"># Returns {"_text": "..."} if response is not JSON</span></pre>
+
+          <strong style="font-size:13px;display:block;margin-top:12px">Test vs. Production path</strong>
+          <ul class="list">
+            <li><code>POST /api/custom-agents/{id}/test</code> → runs <code>_run_code_sandbox</code> <strong>inside API process</strong></li>
+            <li>Production task (<code>custom:{uuid}</code>) → <code>run_custom_agent()</code> in <strong>worker process</strong></li>
+            <li>Both call the same <code>_run_code_sandbox()</code> from <code>workers/tools.py</code></li>
+            <li>After sandbox: DeepSeek call with <code>system_prompt + context + code_result</code></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="grid-3" style="margin-top:14px">
+        <div class="card">
+          <h3>CRUD endpoints</h3>
+          <ul class="list">
+            <li><code>GET  /api/custom-agents</code> — list (auth required)</li>
+            <li><code>POST /api/custom-agents</code> — create</li>
+            <li><code>PUT  /api/custom-agents/{id}</code></li>
+            <li><code>DELETE /api/custom-agents/{id}</code></li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Utility endpoints</h3>
+          <ul class="list">
+            <li><code>POST /api/custom-agents/ai-generate</code> — DeepSeek generates <code>system_prompt</code> + starter <code>code</code></li>
+            <li><code>POST /api/custom-agents/lint</code> — <code>compile_restricted(code)</code>, returns syntax errors (no execution)</li>
+          </ul>
+          <p style="font-size:12px;color:var(--muted);margin-top:6px">
+            Static routes declared <em>before</em> <code>/{agent_id}</code> — required to avoid FastAPI 405.
+          </p>
+        </div>
+        <div class="card">
+          <h3>api_keys / secrets flow</h3>
+          <ul class="list">
+            <li>Stored: <code>CustomAgent.api_keys JSONB DEFAULT '{}'</code></li>
+            <li>Migration: idempotent <code>ALTER TABLE … ADD COLUMN IF NOT EXISTS</code> in FastAPI lifespan</li>
+            <li>Injected as: <code>secrets</code> dict in sandbox globals</li>
+            <li>User code accesses via: <code>secrets["MY_KEY"]</code></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 7. AUTH ────────────────────────────────────────────────────────── -->
+    <section class="subsection">
+      <h2>7. Auth — Magic Link + JWT (HS256) <span class="badge">app/backend/api/auth.py</span></h2>
+
+      <div class="grid">
+        <div>
+          <strong style="font-size:13px">Magic link flow</strong>
+          <div class="flow-row" style="margin-top:8px">
+            <div class="flow-box ext">POST /api/auth/send</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-box">upsert User (by email)</div>
+          </div>
+          <div class="flow-row" style="margin-top:4px">
+            <div class="flow-arrow" style="margin-left:8px">→</div>
+            <div class="flow-box">MagicToken (64-char hex, TTL 15 min)</div>
+          </div>
+          <div class="flow-row" style="margin-top:4px">
+            <div class="flow-arrow" style="margin-left:8px">→</div>
+            <div class="flow-box ext">Resend email (link with token param)</div>
+          </div>
+          <div class="flow-row" style="margin-top:8px">
+            <div class="flow-box ext">GET /api/auth/verify?token=…</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-box">mark MagicToken used</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-box data">return JWT</div>
+          </div>
+        </div>
+        <div>
+          <strong style="font-size:13px">JWT payload &amp; lifecycle</strong>
+          <pre>{
+  <span class="s">"user_id"</span>:      <span class="s">"&lt;uuid&gt;"</span>,
+  <span class="s">"email"</span>:        <span class="s">"user@example.com"</span>,
+  <span class="s">"display_name"</span>: <span class="s">"Traveller"</span>,
+  <span class="s">"avatar_color"</span>: <span class="s">"#3b82f6"</span>,
+  <span class="s">"exp"</span>:          <span class="s">&lt;now + 30 days&gt;</span>
+}
+<span class="c">// algo: HS256, key: settings.secret_key</span></pre>
+          <div class="kv-grid" style="margin-top:10px">
+            <span class="kv-key">Protected route</span><span class="kv-val"><code>Depends(get_current_user)</code> — raises 401 if missing/invalid</span>
+            <span class="kv-key">Optional auth</span><span class="kv-val"><code>Depends(get_optional_user)</code> — returns None; used for read-only trip views</span>
+            <span class="kv-key">MagicToken TTL</span><span class="kv-val">15 minutes (<code>_TOKEN_TTL_MINUTES = 15</code>)</span>
+            <span class="kv-key">JWT TTL</span><span class="kv-val">30 days (<code>_JWT_TTL_DAYS = 30</code>)</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 8. EXPENSES + SETTLEMENT ───────────────────────────────────────── -->
+    <section class="subsection">
+      <h2>8. Expenses &amp; Settlement <span class="badge">api/expenses.py · utils/settlement.py</span></h2>
+
+      <div class="grid">
+        <div>
+          <strong style="font-size:13px">Expense lifecycle</strong>
+          <ul class="list">
+            <li><code>POST /api/trips/{id}/expenses</code> → creates <code>Expense</code> + <code>ExpenseSplit</code> rows</li>
+            <li>Splits are per-user amounts stored in <code>expense_splits</code> table</li>
+            <li><code>GET /api/trips/{id}/expenses/balances</code> → aggregates net balance per user</li>
+            <li><code>GET /api/trips/{id}/expenses/settlement</code> → calls <code>minimize_cash_flow(net_dict)</code></li>
+            <li><code>POST /api/trips/{id}/expenses/{eid}/settle</code> → marks <code>Expense.settled = True</code></li>
+          </ul>
+        </div>
+        <div>
+          <strong style="font-size:13px">minimize_cash_flow() — greedy O(n²)</strong>
+          <pre><span class="c"># net = {"A": -300, "B": +200, "C": +100}</span>
+<span class="k">while</span> b:
+    creditor = max(b, key=<span class="k">lambda</span> k: b[k])   <span class="c"># owed most</span>
+    debtor   = min(b, key=<span class="k">lambda</span> k: b[k])   <span class="c"># owes most</span>
+    amount = min(b[creditor], -b[debtor])
+    transactions.append({
+        <span class="s">"from"</span>: debtor, <span class="s">"to"</span>: creditor, <span class="s">"amount"</span>: amount
+    })
+    <span class="c"># pruning: at most (n-1) transactions for n people</span>
+<span class="c"># → [{"from":"A","to":"B","amount":200},{"from":"A","to":"C","amount":100}]</span></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 9. MEMBERS & INVITES ───────────────────────────────────────────── -->
+    <section class="subsection">
+      <h2>9. Members &amp; Invites <span class="badge">app/backend/api/members.py</span></h2>
+
+      <div class="grid">
+        <div>
+          <strong style="font-size:13px">Membership model</strong>
+          <ul class="list">
+            <li><code>TripMember(trip_id, user_id, role)</code> — roles: <code>owner | editor | viewer</code></li>
+            <li><code>POST /api/trips/{id}/members</code> — owner adds user directly by <code>user_id</code></li>
+            <li><code>DELETE /api/trips/{id}/members/{uid}</code> — owner removes member</li>
+            <li><code>GET /api/trips/{id}/members</code> — list with user details (join)</li>
+          </ul>
+        </div>
+        <div>
+          <strong style="font-size:13px">Invite token flow</strong>
+          <ul class="list">
+            <li><code>TripInvite(trip_id, token, role, max_uses, expires_at)</code></li>
+            <li><code>POST /api/trips/{id}/invites</code> — generates shareable token link</li>
+            <li><code>POST /api/invites/join</code> — validates token expiry + max_uses, creates <code>TripMember</code></li>
+            <li>Token is URL-safe random string; expiry and max-uses enforced at join time</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 10. WEBSOCKET / REALTIME ───────────────────────────────────────── -->
+    <section class="subsection">
+      <h2>10. WebSocket — Real-Time Event Stream <span class="badge">app/backend/api/websocket.py</span></h2>
+
+      <div class="kv-grid">
+        <span class="kv-key">Endpoint</span><span class="kv-val"><code>GET /ws/{session_id}</code> — upgrades to WebSocket</span>
+        <span class="kv-key">Subscribe</span><span class="kv-val"><code>redis.subscribe(f"trip:{session_id}:events")</code> on connect</span>
+        <span class="kv-key">Fan-out</span><span class="kv-val">Each Redis Pub/Sub message → <code>ws.send_text(msg)</code> to browser</span>
+        <span class="kv-key">Event schema</span><span class="kv-val"><code>{"type": "task_started|task_completed|task_failed|replanning|planning_started", "task_type": "…", …}</code></span>
+        <span class="kv-key">Publishers</span><span class="kv-val">Worker (<code>publish_event()</code>) and Planner (<code>publish_event()</code>) both write to the same channel</span>
+        <span class="kv-key">Disconnect</span><span class="kv-val"><code>redis.unsubscribe()</code> on WebSocket close</span>
+      </div>
+    </section>
+
+    <!-- ── 11. DB MODELS ──────────────────────────────────────────────────── -->
+    <section class="subsection">
+      <h2>11. PostgreSQL Schema (SQLAlchemy async) <span class="badge">app/backend/db/models.py</span></h2>
+
+      <div class="grid-3">
+        <div class="card">
+          <h3>Core trip tables</h3>
+          <ul class="list">
+            <li><strong>Trip</strong> — <code>id, user_id, title, destination, budget_inr, duration_days, status, created_at</code></li>
+            <li><strong>TaskRecord</strong> — <code>trip_id, task_type, status, result JSON, created_at</code></li>
+            <li><strong>Itinerary</strong> — <code>trip_id, content JSON, created_at</code></li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Auth + Collaboration</h3>
+          <ul class="list">
+            <li><strong>User</strong> — <code>id, email (unique), display_name, avatar_color</code></li>
+            <li><strong>MagicToken</strong> — <code>token (64-char), user_id, expires_at, used</code></li>
+            <li><strong>TripMember</strong> — <code>trip_id, user_id, role</code></li>
+            <li><strong>TripInvite</strong> — <code>trip_id, token, role, max_uses, uses, expires_at</code></li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Expenses + Agents</h3>
+          <ul class="list">
+            <li><strong>Expense</strong> — <code>trip_id, paid_by, amount, category, description, settled</code></li>
+            <li><strong>ExpenseSplit</strong> — <code>expense_id, user_id, amount</code></li>
+            <li><strong>CustomAgent</strong> — <code>id, user_id, name, description, system_prompt, code, api_keys JSONB DEFAULT '{}'</code></li>
+          </ul>
+        </div>
+      </div>
+
+      <strong style="font-size:13px">Lifespan startup</strong>
+      <pre><span class="c"># main.py lifespan — runs on every boot, safe to re-run</span>
+<span class="k">await</span> conn.execute(<span class="s">"""
+    ALTER TABLE custom_agents
+    ADD COLUMN IF NOT EXISTS api_keys JSONB DEFAULT '{}'::jsonb
+"""</span>)</pre>
+    </section>
+
+    <!-- ── 12. COMPONENT TABLE ────────────────────────────────────────────── -->
+    <section class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Layer</th><th>File(s)</th><th>Role</th><th>Status</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Frontend</td><td>app/frontend/app/page.tsx + layout.tsx</td><td>Trip wizard, agent status timeline, custom-agent editor, expense views, WebSocket consumer</td><td><span class="status ok">Implemented</span></td></tr>
+          <tr><td>Auth</td><td>api/auth.py + db/models.py (User, MagicToken)</td><td>Magic-link flow, JWT issue/verify, <code>get_current_user</code> / <code>get_optional_user</code> FastAPI deps</td><td><span class="status ok">Implemented</span></td></tr>
+          <tr><td>Trips API</td><td>api/trips.py + api/websocket.py</td><td>Trip CRUD, clarification LLM call, plan_trip dispatch, WebSocket event stream</td><td><span class="status ok">Implemented</span></td></tr>
+          <tr><td>Custom Agents</td><td>api/custom_agents.py + workers/tools.py</td><td>CRUD, lint (AST), AI-gen (DeepSeek), sandbox test (API process), production run (worker)</td><td><span class="status ok">Implemented</span></td></tr>
+          <tr><td>Expenses</td><td>api/expenses.py + utils/settlement.py</td><td>Expense ledger, split tracking, greedy cash-flow minimisation</td><td><span class="status ok">Implemented</span></td></tr>
+          <tr><td>Members</td><td>api/members.py + db/models.py</td><td>Role-based membership, shareable invite tokens with expiry + max-uses</td><td><span class="status ok">Implemented</span></td></tr>
+          <tr><td>Orchestrator</td><td>orchestrator/planner.py</td><td>Intent LLM, TASK_DEPENDENCY_MAP, DAG build, task publish, autonomous replanning</td><td><span class="status ok">Implemented</span></td></tr>
+          <tr><td>Workers</td><td>workers/worker.py + tools.py + worker_runner.py</td><td>Redis Stream consumer loop, dep-check, tool dispatch, ACK, event publish</td><td><span class="status ok">Implemented</span></td></tr>
+          <tr><td>Runtime Memory</td><td>cache/redis_client.py</td><td>Context Hash (6 h TTL), Stream task bus (<code>socket_timeout=30</code>), status Hash, Pub/Sub channel</td><td><span class="status ok">Implemented</span></td></tr>
+          <tr><td>Search Cache</td><td>search/es_client.py</td><td>Cache-first ES lookup (7-day freshness), write-through <code>index_result()</code>, region sharding</td><td><span class="status ok">Implemented</span></td></tr>
+          <tr><td>Persistent DB</td><td>db/models.py + db/database.py</td><td>Async SQLAlchemy; all durable state (trips, tasks, itineraries, users, expenses, agents)</td><td><span class="status ok">Implemented</span></td></tr>
+          <tr><td>Context Compression</td><td>orchestrator/context_compressor.py</td><td>Summarise growing context to control prompt token growth</td><td><span class="status warn">Hooked, tune cadence</span></td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- ── 13. IMPLEMENTATION NOTES ───────────────────────────────────────── -->
+    <section class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Component</th><th>Key Detail</th><th>Why It Matters</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>FastAPI route order</td>
+            <td>Static paths (<code>/lint</code>, <code>/ai-generate</code>) declared <em>before</em> <code>/{agent_id}</code></td>
+            <td>FastAPI matches first hit — wrong order returns 405 on static routes</td>
+          </tr>
+          <tr>
+            <td>RestrictedPython v7 rename</td>
+            <td><code>guarded_iter_unpack_sequence</code> (was <code>safe_iter_unpack_sequence</code> in v6)</td>
+            <td>Import fails at runtime if wrong name used — always import from <code>RestrictedPython.Guards</code></td>
+          </tr>
+          <tr>
+            <td>Sandbox <code>_getitem_</code> hook</td>
+            <td><code>_getitem_ = lambda obj, key: obj[key]</code> in <code>glb</code></td>
+            <td>RestrictedPython compiles <code>obj["key"]</code> to <code>_getitem_(obj, "key")</code> — missing hook = NameError</td>
+          </tr>
+          <tr>
+            <td>HTTP helper User-Agent</td>
+            <td><code>User-Agent: TripWeave/1.0 (custom-agent; +https://tripweave.app)</code> merged into all requests</td>
+            <td>Many public APIs return 403 on headless/missing User-Agent; stdlib urllib used (no requests/httpx in sandbox)</td>
+          </tr>
+          <tr>
+            <td>Redis socket timeout</td>
+            <td><code>socket_timeout=30, socket_connect_timeout=5</code></td>
+            <td>Default timeout &lt; <code>block_ms=5000</code> causes worker timeout loops; 30 s gives headroom for the blocking read</td>
+          </tr>
+          <tr>
+            <td>Worker hot-reload</td>
+            <td>API: <code>--reload</code> via volume mount. Worker: no reload flag</td>
+            <td>Worker changes require <code>docker compose up -d --force-recreate worker</code>. API test endpoint (<code>/test</code>) also needs API recreate since sandbox lives in <code>workers/tools.py</code></td>
+          </tr>
+          <tr>
+            <td><code>dep_result == "wait"</code> re-queue</td>
+            <td>ACK original + <code>publish_task(task)</code> fresh + <code>asyncio.sleep(1)</code></td>
+            <td>Prevents undelivered messages from piling up in the PEL (Pending Entries List) and blocking consumer recovery</td>
+          </tr>
+          <tr>
+            <td>api_keys migration</td>
+            <td>Idempotent <code>ALTER TABLE … ADD COLUMN IF NOT EXISTS</code> in FastAPI lifespan</td>
+            <td>Zero-downtime column addition; safe to run on every boot against existing production DB</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <div class="footer">
+      TripWeave architecture reference — updated May 2026. Generated from live graphify knowledge graph (342 nodes · 742 edges · 26 communities).
+    </div>
+  </div>
+</body>
+</html>
