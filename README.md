@@ -2,6 +2,15 @@
 
 **Autonomous Multi-Agent Travel Orchestration Runtime**
 
+## Design & Graph Artifacts
+
+- System architecture document: [architecture.html](architecture.html)
+- Graphify interactive graph: [graphify-out/graph.html](graphify-out/graph.html)
+- Graphify markdown report: [graphify-out/report.md](graphify-out/report.md)
+- Graphify summary report: [graphify-out/GRAPH_REPORT.md](graphify-out/GRAPH_REPORT.md)
+- Graphify raw graph data: [graphify-out/graph.json](graphify-out/graph.json)
+- Graphify manifest: [graphify-out/manifest.json](graphify-out/manifest.json)
+
 ---
 
 ## Architecture

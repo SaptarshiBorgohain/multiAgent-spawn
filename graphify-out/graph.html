@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>TripWeave — Multiagent AI Planner — graphify tree viewer</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f9f9f9;
+      color: #333;
+    }
+    h1 {
+      margin: 20px 0 0 24px;
+      font-size: 2.2rem;
+      font-weight: bold;
+      color: #1e3a56;
+    }
+    .controls {
+      margin: 20px 0 15px 24px;
+    }
+    button {
+      margin-right: 10px;
+      padding: 8px 18px;
+      background: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: background 0.2s ease-in-out;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    button:active {
+      background: #004085;
+    }
+    #tree-container {
+      width: calc(100vw - 48px); /* Adjust for body margin/padding */
+      height: 85vh;
+      overflow: auto;
+      border-radius: 8px;
+      background: #fff;
+      margin-left: 24px;
+      margin-right: 24px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      border: 1px solid #ddd;
+    }
+    svg {
+      background: #fff;
+      border-radius: 8px;
+      display: block; /* Important for D3 */
+    }
+    .node circle {
+      stroke-width: 2.5px;
+    }
+    .node text { /* Base style for the <text> container */
+      font: 13px 'Segoe UI', sans-serif;
+      paint-order: stroke fill; /* Ensures text is readable over lines */
+      stroke: #fff; /* White halo */
+      stroke-width: 3px; /* Halo thickness */
+      stroke-linejoin: round;
+      stroke-opacity: 0.85; /* Halo opacity */
+    }
+    .link {
+      fill: none;
+      stroke-opacity: 0.7;
+      stroke-width: 2px;
+    }
+  </style>
+</head>
+<body>
+  <h1>TripWeave — Multiagent AI Planner — Knowledge Graph</h1>
+  <div class="controls">
+    <button onclick="expandAll()">Expand All</button>
+    <button onclick="collapseAll()">Collapse All</button>
+    <button onclick="resetView()">Reset View</button>
+  </div>
+  <div id="tree-container">
+    <svg id="tree-svg" width="6000" height="8000"></svg>
+  </div>
+
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script>
+    const initialJsonData = {"name":"TripWeave — Multiagent AI Planner","total_count":317,"children":[{"name":"app","total_count":56,"children":[{"name":"backend","total_count":56,"children":[{"name":"api","total_count":10,"children":[{"name":"auth.py","total_count":2,"children":[{"name":"JWT Token Auth","total_count":1,"children":[]},{"name":"Magic Link Auth Flow","total_count":1,"children":[]}]},{"name":"custom_agents.py","total_count":4,"children":[{"name":"Custom Agents API (CRUD + lint + AI gen)","total_count":1,"children":[]},{"name":"POST /ai-generate (DeepSeek prompt/code gen)","total_count":1,"children":[]},{"name":"POST /lint (AST syntax check)","total_count":1,"children":[]},{"name":"POST /{agent_id}/test (sandbox test run)","total_count":1,"children":[]}]},{"name":"expenses.py","total_count":1,"children":[{"name":"Expenses API (Splitwise-style)","total_count":1,"children":[]}]},{"name":"members.py","total_count":1,"children":[{"name":"Members & Invites API","total_count":1,"children":[]}]},{"name":"trips.py","total_count":1,"children":[{"name":"Trips API Router","total_count":1,"children":[]}]},{"name":"websocket.py","total_count":1,"children":[{"name":"WebSocket Router (SSE/WS events)","total_count":1,"children":[]}]}]},{"name":"cache","total_count":4,"children":[{"name":"redis_client.py","total_count":4,"children":[{"name":"Event Pub/Sub (trip:{id}:events)","total_count":1,"children":[]},{"name":"Redis Singleton Connection (socket_timeout=30)","total_count":1,"children":[]},{"name":"Task Stream (Redis Streams XREADGROUP)","total_count":1,"children":[]},{"name":"Trip Context (Redis Hash, 6h TTL)","total_count":1,"children":[]}]}]},{"name":"db","total_count":10,"children":[{"name":"models.py","total_count":10,"children":[{"name":"CustomAgent Model (api_keys JSONB)","total_count":1,"children":[]},{"name":"Expense Model","total_count":1,"children":[]},{"name":"ExpenseSplit Model","total_count":1,"children":[]},{"name":"Itinerary Model","total_count":1,"children":[]},{"name":"MagicToken Model","total_count":1,"children":[]},{"name":"TaskRecord Model","total_count":1,"children":[]},{"name":"Trip Model","total_count":1,"children":[]},{"name":"TripInvite Model","total_count":1,"children":[]},{"name":"TripMember Model","total_count":1,"children":[]},{"name":"User Model","total_count":1,"children":[]}]}]},{"name":"main.py","total_count":4,"children":[{"name":"CORS Middleware (allow *)","total_count":1,"children":[]},{"name":"Idempotent api_keys JSONB Migration","total_count":1,"children":[]},{"name":"Lifespan Startup (DB + ES init)","total_count":1,"children":[]},{"name":"TripWeave FastAPI App","total_count":1,"children":[]}]},{"name":"orchestrator","total_count":6,"children":[{"name":"context_compressor.py","total_count":1,"children":[{"name":"context_compressor (summarise old context)","total_count":1,"children":[]}]},{"name":"planner.py","total_count":5,"children":[{"name":"_build_dag (6 built-in + N custom agents)","total_count":1,"children":[]},{"name":"handle_budget_exceeded (autonomous replanning)","total_count":1,"children":[]},{"name":"monitor_and_replan (budget watchdog)","total_count":1,"children":[]},{"name":"plan_trip (intent extract + DAG publish)","total_count":1,"children":[]},{"name":"TASK_DEPENDENCY_MAP (DAG topology)","total_count":1,"children":[]}]}]},{"name":"requirements.txt","total_count":2,"children":[{"name":"DeepSeek LLM (via openai SDK)","total_count":1,"children":[]},{"name":"RestrictedPython>=7.0 (sandbox)","total_count":1,"children":[]}]},{"name":"search","total_count":2,"children":[{"name":"es_client.py","total_count":2,"children":[{"name":"index_result (write-through cache)","total_count":1,"children":[]},{"name":"search_knowledge (Elasticsearch cache lookup)","total_count":1,"children":[]}]}]},{"name":"worker_runner.py","total_count":1,"children":[{"name":"worker_runner (asyncio entrypoint)","total_count":1,"children":[]}]},{"name":"workers","total_count":17,"children":[{"name":"tools.py","total_count":15,"children":[{"name":"_getitem_ sandbox hook (subscript access)","total_count":1,"children":[]},{"name":"_run_code_sandbox (RestrictedPython exec)","total_count":1,"children":[]},{"name":"_safe_http_get (urllib + User-Agent)","total_count":1,"children":[]},{"name":"_safe_http_post (urllib JSON POST)","total_count":1,"children":[]},{"name":"budget_optimizer (cost breakdown + tips)","total_count":1,"children":[]},{"name":"destination_research (parallel Places + DeepSeek)","total_count":1,"children":[]},{"name":"food_discovery","total_count":1,"children":[]},{"name":"guarded_iter_unpack_sequence (RestrictedPython >= 7.0)","total_count":1,"children":[]},{"name":"hotel_planning (budget-aware)","total_count":1,"children":[]},{"name":"itinerary_optimization (DeepSeek + context merge)","total_count":1,"children":[]},{"name":"places_search (cache-first ES → Google Places)","total_count":1,"children":[]},{"name":"RestrictedPython compile_restricted + safe_globals","total_count":1,"children":[]},{"name":"run_custom_agent (sandbox + LLM)","total_count":1,"children":[]},{"name":"TOOL_REGISTRY (task_type → handler map)","total_count":1,"children":[]},{"name":"transport_planning","total_count":1,"children":[]}]},{"name":"worker.py","total_count":2,"children":[{"name":"_check_dependencies (ready/wait/cancel)","total_count":1,"children":[]},{"name":"run_worker (infinite Redis stream consumer)","total_count":1,"children":[]}]}]}]}]},{"name":"backend","total_count":196,"children":[{"name":"api","total_count":96,"children":[{"name":"auth.py","total_count":14,"children":[{"name":"_issue_jwt()","total_count":1,"children":[]},{"name":"AsyncSession","total_count":1,"children":[]},{"name":"Decode and verify a JWT. Raises jwt.ExpiredSignatureError / jwt.InvalidTokenErro","total_count":1,"children":[]},{"name":"decode_jwt()","total_count":1,"children":[]},{"name":"get_current_user()","total_count":1,"children":[]},{"name":"get_optional_user()","total_count":1,"children":[]},{"name":"Magic-link authentication.  Flow:   POST /api/auth/send   → create/find User, ge","total_count":1,"children":[]},{"name":"me()","total_count":1,"children":[]},{"name":"send_magic_link()","total_count":1,"children":[]},{"name":"SendMagicLinkRequest","total_count":1,"children":[]},{"name":"SendResponse","total_count":1,"children":[]},{"name":"str","total_count":1,"children":[]},{"name":"User","total_count":1,"children":[]},{"name":"verify_magic_link()","total_count":1,"children":[]}]},{"name":"custom_agents.py","total_count":21,"children":[{"name":"# NOTE: these routes MUST be declared before /{agent_id} routes to avoid","total_count":1,"children":[]},{"name":"ai_generate()","total_count":1,"children":[]},{"name":"AIGenerateRequest","total_count":1,"children":[]},{"name":"AsyncSession","total_count":1,"children":[]},{"name":"Config","total_count":1,"children":[]},{"name":"create_custom_agent()","total_count":1,"children":[]},{"name":"Custom Agent CRUD API.  Lets users create, edit, delete, and test-run their own","total_count":1,"children":[]},{"name":"CustomAgentCreate","total_count":1,"children":[]},{"name":"CustomAgentOut","total_count":1,"children":[]},{"name":"CustomAgentUpdate","total_count":1,"children":[]},{"name":"delete_custom_agent()","total_count":1,"children":[]},{"name":"lint_code()","total_count":1,"children":[]},{"name":"LintRequest","total_count":1,"children":[]},{"name":"list_custom_agents()","total_count":1,"children":[]},{"name":"Parse Python code with ast.parse and return any syntax errors.     Returns {ok:","total_count":1,"children":[]},{"name":"Runs the agent against a live trip context (if session_id provided) or     an em","total_count":1,"children":[]},{"name":"str","total_count":1,"children":[]},{"name":"test_run_agent()","total_count":1,"children":[]},{"name":"TestRunRequest","total_count":1,"children":[]},{"name":"update_custom_agent()","total_count":1,"children":[]},{"name":"Use DeepSeek to generate or refine a system_prompt or Python code snippet     fo","total_count":1,"children":[]}]},{"name":"expenses.py","total_count":21,"children":[{"name":"# IMPORTANT: static sub-paths (/balances, /settlement, /settle) MUST be","total_count":1,"children":[]},{"name":"_get_trip()","total_count":1,"children":[]},{"name":"_user_name()","total_count":1,"children":[]},{"name":"AsyncSession","total_count":1,"children":[]},{"name":"create_expense()","total_count":1,"children":[]},{"name":"CreateExpenseRequest","total_count":1,"children":[]},{"name":"delete_expense()","total_count":1,"children":[]},{"name":"Expense tracking API: create, list, delete expenses; compute balances and optima","total_count":1,"children":[]},{"name":"get_balances()","total_count":1,"children":[]},{"name":"get_settlement()","total_count":1,"children":[]},{"name":"list_expenses()","total_count":1,"children":[]},{"name":"Mark the debtor's outstanding splits as settled (up to the settled amount).","total_count":1,"children":[]},{"name":"mark_settled()","total_count":1,"children":[]},{"name":"Returns (display_name, avatar_color) for a user id.","total_count":1,"children":[]},{"name":"Returns the minimum set of transactions needed to settle all debts.","total_count":1,"children":[]},{"name":"Returns {user_id, display_name, avatar_color, net_balance} per member.","total_count":1,"children":[]},{"name":"SettleRequest","total_count":1,"children":[]},{"name":"SplitEntry","total_count":1,"children":[]},{"name":"str","total_count":1,"children":[]},{"name":"Trip","total_count":1,"children":[]},{"name":"UUID","total_count":1,"children":[]}]},{"name":"members.py","total_count":17,"children":[{"name":"_get_trip()","total_count":1,"children":[]},{"name":"add_member()","total_count":1,"children":[]},{"name":"AsyncSession","total_count":1,"children":[]},{"name":"create_invite()","total_count":1,"children":[]},{"name":"Directly add a member by user_id (owner action).","total_count":1,"children":[]},{"name":"Generate a 7-day invite link for this trip.","total_count":1,"children":[]},{"name":"Join a trip using an invite token.","total_count":1,"children":[]},{"name":"join_trip()","total_count":1,"children":[]},{"name":"JoinRequest","total_count":1,"children":[]},{"name":"List all members of this trip with their user details.","total_count":1,"children":[]},{"name":"list_members()","total_count":1,"children":[]},{"name":"str","total_count":1,"children":[]},{"name":"Trip","total_count":1,"children":[]},{"name":"Trip membership, invite links, and collaboration.","total_count":1,"children":[]},{"name":"Update a member's role (owner only).","total_count":1,"children":[]},{"name":"update_member_role()","total_count":1,"children":[]},{"name":"UpdateRoleRequest","total_count":1,"children":[]}]},{"name":"trips.py","total_count":19,"children":[{"name":"_get_clarify_llm()","total_count":1,"children":[]},{"name":"_run_plan_in_background()","total_count":1,"children":[]},{"name":"AsyncOpenAI","total_count":1,"children":[]},{"name":"AsyncSession","total_count":1,"children":[]},{"name":"BackgroundTasks","total_count":1,"children":[]},{"name":"clarify_trip()","total_count":1,"children":[]},{"name":"ClarifyRequest","total_count":1,"children":[]},{"name":"ClarifyResponse","total_count":1,"children":[]},{"name":"FastAPI routes for trip planning sessions.","total_count":1,"children":[]},{"name":"get_context()","total_count":1,"children":[]},{"name":"Given a raw trip brief, return 3-4 targeted clarifying questions that would","total_count":1,"children":[]},{"name":"replan()","total_count":1,"children":[]},{"name":"rerun_agent()","total_count":1,"children":[]},{"name":"RerunAgentRequest","total_count":1,"children":[]},{"name":"Run plan_trip in the background so the POST can return immediately.     Any LLM","total_count":1,"children":[]},{"name":"start_trip()","total_count":1,"children":[]},{"name":"StartTripRequest","total_count":1,"children":[]},{"name":"StartTripResponse","total_count":1,"children":[]},{"name":"str","total_count":1,"children":[]}]},{"name":"websocket.py","total_count":4,"children":[{"name":"str","total_count":1,"children":[]},{"name":"trip_websocket()","total_count":1,"children":[]},{"name":"WebSocket","total_count":1,"children":[]},{"name":"WebSocket endpoint for real-time trip updates.  Subscribes to Redis Pub/Sub chan","total_count":1,"children":[]}]}]},{"name":"cache","total_count":16,"children":[{"name":"redis_client.py","total_count":16,"children":[{"name":"ack_task()","total_count":1,"children":[]},{"name":"ensure_consumer_group()","total_count":1,"children":[]},{"name":"get_all_agent_statuses()","total_count":1,"children":[]},{"name":"get_redis()","total_count":1,"children":[]},{"name":"get_trip_context()","total_count":1,"children":[]},{"name":"int","total_count":1,"children":[]},{"name":"publish_event()","total_count":1,"children":[]},{"name":"publish_task()","total_count":1,"children":[]},{"name":"Push a task onto the Redis Stream. Returns the message ID.","total_count":1,"children":[]},{"name":"read_tasks()","total_count":1,"children":[]},{"name":"Redis","total_count":1,"children":[]},{"name":"Redis client + helpers for:   - Task streams (Redis Streams)   - Shared trip con","total_count":1,"children":[]},{"name":"set_agent_status()","total_count":1,"children":[]},{"name":"set_trip_context()","total_count":1,"children":[]},{"name":"str","total_count":1,"children":[]},{"name":"update_trip_context()","total_count":1,"children":[]}]}]},{"name":"config.py","total_count":2,"children":[{"name":"Config","total_count":1,"children":[]},{"name":"Settings","total_count":1,"children":[]}]},{"name":"db","total_count":10,"children":[{"name":"models.py","total_count":10,"children":[{"name":"CustomAgent","total_count":1,"children":[]},{"name":"Expense","total_count":1,"children":[]},{"name":"ExpenseSplit","total_count":1,"children":[]},{"name":"Itinerary","total_count":1,"children":[]},{"name":"MagicToken","total_count":1,"children":[]},{"name":"TaskRecord","total_count":1,"children":[]},{"name":"Trip","total_count":1,"children":[]},{"name":"TripInvite","total_count":1,"children":[]},{"name":"TripMember","total_count":1,"children":[]},{"name":"User","total_count":1,"children":[]}]}]},{"name":"main.py","total_count":4,"children":[{"name":"FastAPI","total_count":1,"children":[]},{"name":"health()","total_count":1,"children":[]},{"name":"lifespan()","total_count":1,"children":[]},{"name":"TripWeave FastAPI entrypoint.","total_count":1,"children":[]}]},{"name":"orchestrator","total_count":22,"children":[{"name":"context_compressor.py","total_count":9,"children":[{"name":"_get_llm()","total_count":1,"children":[]},{"name":"AsyncOpenAI","total_count":1,"children":[]},{"name":"AsyncSession","total_count":1,"children":[]},{"name":"compress_context()","total_count":1,"children":[]},{"name":"Context compression service.  Every N interactions, compress raw trip chat into","total_count":1,"children":[]},{"name":"int","total_count":1,"children":[]},{"name":"maybe_compress()","total_count":1,"children":[]},{"name":"Pull active context from Redis, compress via LLM, persist to Postgres,     and u","total_count":1,"children":[]},{"name":"str","total_count":1,"children":[]}]},{"name":"planner.py","total_count":13,"children":[{"name":"1. Extract intent from user query via LLM.     2. Seed Redis context.     3. Bui","total_count":1,"children":[]},{"name":"_build_dag()","total_count":1,"children":[]},{"name":"_extract_intent()","total_count":1,"children":[]},{"name":"_get_llm()","total_count":1,"children":[]},{"name":"AsyncOpenAI","total_count":1,"children":[]},{"name":"Autonomously spawn a cheaper hotel search when budget is exceeded.","total_count":1,"children":[]},{"name":"Called periodically by the API. Checks agent statuses and triggers     follow-up","total_count":1,"children":[]},{"name":"handle_budget_exceeded()","total_count":1,"children":[]},{"name":"monitor_and_replan()","total_count":1,"children":[]},{"name":"plan_trip()","total_count":1,"children":[]},{"name":"Planner / Orchestrator  Responsibilities: 1. Parse user intent via LLM 2. Genera","total_count":1,"children":[]},{"name":"Returns tasks ordered so dependencies come before dependents.","total_count":1,"children":[]},{"name":"str","total_count":1,"children":[]}]}]},{"name":"search","total_count":12,"children":[{"name":"es_client.py","total_count":12,"children":[{"name":"_get_es()","total_count":1,"children":[]},{"name":"_region_for()","total_count":1,"children":[]},{"name":"AsyncElasticsearch","total_count":1,"children":[]},{"name":"Cache-first retrieval. Returns cached results if fresh (< 7 days).","total_count":1,"children":[]},{"name":"Create indexes with shard routing on first boot.","total_count":1,"children":[]},{"name":"Elasticsearch client + helpers for the Search/Knowledge layer.  Indexes:   - pla","total_count":1,"children":[]},{"name":"index_result()","total_count":1,"children":[]},{"name":"int","total_count":1,"children":[]},{"name":"search_knowledge()","total_count":1,"children":[]},{"name":"setup_indexes()","total_count":1,"children":[]},{"name":"Store a normalized search result in the knowledge layer.","total_count":1,"children":[]},{"name":"str","total_count":1,"children":[]}]}]},{"name":"utils","total_count":6,"children":[{"name":"settlement.py","total_count":5,"children":[{"name":"Debt minimisation algorithm for group expense settlement.  Given a dict of {user","total_count":1,"children":[]},{"name":"float","total_count":1,"children":[]},{"name":"Greedy O(n²) algorithm: always pair the biggest creditor with the biggest debtor","total_count":1,"children":[]},{"name":"minimize_cash_flow()","total_count":1,"children":[]},{"name":"str","total_count":1,"children":[]}]},{"name":"__init__.py","total_count":1,"children":[]}]},{"name":"worker_runner.py","total_count":2,"children":[{"name":"main()","total_count":1,"children":[]},{"name":"Worker runner — starts a fixed pool of long-lived workers. Each worker loops for","total_count":1,"children":[]}]},{"name":"workers","total_count":26,"children":[{"name":"tools.py","total_count":20,"children":[{"name":"_google_places_search()","total_count":1,"children":[]},{"name":"_run_code_sandbox()","total_count":1,"children":[]},{"name":"_safe_http_get()","total_count":1,"children":[]},{"name":"_safe_http_post()","total_count":1,"children":[]},{"name":"budget_optimizer()","total_count":1,"children":[]},{"name":"Cache-first: query Elasticsearch first.     Fall back to Google Places API only","total_count":1,"children":[]},{"name":"destination_research()","total_count":1,"children":[]},{"name":"Execute user-supplied Python in a RestrictedPython sandbox.     The code runs in","total_count":1,"children":[]},{"name":"food_discovery()","total_count":1,"children":[]},{"name":"Generic handler for user-defined agents.      Execution order:       1. If agent","total_count":1,"children":[]},{"name":"hotel_planning()","total_count":1,"children":[]},{"name":"itinerary_optimization()","total_count":1,"children":[]},{"name":"places_search()","total_count":1,"children":[]},{"name":"Reads the finished itinerary + trip context and produces actionable money-saving","total_count":1,"children":[]},{"name":"run_custom_agent()","total_count":1,"children":[]},{"name":"Safe outbound GET — callable from inside the sandbox.","total_count":1,"children":[]},{"name":"Safe outbound POST — callable from inside the sandbox.","total_count":1,"children":[]},{"name":"str","total_count":1,"children":[]},{"name":"Tool registry.  Each tool is a simple async function. Workers look up the right","total_count":1,"children":[]},{"name":"transport_planning()","total_count":1,"children":[]}]},{"name":"worker.py","total_count":6,"children":[{"name":"_check_dependencies()","total_count":1,"children":[]},{"name":"Dynamic Worker  Lifecycle:   1. Connect to Redis Stream consumer group   2. Read","total_count":1,"children":[]},{"name":"Long-running worker: blocks on the Redis Stream and processes tasks indefinitely","total_count":1,"children":[]},{"name":"Returns:       'ready'  — all deps done, proceed       'wait'   — deps pending,","total_count":1,"children":[]},{"name":"run_worker()","total_count":1,"children":[]},{"name":"str","total_count":1,"children":[]}]}]}]},{"name":"docker-compose.yml","total_count":6,"children":[{"name":"API Docker Service (uvicorn + volume)","total_count":1,"children":[]},{"name":"Elasticsearch Service","total_count":1,"children":[]},{"name":"Frontend Docker Service (Next.js)","total_count":1,"children":[]},{"name":"PostgreSQL 15 Service","total_count":1,"children":[]},{"name":"Redis Service","total_count":1,"children":[]},{"name":"Worker Docker Service (no reload)","total_count":1,"children":[]}]},{"name":"frontend","total_count":59,"children":[{"name":"app","total_count":38,"children":[{"name":"apple-icon.tsx","total_count":2,"children":[{"name":"AppleIcon()","total_count":1,"children":[]},{"name":"size","total_count":1,"children":[]}]},{"name":"icon.tsx","total_count":2,"children":[{"name":"Icon()","total_count":1,"children":[]},{"name":"size","total_count":1,"children":[]}]},{"name":"page.tsx","total_count":34,"children":[{"name":"AGENT_LABEL","total_count":1,"children":[]},{"name":"AGENT_THOUGHTS","total_count":1,"children":[]},{"name":"AgentCard()","total_count":1,"children":[]},{"name":"AgentNode","total_count":1,"children":[]},{"name":"AgentStatus","total_count":1,"children":[]},{"name":"AuthPrompt()","total_count":1,"children":[]},{"name":"AuthUser","total_count":1,"children":[]},{"name":"Balance","total_count":1,"children":[]},{"name":"CATEGORY_ICONS","total_count":1,"children":[]},{"name":"CodeEditor()","total_count":1,"children":[]},{"name":"CustomAgentDef","total_count":1,"children":[]},{"name":"DayCard()","total_count":1,"children":[]},{"name":"DayPlan","total_count":1,"children":[]},{"name":"EditableField()","total_count":1,"children":[]},{"name":"escHtml()","total_count":1,"children":[]},{"name":"Expense","total_count":1,"children":[]},{"name":"ExpensePanel()","total_count":1,"children":[]},{"name":"ForkSVG()","total_count":1,"children":[]},{"name":"highlightPython()","total_count":1,"children":[]},{"name":"Home()","total_count":1,"children":[]},{"name":"INITIAL_AGENTS","total_count":1,"children":[]},{"name":"ItineraryData","total_count":1,"children":[]},{"name":"ItineraryPanel()","total_count":1,"children":[]},{"name":"LOG_COLOR","total_count":1,"children":[]},{"name":"LogEntry","total_count":1,"children":[]},{"name":"Member","total_count":1,"children":[]},{"name":"MemberBar()","total_count":1,"children":[]},{"name":"MergeSVG()","total_count":1,"children":[]},{"name":"parseItinerary()","total_count":1,"children":[]},{"name":"S","total_count":1,"children":[]},{"name":"SettlementTx","total_count":1,"children":[]},{"name":"SUBTITLES","total_count":1,"children":[]},{"name":"ThinkingStream()","total_count":1,"children":[]},{"name":"VStem()","total_count":1,"children":[]}]}]},{"name":"next.config.js","total_count":1,"children":[{"name":"nextConfig","total_count":1,"children":[]}]},{"name":"tsconfig.json","total_count":19,"children":[{"name":"@/*","total_count":1,"children":[]},{"name":"allowJs","total_count":1,"children":[]},{"name":"compilerOptions","total_count":1,"children":[]},{"name":"esModuleInterop","total_count":1,"children":[]},{"name":"exclude","total_count":1,"children":[]},{"name":"include","total_count":1,"children":[]},{"name":"incremental","total_count":1,"children":[]},{"name":"isolatedModules","total_count":1,"children":[]},{"name":"jsx","total_count":1,"children":[]},{"name":"lib","total_count":1,"children":[]},{"name":"module","total_count":1,"children":[]},{"name":"moduleResolution","total_count":1,"children":[]},{"name":"noEmit","total_count":1,"children":[]},{"name":"paths","total_count":1,"children":[]},{"name":"plugins","total_count":1,"children":[]},{"name":"resolveJsonModule","total_count":1,"children":[]},{"name":"skipLibCheck","total_count":1,"children":[]},{"name":"strict","total_count":1,"children":[]},{"name":"target","total_count":1,"children":[]}]},{"name":"next-env.d.ts","total_count":1,"children":[]}]}]};
+
+    function transformData(jsonData) {
+        // Helper function to recursively build the children structure
+        function processNode(node, parentL1StageName) {
+            let displayName = node.name;
+            // Append total_count if it exists and is not already in the name
+            if (node.total_count !== undefined) {
+                if (!/\(Total Count: \d+\)$/.test(displayName)) {
+                    displayName += ` (Total Count: ${node.total_count})`;
+                }
+            }
+
+            const newNode = { name: displayName };
+
+            if (parentL1StageName === "Root") {
+                 newNode.originalStageName = node.name;
+            } else {
+                newNode.originalStageName = parentL1StageName;
+            }
+
+            if (node.children && node.children.length > 0) {
+                const stageNameToPass = (parentL1StageName === "Root") ? node.name : parentL1StageName;
+                newNode.children = node.children.map(child => processNode(child, stageNameToPass));
+            }
+
+            return newNode;
+        }
+
+        let rootDisplayName = jsonData.name;
+        if (jsonData.total_count !== undefined && !/\(Total Count: \d+\)$/.test(rootDisplayName)) {
+            rootDisplayName += ` (Total Count: ${jsonData.total_count})`;
+        }
+
+        return {
+            name: rootDisplayName,
+            originalStageName: "Root",
+            children: (jsonData.children || []).map(child => processNode(child, "Root"))
+        };
+    }
+
+    const treeData = transformData(initialJsonData);
+
+    // Auto-populated phaseColors: every depth-1 child of the root gets
+    // a stable colour from a bigger palette so all top-level dirs are
+    // distinguishable.
+    const PALETTE = [
+      ["#3498DB","#2980B9","#AED6F1"], ["#2ECC71","#27AE60","#A9DFBF"],
+      ["#E74C3C","#C0392B","#F5B7B1"], ["#9B59B6","#8E44AD","#D7BDE2"],
+      ["#F39C12","#D68910","#FAD7A0"], ["#1ABC9C","#117864","#A2D9CE"],
+      ["#34495E","#1B2631","#ABB2B9"], ["#E67E22","#BA4A00","#F5CBA7"],
+      ["#16A085","#0E6655","#A2D9CE"], ["#D35400","#A04000","#EDBB99"],
+      ["#7F8C8D","#566573","#D5DBDB"], ["#C0392B","#7B241C","#F5B7B1"],
+      ["#2E86C1","#1B4F72","#A9CCE3"], ["#28B463","#196F3D","#A9DFBF"],
+      ["#AF7AC5","#6C3483","#D2B4DE"],
+    ];
+    const phaseColors = { "Root": { fill: "#4A4A4A", stroke: "#333333", collapsedFill: "#6C757D" },
+                          "Default": { fill: "#BDC3C7", stroke: "#95A5A6", collapsedFill: "#ECF0F1" } };
+    (initialJsonData.children || []).forEach((c, i) => {
+      const pal = PALETTE[i % PALETTE.length];
+      phaseColors[c.name] = { fill: pal[0], stroke: pal[1], collapsedFill: pal[2] };
+    });
+
+    const levelSpecificPalettes = {
+      0: { fill: "#4A4A4A", stroke: "#333333", collapsedFill: "#6C757D" },
+      2: { fill: "#6ab04c", stroke: "#508a38", collapsedFill: "#a3d391" },
+      3: { fill: "#f0932b", stroke: "#d0730f", collapsedFill: "#f6c07e" },
+      4: { fill: "#be2edd", stroke: "#a01cb3", collapsedFill: "#e08bf2" },
+      5: { fill: "#00a8ff", stroke: "#007ac1", collapsedFill: "#74d2ff" },
+      6: { fill: "#e55039", stroke: "#c23620", collapsedFill: "#f09a8d" },
+      default: { fill: "#747d8c", stroke: "#57606f", collapsedFill: "#a4b0be" }
+    };
+
+    const svgElement = d3.select("#tree-svg");
+    const initialSvgWidth = +svgElement.attr("width");
+    const initialSvgHeight = +svgElement.attr("height");
+    const margin = { top: 40, right: 120, bottom: 80, left: 450 };
+    let width = initialSvgWidth - margin.left - margin.right;
+    let height = initialSvgHeight - margin.top - margin.bottom;
+    const duration = 500;
+    let nodeCounter = 0;
+    const g = svgElement.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
+    const treemap = d3.tree().nodeSize([40, 0]);
+    let rootNode = d3.hierarchy(treeData, d => d.children);
+    rootNode.x0 = 0;
+    rootNode.y0 = 0;
+
+    if (rootNode.children) {
+      rootNode.children.forEach(d_child => {
+        if (d_child.children) { collapseBranch(d_child); }
+      });
+    }
+    updateTree(rootNode);
+
+    function collapseBranch(d) { if (d.children) { d._children = d.children; d._children.forEach(collapseBranch); d.children = null; } }
+    function expandBranch(d) { if (d._children) { d.children = d._children; d._children = null; } if (d.children) { d.children.forEach(expandBranch); } }
+    window.expandAll = () => { expandBranch(rootNode); updateTree(rootNode); };
+    window.collapseAll = () => { if (rootNode.children) { rootNode.children.forEach(collapseBranch); } updateTree(rootNode); };
+    window.resetView = () => { if (rootNode.children) { rootNode.children.forEach(d_child => { if (d_child.children || d_child._children) { collapseBranch(d_child); } }); } if (rootNode._children && !rootNode.children) { rootNode.children = rootNode._children; rootNode._children = null; } updateTree(rootNode); };
+
+    function updateTree(source) {
+      const treeLayoutData = treemap(rootNode);
+      let nodes = treeLayoutData.descendants();
+      let links = treeLayoutData.descendants().slice(1);
+
+      let minX = 0;
+      let maxX = 0;
+      if (nodes.length > 0) {
+        minX = d3.min(nodes, d => d.x);
+        maxX = d3.max(nodes, d => d.x);
+      }
+
+      let neededHeight = Math.max(initialSvgHeight, maxX - minX + margin.top + margin.bottom + 100);
+      svgElement.transition().duration(duration / 2).attr("height", neededHeight);
+      g.transition().duration(duration / 2).attr("transform", `translate(${margin.left},${margin.top - minX + 40})`);
+
+      nodes.forEach(d => { d.y = d.depth * 400; }); // Adjust horizontal separation if needed
+
+      const node = g.selectAll('g.node').data(nodes, d => d.id || (d.id = ++nodeCounter));
+      const nodeEnter = node.enter().append('g')
+        .attr('class', d => "node" + (d.children || d._children ? " node--internal" : " node--leaf") + (d._children ? " _children" : ""))
+        .attr('transform', d => `translate(${source.y0},${source.x0})`)
+        .on('click', (event, d) => { if (d.children) { d._children = d.children; d.children = null; } else if (d._children) { d.children = d._children; d._children = null; } updateTree(d); })
+        .style('cursor', d => (d.children || d._children) ? 'pointer' : 'default');
+
+      nodeEnter.append('circle').attr('r', 1e-6);
+
+      nodeEnter.append('text')
+        .attr('dy', '.35em')
+        .attr('x', d => d.children || d._children ? -14 : 14)
+        .attr('text-anchor', d => d.children || d._children ? 'end' : 'start')
+        .style("fill-opacity", 1e-6)
+        .call(wrapText, 380);
+
+      const nodeUpdate = nodeEnter.merge(node);
+      nodeUpdate.transition().duration(duration)
+        .attr('transform', d => `translate(${d.y},${d.x})`)
+        .attr('class', d => "node" + (d.children ? " node--internal" : " node--leaf") + (d._children ? " node--internal _children" : ""));
+
+      nodeUpdate.select('circle').attr('r', 8.5)
+        .style('fill', d => {
+            let palette;
+            if (d.depth === 0) {
+                palette = levelSpecificPalettes[0];
+            } else if (d.depth === 1) {
+                palette = phaseColors[d.data.originalStageName] || phaseColors.Default;
+            } else {
+                palette = levelSpecificPalettes[d.depth] || levelSpecificPalettes.default;
+            }
+            if (d._children) return palette.collapsedFill;
+            if (d.children) return palette.fill;
+            return "#fff";
+        })
+        .style('stroke', d => {
+            let palette;
+            if (d.depth === 0) {
+                palette = levelSpecificPalettes[0];
+            } else if (d.depth === 1) {
+                palette = phaseColors[d.data.originalStageName] || phaseColors.Default;
+            } else {
+                palette = levelSpecificPalettes[d.depth] || levelSpecificPalettes.default;
+            }
+            return palette.stroke;
+        });
+      nodeUpdate.select('text').style("fill-opacity", 1).call(wrapText, 380);
+
+      const nodeExit = node.exit().transition().duration(duration).attr('transform', d => `translate(${source.y},${source.x})`).remove();
+      nodeExit.select('circle').attr('r', 1e-6);
+      nodeExit.select('text').style('fill-opacity', 1e-6);
+
+      const link = g.selectAll('path.link').data(links, d => d.id);
+      const linkEnter = link.enter().insert('path', "g").attr('class', 'link').attr('d', d => { const o = { x: source.x0, y: source.y0 }; return diagonal(o, o); });
+
+      linkEnter.merge(link).transition().duration(duration).attr('d', d => diagonal(d, d.parent))
+        .style('stroke', d => {
+            const sourceNode = d.parent;
+            if (!sourceNode) return phaseColors.Default.stroke;
+            const l1AncestorName = sourceNode.data.originalStageName;
+            const colorPalette = phaseColors[l1AncestorName] || phaseColors.Default;
+            return colorPalette.stroke;
+        });
+      link.exit().transition().duration(duration).attr('d', d => { const o = { x: source.x, y: source.y }; return diagonal(o, o); }).remove();
+      nodes.forEach(d => { d.x0 = d.x; d.y0 = d.y; });
+    }
+
+    function diagonal(s, d) { return `M ${s.y} ${s.x} C ${(s.y + d.y) / 2} ${s.x}, ${(s.y + d.y) / 2} ${d.x}, ${d.y} ${d.x}`; }
+
+    function wrapText(textElements, maxWidth) {
+        const textPartColors = {
+            name: '#343a40',
+            count: '#0056b3'
+        };
+        const countRegex = /(\s\(Total Count: \d+\))$/;
+
+        textElements.each(function () {
+            const textD3 = d3.select(this);
+            const originalNodeText = textD3.datum().data.name;
+            const x = parseFloat(textD3.attr("x") || 0);
+            const initialDy = textD3.attr("dy");
+            const textAnchor = textD3.attr("text-anchor");
+            const lineHeight = 1.1;
+
+            textD3.text(null);
+
+            let namePart = originalNodeText;
+            let countPartText = "";
+
+            const countMatch = originalNodeText.match(countRegex);
+            if (countMatch && originalNodeText.endsWith(countMatch[0])) {
+                namePart = originalNodeText.substring(0, originalNodeText.length - countMatch[0].length).trim();
+                countPartText = countMatch[0].trim();
+            }
+
+            const tokens = [];
+            namePart.split(/\s+/).filter(Boolean).forEach(word => {
+                tokens.push({ text: word, type: 'name' });
+            });
+            if (countPartText) {
+                tokens.push({ text: countPartText, type: 'count' });
+            }
+
+            if (tokens.length === 0 && originalNodeText) {
+                tokens.push({ text: originalNodeText, type: 'name' });
+            }
+
+            let currentTspan = textD3.append("tspan").attr("x", x).attr("dy", initialDy);
+            if (textAnchor === "end") currentTspan.attr("text-anchor", "end");
+
+            let lineTokens = [];
+
+            for (let i = 0; i < tokens.length; i++) {
+                const tokenObj = tokens[i];
+
+                lineTokens.push(tokenObj);
+                currentTspan.text(lineTokens.map(t => t.text).join(" "));
+
+                if (currentTspan.node().getComputedTextLength() > maxWidth && lineTokens.length > 1) {
+                    lineTokens.pop();
+
+                    currentTspan.text(null);
+                    lineTokens.forEach((prevToken, idx) => {
+                        currentTspan.append("tspan")
+                            .text((idx > 0 ? " " : "") + prevToken.text)
+                            .style("fill", textPartColors[prevToken.type] || textPartColors.name)
+                            .style("font-weight", prevToken.type === 'count' ? "bold" : "normal");
+                    });
+
+                    lineTokens = [tokenObj];
+                    currentTspan = textD3.append("tspan").attr("x", x).attr("dy", lineHeight + "em");
+                    if (textAnchor === "end") currentTspan.attr("text-anchor", "end");
+                }
+            }
+
+            currentTspan.text(null);
+            lineTokens.forEach((token, idx) => {
+                currentTspan.append("tspan")
+                    .text((idx > 0 ? " " : "") + token.text)
+                    .style("fill", textPartColors[token.type] || textPartColors.name)
+                    .style("font-weight", token.type === 'count' ? "bold" : "normal");
+            });
+
+            if (textD3.selectAll("tspan > tspan").empty() && textD3.select("tspan").text().length === 0 && originalNodeText) {
+                let t = textD3.select("tspan");
+                let displayText = originalNodeText;
+                t.text(displayText).style("fill", textPartColors.name);
+                if (t.node() && t.node().getComputedTextLength() > maxWidth && displayText.length > 20) {
+                    let estimatedChars = Math.floor(maxWidth / (t.node().getComputedTextLength()/displayText.length) );
+                    displayText = displayText.substring(0, Math.max(0, estimatedChars - 3)) + "...";
+                    t.text(displayText);
+                }
+            }
+        });
+    }
+  </script>
+</body>
+</html>

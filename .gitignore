@@ -9,5 +9,4 @@ app/frontend/node_modules/
 app/frontend/.next/
 
 # Graphify generated output
-graphify-out/
 app/graphify-out/

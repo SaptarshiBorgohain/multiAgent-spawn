@@ -1,0 +1,4830 @@
+{
+  "directed": false,
+  "multigraph": false,
+  "graph": {
+    "hyperedges": [
+      {
+        "id": "async_task_pipeline",
+        "label": "Asynchronous Task Processing Pipeline",
+        "nodes": [
+          "page_tsx_component",
+          "trips_router_module",
+          "redis_client_module",
+          "worker_runner_module"
+        ],
+        "relation": "participate_in",
+        "confidence": "INFERRED",
+        "confidence_score": 0.85,
+        "source_file": "app/backend/worker_runner.py"
+      },
+      {
+        "id": "search_knowledge_layer",
+        "label": "Search & Knowledge Discovery Layer",
+        "nodes": [
+          "elasticsearch_client_module",
+          "redis_client_module",
+          "database_models_module"
+        ],
+        "relation": "participate_in",
+        "confidence": "INFERRED",
+        "confidence_score": 0.75,
+        "source_file": "app/backend/search/es_client.py"
+      },
+      {
+        "id": "realtime_event_system",
+        "label": "Real-Time Event Streaming System",
+        "nodes": [
+          "page_tsx_component",
+          "websocket_router_module",
+          "redis_client_module"
+        ],
+        "relation": "participate_in",
+        "confidence": "INFERRED",
+        "confidence_score": 0.8,
+        "source_file": "app/frontend/app/page.tsx"
+      },
+      {
+        "id": "trip_execution_pipeline",
+        "label": "Trip Execution Pipeline: API \u2192 Planner \u2192 Workers \u2192 Results",
+        "nodes": [
+          "trips_start_trip",
+          "planner_plan_trip",
+          "worker_run_worker",
+          "stack_redis_streams"
+        ],
+        "relation": "participate_in",
+        "confidence": "EXTRACTED",
+        "confidence_score": 0.95,
+        "source_file": "README.md"
+      },
+      {
+        "id": "search_and_context_flow",
+        "label": "Search-Context Flow: Tool handlers \u2192 Cache-First Search \u2192 Elasticsearch \u2192 Result Update",
+        "nodes": [
+          "tools_places_search",
+          "stack_elasticsearch",
+          "tools_destination_research",
+          "tools_transport_planning",
+          "tools_hotel_planning",
+          "tools_food_discovery"
+        ],
+        "relation": "form",
+        "confidence": "EXTRACTED",
+        "confidence_score": 0.9,
+        "source_file": "app/backend/workers/tools.py"
+      },
+      {
+        "id": "memory_persistence_layer",
+        "label": "Memory Persistence: Active Context \u2192 Compression \u2192 Storage",
+        "nodes": [
+          "compressor_maybe_compress",
+          "compressor_compress_context",
+          "stack_postgresql",
+          "stack_redis_streams"
+        ],
+        "relation": "implement",
+        "confidence": "EXTRACTED",
+        "confidence_score": 0.92,
+        "source_file": "app/backend/orchestrator/context_compressor.py"
+      }
+    ]
+  },
+  "nodes": [
+    {
+      "label": "tailwind.config.js",
+      "file_type": "code",
+      "source_file": "frontend/tailwind.config.js",
+      "source_location": "L1",
+      "id": "frontend_tailwind_config_js",
+      "community": 17,
+      "norm_label": "tailwind.config.js"
+    },
+    {
+      "label": "next.config.js",
+      "file_type": "code",
+      "source_file": "frontend/next.config.js",
+      "source_location": "L1",
+      "id": "frontend_next_config_js",
+      "community": 15,
+      "norm_label": "next.config.js"
+    },
+    {
+      "label": "nextConfig",
+      "file_type": "code",
+      "source_file": "frontend/next.config.js",
+      "source_location": "L2",
+      "id": "frontend_next_config_nextconfig",
+      "community": 15,
+      "norm_label": "nextconfig"
+    },
+    {
+      "label": "package.json",
+      "file_type": "code",
+      "source_file": "frontend/package.json",
+      "source_location": "L1",
+      "id": "frontend_package_json",
+      "community": 3,
+      "norm_label": "package.json"
+    },
+    {
+      "label": "name",
+      "file_type": "code",
+      "source_file": "frontend/package.json",
+      "source_location": "L2",
+      "id": "frontend_package_name",
+      "community": 3,
+      "norm_label": "name"
+    },
+    {
+      "label": "version",
+      "file_type": "code",
+      "source_file": "frontend/package.json",
+      "source_location": "L3",
+      "id": "frontend_package_version",
+      "community": 3,
+      "norm_label": "version"
+    },
+    {
+      "label": "private",
+      "file_type": "code",
+      "source_file": "frontend/package.json",
+      "source_location": "L4",
+      "id": "frontend_package_private",
+      "community": 3,
+      "norm_label": "private"
+    },
+    {
+      "label": "scripts",
+      "file_type": "code",
+      "source_file": "frontend/package.json",
+      "source_location": "L5",
+      "id": "frontend_package_scripts",
+      "community": 3,
+      "norm_label": "scripts"
+    },
+    {
+      "label": "dev",
+      "file_type": "code",
+      "source_file": "frontend/package.json",
+      "source_location": "L6",
+      "id": "frontend_package_scripts_dev",
+      "community": 3,
+      "norm_label": "dev"
+    },
+    {
+      "label": "build",
+      "file_type": "code",
+      "source_file": "frontend/package.json",
+      "source_location": "L7",
+      "id": "frontend_package_scripts_build",
+      "community": 3,
+      "norm_label": "build"
+    },
+    {
+      "label": "start",
+      "file_type": "code",
+      "source_file": "frontend/package.json",
+      "source_location": "L8",
+      "id": "frontend_package_scripts_start",
+      "community": 3,
+      "norm_label": "start"
+    },
+    {
+      "label": "dependencies",
+      "file_type": "code",
+      "source_file": "frontend/package.json",
+      "source_location": "L10",
+      "id": "frontend_package_dependencies",
+      "community": 3,
+      "norm_label": "dependencies"
+    },
+    {
+      "label": "next",
+      "file_type": "code",
+      "source_file": "frontend/package.json",
+      "source_location": "L11",
+      "id": "frontend_package_dependencies_next",
+      "community": 3,
+      "norm_label": "next"
+    },
+    {
+      "label": "react",
+      "file_type": "code",
+      "source_file": "frontend/package.json",
+      "source_location": "L12",
+      "id": "frontend_package_dependencies_react",
+      "community": 3,
+      "norm_label": "react"
+    },
+    {
+      "label": "react-dom",
+      "file_type": "code",
+      "source_file": "frontend/package.json",
+      "source_location": "L13",
+      "id": "frontend_package_dependencies_react_dom",
+      "community": 3,
+      "norm_label": "react-dom"
+    },
+    {
+      "label": "devDependencies",
+      "file_type": "code",
+      "source_file": "frontend/package.json",
+      "source_location": "L15",
+      "id": "frontend_package_devdependencies",
+      "community": 3,
+      "norm_label": "devdependencies"
+    },
+    {
+      "label": "@types/node",
+      "file_type": "code",
+      "source_file": "frontend/package.json",
+      "source_location": "L16",
+      "id": "frontend_package_devdependencies_types_node",
+      "community": 3,
+      "norm_label": "@types/node"
+    },
+    {
+      "label": "@types/react",
+      "file_type": "code",
+      "source_file": "frontend/package.json",
+      "source_location": "L17",
+      "id": "frontend_package_devdependencies_types_react",
+      "community": 3,
+      "norm_label": "@types/react"
+    },
+    {
+      "label": "autoprefixer",
+      "file_type": "code",
+      "source_file": "frontend/package.json",
+      "source_location": "L18",
+      "id": "frontend_package_devdependencies_autoprefixer",
+      "community": 3,
+      "norm_label": "autoprefixer"
+    },
+    {
+      "label": "postcss",
+      "file_type": "code",
+      "source_file": "frontend/package.json",
+      "source_location": "L19",
+      "id": "frontend_package_devdependencies_postcss",
+      "community": 3,
+      "norm_label": "postcss"
+    },
+    {
+      "label": "tailwindcss",
+      "file_type": "code",
+      "source_file": "frontend/package.json",
+      "source_location": "L20",
+      "id": "frontend_package_devdependencies_tailwindcss",
+      "community": 3,
+      "norm_label": "tailwindcss"
+    },
+    {
+      "label": "typescript",
+      "file_type": "code",
+      "source_file": "frontend/package.json",
+      "source_location": "L21",
+      "id": "frontend_package_devdependencies_typescript",
+      "community": 3,
+      "norm_label": "typescript"
+    },
+    {
+      "label": "tsconfig.json",
+      "file_type": "code",
+      "source_file": "frontend/tsconfig.json",
+      "source_location": "L1",
+      "id": "frontend_tsconfig_json",
+      "community": 1,
+      "norm_label": "tsconfig.json"
+    },
+    {
+      "label": "compilerOptions",
+      "file_type": "code",
+      "source_file": "frontend/tsconfig.json",
+      "source_location": "L2",
+      "id": "frontend_tsconfig_compileroptions",
+      "community": 1,
+      "norm_label": "compileroptions"
+    },
+    {
+      "label": "target",
+      "file_type": "code",
+      "source_file": "frontend/tsconfig.json",
+      "source_location": "L3",
+      "id": "frontend_tsconfig_compileroptions_target",
+      "community": 1,
+      "norm_label": "target"
+    },
+    {
+      "label": "lib",
+      "file_type": "code",
+      "source_file": "frontend/tsconfig.json",
+      "source_location": "L4",
+      "id": "frontend_tsconfig_compileroptions_lib",
+      "community": 1,
+      "norm_label": "lib"
+    },
+    {
+      "label": "allowJs",
+      "file_type": "code",
+      "source_file": "frontend/tsconfig.json",
+      "source_location": "L5",
+      "id": "frontend_tsconfig_compileroptions_allowjs",
+      "community": 1,
+      "norm_label": "allowjs"
+    },
+    {
+      "label": "skipLibCheck",
+      "file_type": "code",
+      "source_file": "frontend/tsconfig.json",
+      "source_location": "L6",
+      "id": "frontend_tsconfig_compileroptions_skiplibcheck",
+      "community": 1,
+      "norm_label": "skiplibcheck"
+    },
+    {
+      "label": "strict",
+      "file_type": "code",
+      "source_file": "frontend/tsconfig.json",
+      "source_location": "L7",
+      "id": "frontend_tsconfig_compileroptions_strict",
+      "community": 1,
+      "norm_label": "strict"
+    },
+    {
+      "label": "noEmit",
+      "file_type": "code",
+      "source_file": "frontend/tsconfig.json",
+      "source_location": "L8",
+      "id": "frontend_tsconfig_compileroptions_noemit",
+      "community": 1,
+      "norm_label": "noemit"
+    },
+    {
+      "label": "esModuleInterop",
+      "file_type": "code",
+      "source_file": "frontend/tsconfig.json",
+      "source_location": "L9",
+      "id": "frontend_tsconfig_compileroptions_esmoduleinterop",
+      "community": 1,
+      "norm_label": "esmoduleinterop"
+    },
+    {
+      "label": "module",
+      "file_type": "code",
+      "source_file": "frontend/tsconfig.json",
+      "source_location": "L10",
+      "id": "frontend_tsconfig_compileroptions_module",
+      "community": 1,
+      "norm_label": "module"
+    },
+    {
+      "label": "moduleResolution",
+      "file_type": "code",
+      "source_file": "frontend/tsconfig.json",
+      "source_location": "L11",
+      "id": "frontend_tsconfig_compileroptions_moduleresolution",
+      "community": 1,
+      "norm_label": "moduleresolution"
+    },
+    {
+      "label": "resolveJsonModule",
+      "file_type": "code",
+      "source_file": "frontend/tsconfig.json",
+      "source_location": "L12",
+      "id": "frontend_tsconfig_compileroptions_resolvejsonmodule",
+      "community": 1,
+      "norm_label": "resolvejsonmodule"
+    },
+    {
+      "label": "isolatedModules",
+      "file_type": "code",
+      "source_file": "frontend/tsconfig.json",
+      "source_location": "L13",
+      "id": "frontend_tsconfig_compileroptions_isolatedmodules",
+      "community": 1,
+      "norm_label": "isolatedmodules"
+    },
+    {
+      "label": "jsx",
+      "file_type": "code",
+      "source_file": "frontend/tsconfig.json",
+      "source_location": "L14",
+      "id": "frontend_tsconfig_compileroptions_jsx",
+      "community": 1,
+      "norm_label": "jsx"
+    },
+    {
+      "label": "incremental",
+      "file_type": "code",
+      "source_file": "frontend/tsconfig.json",
+      "source_location": "L15",
+      "id": "frontend_tsconfig_compileroptions_incremental",
+      "community": 1,
+      "norm_label": "incremental"
+    },
+    {
+      "label": "plugins",
+      "file_type": "code",
+      "source_file": "frontend/tsconfig.json",
+      "source_location": "L16",
+      "id": "frontend_tsconfig_compileroptions_plugins",
+      "community": 1,
+      "norm_label": "plugins"
+    },
+    {
+      "label": "paths",
+      "file_type": "code",
+      "source_file": "frontend/tsconfig.json",
+      "source_location": "L17",
+      "id": "frontend_tsconfig_compileroptions_paths",
+      "community": 1,
+      "norm_label": "paths"
+    },
+    {
+      "label": "@/*",
+      "file_type": "code",
+      "source_file": "frontend/tsconfig.json",
+      "source_location": "L17",
+      "id": "frontend_tsconfig_paths",
+      "community": 1,
+      "norm_label": "@/*"
+    },
+    {
+      "label": "include",
+      "file_type": "code",
+      "source_file": "frontend/tsconfig.json",
+      "source_location": "L19",
+      "id": "frontend_tsconfig_include",
+      "community": 1,
+      "norm_label": "include"
+    },
+    {
+      "label": "exclude",
+      "file_type": "code",
+      "source_file": "frontend/tsconfig.json",
+      "source_location": "L20",
+      "id": "frontend_tsconfig_exclude",
+      "community": 1,
+      "norm_label": "exclude"
+    },
+    {
+      "label": "postcss.config.js",
+      "file_type": "code",
+      "source_file": "frontend/postcss.config.js",
+      "source_location": "L1",
+      "id": "frontend_postcss_config_js",
+      "community": 18,
+      "norm_label": "postcss.config.js"
+    },
+    {
+      "label": "layout.tsx",
+      "file_type": "code",
+      "source_file": "frontend/app/layout.tsx",
+      "source_location": "L1",
+      "id": "frontend_app_layout_tsx",
+      "community": 13,
+      "norm_label": "layout.tsx"
+    },
+    {
+      "label": "metadata",
+      "file_type": "code",
+      "source_file": "frontend/app/layout.tsx",
+      "source_location": "L4",
+      "id": "app_layout_metadata",
+      "community": 13,
+      "norm_label": "metadata"
+    },
+    {
+      "label": "RootLayout()",
+      "file_type": "code",
+      "source_file": "frontend/app/layout.tsx",
+      "source_location": "L9",
+      "id": "app_layout_rootlayout",
+      "community": 13,
+      "norm_label": "rootlayout()"
+    },
+    {
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "frontend/app/page.tsx",
+      "source_location": "L1",
+      "id": "frontend_app_page_tsx",
+      "community": 12,
+      "norm_label": "page.tsx"
+    },
+    {
+      "label": "AgentEvent",
+      "file_type": "code",
+      "source_file": "frontend/app/page.tsx",
+      "source_location": "L8",
+      "id": "app_page_agentevent",
+      "community": 12,
+      "norm_label": "agentevent"
+    },
+    {
+      "label": "STATUS_ICON",
+      "file_type": "code",
+      "source_file": "frontend/app/page.tsx",
+      "source_location": "L17",
+      "id": "app_page_status_icon",
+      "community": 12,
+      "norm_label": "status_icon"
+    },
+    {
+      "label": "Home()",
+      "file_type": "code",
+      "source_file": "frontend/app/page.tsx",
+      "source_location": "L25",
+      "id": "app_page_home",
+      "community": 12,
+      "norm_label": "home()"
+    },
+    {
+      "label": "config.py",
+      "file_type": "code",
+      "source_file": "backend/config.py",
+      "source_location": "L1",
+      "id": "backend_config_py",
+      "community": 11,
+      "norm_label": "config.py"
+    },
+    {
+      "label": "Settings",
+      "file_type": "code",
+      "source_file": "backend/config.py",
+      "source_location": "L4",
+      "id": "backend_config_settings",
+      "community": 11,
+      "norm_label": "settings"
+    },
+    {
+      "label": "BaseSettings",
+      "file_type": "code",
+      "source_file": "",
+      "source_location": "",
+      "id": "basesettings",
+      "community": 11,
+      "norm_label": "basesettings"
+    },
+    {
+      "label": "Config",
+      "file_type": "code",
+      "source_file": "backend/config.py",
+      "source_location": "L15",
+      "id": "backend_config_config",
+      "community": 11,
+      "norm_label": "config"
+    },
+    {
+      "label": "worker_runner.py",
+      "file_type": "code",
+      "source_file": "backend/worker_runner.py",
+      "source_location": "L1",
+      "id": "backend_worker_runner_py",
+      "community": 14,
+      "norm_label": "worker_runner.py"
+    },
+    {
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "backend/worker_runner.py",
+      "source_location": "L12",
+      "id": "backend_worker_runner_main",
+      "community": 14,
+      "norm_label": "main()"
+    },
+    {
+      "label": "Worker runner \u2014 continuously spawns ephemeral workers to drain the task stream.",
+      "file_type": "rationale",
+      "source_file": "backend/worker_runner.py",
+      "source_location": "L1",
+      "id": "backend_worker_runner_rationale_1",
+      "community": 14,
+      "norm_label": "worker runner \u2014 continuously spawns ephemeral workers to drain the task stream."
+    },
+    {
+      "label": "main.py",
+      "file_type": "code",
+      "source_file": "backend/main.py",
+      "source_location": "L1",
+      "id": "backend_main_py",
+      "community": 5,
+      "norm_label": "main.py"
+    },
+    {
+      "label": "lifespan()",
+      "file_type": "code",
+      "source_file": "backend/main.py",
+      "source_location": "L16",
+      "id": "backend_main_lifespan",
+      "community": 5,
+      "norm_label": "lifespan()"
+    },
+    {
+      "label": "FastAPI",
+      "file_type": "code",
+      "source_file": "backend/main.py",
+      "source_location": "L16",
+      "id": "fastapi",
+      "community": 5,
+      "norm_label": "fastapi"
+    },
+    {
+      "label": "health()",
+      "file_type": "code",
+      "source_file": "backend/main.py",
+      "source_location": "L39",
+      "id": "backend_main_health",
+      "community": 5,
+      "norm_label": "health()"
+    },
+    {
+      "label": "TripWeave FastAPI entrypoint.",
+      "file_type": "rationale",
+      "source_file": "backend/main.py",
+      "source_location": "L1",
+      "id": "backend_main_rationale_1",
+      "community": 5,
+      "norm_label": "tripweave fastapi entrypoint."
+    },
+    {
+      "label": "__init__.py",
+      "file_type": "code",
+      "source_file": "backend/cache/__init__.py",
+      "source_location": "L1",
+      "id": "backend_cache_init_py",
+      "community": 19,
+      "norm_label": "__init__.py"
+    },
+    {
+      "label": "redis_client.py",
+      "file_type": "code",
+      "source_file": "backend/cache/redis_client.py",
+      "source_location": "L1",
+      "id": "backend_cache_redis_client_py",
+      "community": 0,
+      "norm_label": "redis_client.py"
+    },
+    {
+      "label": "get_redis()",
+      "file_type": "code",
+      "source_file": "backend/cache/redis_client.py",
+      "source_location": "L17",
+      "id": "cache_redis_client_get_redis",
+      "community": 0,
+      "norm_label": "get_redis()"
+    },
+    {
+      "label": "Redis",
+      "file_type": "code",
+      "source_file": "backend/cache/redis_client.py",
+      "source_location": "L17",
+      "id": "redis",
+      "community": 0,
+      "norm_label": "redis"
+    },
+    {
+      "label": "set_trip_context()",
+      "file_type": "code",
+      "source_file": "backend/cache/redis_client.py",
+      "source_location": "L29",
+      "id": "cache_redis_client_set_trip_context",
+      "community": 0,
+      "norm_label": "set_trip_context()"
+    },
+    {
+      "label": "str",
+      "file_type": "code",
+      "source_file": "backend/cache/redis_client.py",
+      "source_location": "L29",
+      "id": "backend_cache_redis_client_py_str",
+      "community": 0,
+      "norm_label": "str"
+    },
+    {
+      "label": "get_trip_context()",
+      "file_type": "code",
+      "source_file": "backend/cache/redis_client.py",
+      "source_location": "L36",
+      "id": "cache_redis_client_get_trip_context",
+      "community": 0,
+      "norm_label": "get_trip_context()"
+    },
+    {
+      "label": "update_trip_context()",
+      "file_type": "code",
+      "source_file": "backend/cache/redis_client.py",
+      "source_location": "L43",
+      "id": "cache_redis_client_update_trip_context",
+      "community": 7,
+      "norm_label": "update_trip_context()"
+    },
+    {
+      "label": "publish_task()",
+      "file_type": "code",
+      "source_file": "backend/cache/redis_client.py",
+      "source_location": "L56",
+      "id": "cache_redis_client_publish_task",
+      "community": 0,
+      "norm_label": "publish_task()"
+    },
+    {
+      "label": "ensure_consumer_group()",
+      "file_type": "code",
+      "source_file": "backend/cache/redis_client.py",
+      "source_location": "L63",
+      "id": "cache_redis_client_ensure_consumer_group",
+      "community": 0,
+      "norm_label": "ensure_consumer_group()"
+    },
+    {
+      "label": "read_tasks()",
+      "file_type": "code",
+      "source_file": "backend/cache/redis_client.py",
+      "source_location": "L71",
+      "id": "cache_redis_client_read_tasks",
+      "community": 0,
+      "norm_label": "read_tasks()"
+    },
+    {
+      "label": "int",
+      "file_type": "code",
+      "source_file": "backend/cache/redis_client.py",
+      "source_location": "L71",
+      "id": "backend_cache_redis_client_py_int",
+      "community": 0,
+      "norm_label": "int"
+    },
+    {
+      "label": "ack_task()",
+      "file_type": "code",
+      "source_file": "backend/cache/redis_client.py",
+      "source_location": "L83",
+      "id": "cache_redis_client_ack_task",
+      "community": 0,
+      "norm_label": "ack_task()"
+    },
+    {
+      "label": "set_agent_status()",
+      "file_type": "code",
+      "source_file": "backend/cache/redis_client.py",
+      "source_location": "L90",
+      "id": "cache_redis_client_set_agent_status",
+      "community": 0,
+      "norm_label": "set_agent_status()"
+    },
+    {
+      "label": "get_all_agent_statuses()",
+      "file_type": "code",
+      "source_file": "backend/cache/redis_client.py",
+      "source_location": "L97",
+      "id": "cache_redis_client_get_all_agent_statuses",
+      "community": 0,
+      "norm_label": "get_all_agent_statuses()"
+    },
+    {
+      "label": "publish_event()",
+      "file_type": "code",
+      "source_file": "backend/cache/redis_client.py",
+      "source_location": "L104",
+      "id": "cache_redis_client_publish_event",
+      "community": 0,
+      "norm_label": "publish_event()"
+    },
+    {
+      "label": "Redis client + helpers for:   - Task streams (Redis Streams)   - Shared trip con",
+      "file_type": "rationale",
+      "source_file": "backend/cache/redis_client.py",
+      "source_location": "L1",
+      "id": "cache_redis_client_rationale_1",
+      "community": 0,
+      "norm_label": "redis client + helpers for:   - task streams (redis streams)   - shared trip con"
+    },
+    {
+      "label": "Push a task onto the Redis Stream. Returns the message ID.",
+      "file_type": "rationale",
+      "source_file": "backend/cache/redis_client.py",
+      "source_location": "L57",
+      "id": "cache_redis_client_rationale_57",
+      "community": 0,
+      "norm_label": "push a task onto the redis stream. returns the message id."
+    },
+    {
+      "label": "__init__.py",
+      "file_type": "code",
+      "source_file": "backend/search/__init__.py",
+      "source_location": "L1",
+      "id": "backend_search_init_py",
+      "community": 20,
+      "norm_label": "__init__.py"
+    },
+    {
+      "label": "es_client.py",
+      "file_type": "code",
+      "source_file": "backend/search/es_client.py",
+      "source_location": "L1",
+      "id": "backend_search_es_client_py",
+      "community": 5,
+      "norm_label": "es_client.py"
+    },
+    {
+      "label": "_get_es()",
+      "file_type": "code",
+      "source_file": "backend/search/es_client.py",
+      "source_location": "L33",
+      "id": "search_es_client_get_es",
+      "community": 5,
+      "norm_label": "_get_es()"
+    },
+    {
+      "label": "AsyncElasticsearch",
+      "file_type": "code",
+      "source_file": "backend/search/es_client.py",
+      "source_location": "L33",
+      "id": "asyncelasticsearch",
+      "community": 5,
+      "norm_label": "asyncelasticsearch"
+    },
+    {
+      "label": "_region_for()",
+      "file_type": "code",
+      "source_file": "backend/search/es_client.py",
+      "source_location": "L40",
+      "id": "search_es_client_region_for",
+      "community": 5,
+      "norm_label": "_region_for()"
+    },
+    {
+      "label": "str",
+      "file_type": "code",
+      "source_file": "backend/search/es_client.py",
+      "source_location": "L40",
+      "id": "backend_search_es_client_py_str",
+      "community": 5,
+      "norm_label": "str"
+    },
+    {
+      "label": "setup_indexes()",
+      "file_type": "code",
+      "source_file": "backend/search/es_client.py",
+      "source_location": "L44",
+      "id": "search_es_client_setup_indexes",
+      "community": 5,
+      "norm_label": "setup_indexes()"
+    },
+    {
+      "label": "search_knowledge()",
+      "file_type": "code",
+      "source_file": "backend/search/es_client.py",
+      "source_location": "L67",
+      "id": "search_es_client_search_knowledge",
+      "community": 5,
+      "norm_label": "search_knowledge()"
+    },
+    {
+      "label": "int",
+      "file_type": "code",
+      "source_file": "backend/search/es_client.py",
+      "source_location": "L67",
+      "id": "backend_search_es_client_py_int",
+      "community": 5,
+      "norm_label": "int"
+    },
+    {
+      "label": "index_result()",
+      "file_type": "code",
+      "source_file": "backend/search/es_client.py",
+      "source_location": "L92",
+      "id": "search_es_client_index_result",
+      "community": 5,
+      "norm_label": "index_result()"
+    },
+    {
+      "label": "Elasticsearch client + helpers for the Search/Knowledge layer.  Indexes:   - pla",
+      "file_type": "rationale",
+      "source_file": "backend/search/es_client.py",
+      "source_location": "L1",
+      "id": "search_es_client_rationale_1",
+      "community": 5,
+      "norm_label": "elasticsearch client + helpers for the search/knowledge layer.  indexes:   - pla"
+    },
+    {
+      "label": "Create indexes with shard routing on first boot.",
+      "file_type": "rationale",
+      "source_file": "backend/search/es_client.py",
+      "source_location": "L45",
+      "id": "search_es_client_rationale_45",
+      "community": 5,
+      "norm_label": "create indexes with shard routing on first boot."
+    },
+    {
+      "label": "Cache-first retrieval. Returns cached results if fresh (< 7 days).",
+      "file_type": "rationale",
+      "source_file": "backend/search/es_client.py",
+      "source_location": "L68",
+      "id": "search_es_client_rationale_68",
+      "community": 5,
+      "norm_label": "cache-first retrieval. returns cached results if fresh (< 7 days)."
+    },
+    {
+      "label": "Store a normalized search result in the knowledge layer.",
+      "file_type": "rationale",
+      "source_file": "backend/search/es_client.py",
+      "source_location": "L93",
+      "id": "search_es_client_rationale_93",
+      "community": 5,
+      "norm_label": "store a normalized search result in the knowledge layer."
+    },
+    {
+      "label": "models.py",
+      "file_type": "code",
+      "source_file": "backend/db/models.py",
+      "source_location": "L1",
+      "id": "backend_db_models_py",
+      "community": 9,
+      "norm_label": "models.py"
+    },
+    {
+      "label": "Trip",
+      "file_type": "code",
+      "source_file": "backend/db/models.py",
+      "source_location": "L9",
+      "id": "db_models_trip",
+      "community": 2,
+      "norm_label": "trip"
+    },
+    {
+      "label": "TaskRecord",
+      "file_type": "code",
+      "source_file": "backend/db/models.py",
+      "source_location": "L22",
+      "id": "db_models_taskrecord",
+      "community": 9,
+      "norm_label": "taskrecord"
+    },
+    {
+      "label": "Itinerary",
+      "file_type": "code",
+      "source_file": "backend/db/models.py",
+      "source_location": "L34",
+      "id": "db_models_itinerary",
+      "community": 9,
+      "norm_label": "itinerary"
+    },
+    {
+      "label": "database.py",
+      "file_type": "code",
+      "source_file": "backend/db/database.py",
+      "source_location": "L1",
+      "id": "backend_db_database_py",
+      "community": 9,
+      "norm_label": "database.py"
+    },
+    {
+      "label": "Base",
+      "file_type": "code",
+      "source_file": "backend/db/database.py",
+      "source_location": "L15",
+      "id": "db_database_base",
+      "community": 9,
+      "norm_label": "base"
+    },
+    {
+      "label": "DeclarativeBase",
+      "file_type": "code",
+      "source_file": "",
+      "source_location": "",
+      "id": "declarativebase",
+      "community": 9,
+      "norm_label": "declarativebase"
+    },
+    {
+      "label": "get_db()",
+      "file_type": "code",
+      "source_file": "backend/db/database.py",
+      "source_location": "L19",
+      "id": "db_database_get_db",
+      "community": 9,
+      "norm_label": "get_db()"
+    },
+    {
+      "label": "__init__.py",
+      "file_type": "code",
+      "source_file": "backend/db/__init__.py",
+      "source_location": "L1",
+      "id": "backend_db_init_py",
+      "community": 21,
+      "norm_label": "__init__.py"
+    },
+    {
+      "label": "__init__.py",
+      "file_type": "code",
+      "source_file": "backend/api/__init__.py",
+      "source_location": "L1",
+      "id": "backend_api_init_py",
+      "community": 22,
+      "norm_label": "__init__.py"
+    },
+    {
+      "label": "websocket.py",
+      "file_type": "code",
+      "source_file": "backend/api/websocket.py",
+      "source_location": "L1",
+      "id": "backend_api_websocket_py",
+      "community": 10,
+      "norm_label": "websocket.py"
+    },
+    {
+      "label": "trip_websocket()",
+      "file_type": "code",
+      "source_file": "backend/api/websocket.py",
+      "source_location": "L18",
+      "id": "api_websocket_trip_websocket",
+      "community": 10,
+      "norm_label": "trip_websocket()"
+    },
+    {
+      "label": "WebSocket",
+      "file_type": "code",
+      "source_file": "backend/api/websocket.py",
+      "source_location": "L18",
+      "id": "websocket",
+      "community": 10,
+      "norm_label": "websocket"
+    },
+    {
+      "label": "str",
+      "file_type": "code",
+      "source_file": "backend/api/websocket.py",
+      "source_location": "L18",
+      "id": "backend_api_websocket_py_str",
+      "community": 10,
+      "norm_label": "str"
+    },
+    {
+      "label": "WebSocket endpoint for real-time trip updates.  Subscribes to Redis Pub/Sub chan",
+      "file_type": "rationale",
+      "source_file": "backend/api/websocket.py",
+      "source_location": "L1",
+      "id": "api_websocket_rationale_1",
+      "community": 10,
+      "norm_label": "websocket endpoint for real-time trip updates.  subscribes to redis pub/sub chan"
+    },
+    {
+      "label": "trips.py",
+      "file_type": "code",
+      "source_file": "backend/api/trips.py",
+      "source_location": "L1",
+      "id": "backend_api_trips_py",
+      "community": 2,
+      "norm_label": "trips.py"
+    },
+    {
+      "label": "StartTripRequest",
+      "file_type": "code",
+      "source_file": "backend/api/trips.py",
+      "source_location": "L18",
+      "id": "api_trips_starttriprequest",
+      "community": 2,
+      "norm_label": "starttriprequest"
+    },
+    {
+      "label": "BaseModel",
+      "file_type": "code",
+      "source_file": "",
+      "source_location": "",
+      "id": "basemodel",
+      "community": 2,
+      "norm_label": "basemodel"
+    },
+    {
+      "label": "StartTripResponse",
+      "file_type": "code",
+      "source_file": "backend/api/trips.py",
+      "source_location": "L22",
+      "id": "api_trips_starttripresponse",
+      "community": 2,
+      "norm_label": "starttripresponse"
+    },
+    {
+      "label": "start_trip()",
+      "file_type": "code",
+      "source_file": "backend/api/trips.py",
+      "source_location": "L29",
+      "id": "api_trips_start_trip",
+      "community": 2,
+      "norm_label": "start_trip()"
+    },
+    {
+      "label": "AsyncSession",
+      "file_type": "code",
+      "source_file": "backend/api/trips.py",
+      "source_location": "L29",
+      "id": "backend_api_trips_py_asyncsession",
+      "community": 2,
+      "norm_label": "asyncsession"
+    },
+    {
+      "label": "get_context()",
+      "file_type": "code",
+      "source_file": "backend/api/trips.py",
+      "source_location": "L46",
+      "id": "api_trips_get_context",
+      "community": 2,
+      "norm_label": "get_context()"
+    },
+    {
+      "label": "str",
+      "file_type": "code",
+      "source_file": "backend/api/trips.py",
+      "source_location": "L46",
+      "id": "backend_api_trips_py_str",
+      "community": 2,
+      "norm_label": "str"
+    },
+    {
+      "label": "replan()",
+      "file_type": "code",
+      "source_file": "backend/api/trips.py",
+      "source_location": "L54",
+      "id": "api_trips_replan",
+      "community": 2,
+      "norm_label": "replan()"
+    },
+    {
+      "label": "FastAPI routes for trip planning sessions.",
+      "file_type": "rationale",
+      "source_file": "backend/api/trips.py",
+      "source_location": "L1",
+      "id": "api_trips_rationale_1",
+      "community": 2,
+      "norm_label": "fastapi routes for trip planning sessions."
+    },
+    {
+      "label": "worker.py",
+      "file_type": "code",
+      "source_file": "backend/workers/worker.py",
+      "source_location": "L1",
+      "id": "backend_workers_worker_py",
+      "community": 0,
+      "norm_label": "worker.py"
+    },
+    {
+      "label": "_dependencies_satisfied()",
+      "file_type": "code",
+      "source_file": "backend/workers/worker.py",
+      "source_location": "L28",
+      "id": "workers_worker_dependencies_satisfied",
+      "community": 0,
+      "norm_label": "_dependencies_satisfied()"
+    },
+    {
+      "label": "bool",
+      "file_type": "code",
+      "source_file": "backend/workers/worker.py",
+      "source_location": "L28",
+      "id": "bool",
+      "community": 0,
+      "norm_label": "bool"
+    },
+    {
+      "label": "run_worker()",
+      "file_type": "code",
+      "source_file": "backend/workers/worker.py",
+      "source_location": "L37",
+      "id": "workers_worker_run_worker",
+      "community": 0,
+      "norm_label": "run_worker()"
+    },
+    {
+      "label": "str",
+      "file_type": "code",
+      "source_file": "backend/workers/worker.py",
+      "source_location": "L37",
+      "id": "backend_workers_worker_py_str",
+      "community": 0,
+      "norm_label": "str"
+    },
+    {
+      "label": "Dynamic Worker  Lifecycle:   1. Connect to Redis Stream consumer group   2. Read",
+      "file_type": "rationale",
+      "source_file": "backend/workers/worker.py",
+      "source_location": "L1",
+      "id": "workers_worker_rationale_1",
+      "community": 0,
+      "norm_label": "dynamic worker  lifecycle:   1. connect to redis stream consumer group   2. read"
+    },
+    {
+      "label": "tools.py",
+      "file_type": "code",
+      "source_file": "backend/workers/tools.py",
+      "source_location": "L1",
+      "id": "backend_workers_tools_py",
+      "community": 7,
+      "norm_label": "tools.py"
+    },
+    {
+      "label": "places_search()",
+      "file_type": "code",
+      "source_file": "backend/workers/tools.py",
+      "source_location": "L18",
+      "id": "workers_tools_places_search",
+      "community": 7,
+      "norm_label": "places_search()"
+    },
+    {
+      "label": "_google_places_search()",
+      "file_type": "code",
+      "source_file": "backend/workers/tools.py",
+      "source_location": "L40",
+      "id": "workers_tools_google_places_search",
+      "community": 7,
+      "norm_label": "_google_places_search()"
+    },
+    {
+      "label": "str",
+      "file_type": "code",
+      "source_file": "backend/workers/tools.py",
+      "source_location": "L40",
+      "id": "backend_workers_tools_py_str",
+      "community": 7,
+      "norm_label": "str"
+    },
+    {
+      "label": "destination_research()",
+      "file_type": "code",
+      "source_file": "backend/workers/tools.py",
+      "source_location": "L61",
+      "id": "workers_tools_destination_research",
+      "community": 7,
+      "norm_label": "destination_research()"
+    },
+    {
+      "label": "transport_planning()",
+      "file_type": "code",
+      "source_file": "backend/workers/tools.py",
+      "source_location": "L69",
+      "id": "workers_tools_transport_planning",
+      "community": 7,
+      "norm_label": "transport_planning()"
+    },
+    {
+      "label": "hotel_planning()",
+      "file_type": "code",
+      "source_file": "backend/workers/tools.py",
+      "source_location": "L77",
+      "id": "workers_tools_hotel_planning",
+      "community": 7,
+      "norm_label": "hotel_planning()"
+    },
+    {
+      "label": "food_discovery()",
+      "file_type": "code",
+      "source_file": "backend/workers/tools.py",
+      "source_location": "L87",
+      "id": "workers_tools_food_discovery",
+      "community": 7,
+      "norm_label": "food_discovery()"
+    },
+    {
+      "label": "itinerary_optimization()",
+      "file_type": "code",
+      "source_file": "backend/workers/tools.py",
+      "source_location": "L97",
+      "id": "workers_tools_itinerary_optimization",
+      "community": 7,
+      "norm_label": "itinerary_optimization()"
+    },
+    {
+      "label": "Tool registry.  Each tool is a simple async function. Workers look up the right",
+      "file_type": "rationale",
+      "source_file": "backend/workers/tools.py",
+      "source_location": "L1",
+      "id": "workers_tools_rationale_1",
+      "community": 7,
+      "norm_label": "tool registry.  each tool is a simple async function. workers look up the right"
+    },
+    {
+      "label": "Cache-first: query Elasticsearch first.     Fall back to Google Places API only",
+      "file_type": "rationale",
+      "source_file": "backend/workers/tools.py",
+      "source_location": "L19",
+      "id": "workers_tools_rationale_19",
+      "community": 7,
+      "norm_label": "cache-first: query elasticsearch first.     fall back to google places api only"
+    },
+    {
+      "label": "__init__.py",
+      "file_type": "code",
+      "source_file": "backend/workers/__init__.py",
+      "source_location": "L1",
+      "id": "backend_workers_init_py",
+      "community": 23,
+      "norm_label": "__init__.py"
+    },
+    {
+      "label": "planner.py",
+      "file_type": "code",
+      "source_file": "backend/orchestrator/planner.py",
+      "source_location": "L1",
+      "id": "backend_orchestrator_planner_py",
+      "community": 0,
+      "norm_label": "planner.py"
+    },
+    {
+      "label": "plan_trip()",
+      "file_type": "code",
+      "source_file": "backend/orchestrator/planner.py",
+      "source_location": "L36",
+      "id": "orchestrator_planner_plan_trip",
+      "community": 0,
+      "norm_label": "plan_trip()"
+    },
+    {
+      "label": "str",
+      "file_type": "code",
+      "source_file": "backend/orchestrator/planner.py",
+      "source_location": "L36",
+      "id": "backend_orchestrator_planner_py_str",
+      "community": 0,
+      "norm_label": "str"
+    },
+    {
+      "label": "_extract_intent()",
+      "file_type": "code",
+      "source_file": "backend/orchestrator/planner.py",
+      "source_location": "L54",
+      "id": "orchestrator_planner_extract_intent",
+      "community": 0,
+      "norm_label": "_extract_intent()"
+    },
+    {
+      "label": "_build_dag()",
+      "file_type": "code",
+      "source_file": "backend/orchestrator/planner.py",
+      "source_location": "L67",
+      "id": "orchestrator_planner_build_dag",
+      "community": 0,
+      "norm_label": "_build_dag()"
+    },
+    {
+      "label": "handle_budget_exceeded()",
+      "file_type": "code",
+      "source_file": "backend/orchestrator/planner.py",
+      "source_location": "L89",
+      "id": "orchestrator_planner_handle_budget_exceeded",
+      "community": 0,
+      "norm_label": "handle_budget_exceeded()"
+    },
+    {
+      "label": "monitor_and_replan()",
+      "file_type": "code",
+      "source_file": "backend/orchestrator/planner.py",
+      "source_location": "L104",
+      "id": "orchestrator_planner_monitor_and_replan",
+      "community": 0,
+      "norm_label": "monitor_and_replan()"
+    },
+    {
+      "label": "Planner / Orchestrator  Responsibilities: 1. Parse user intent via LLM 2. Genera",
+      "file_type": "rationale",
+      "source_file": "backend/orchestrator/planner.py",
+      "source_location": "L1",
+      "id": "orchestrator_planner_rationale_1",
+      "community": 0,
+      "norm_label": "planner / orchestrator  responsibilities: 1. parse user intent via llm 2. genera"
+    },
+    {
+      "label": "1. Extract intent from user query via LLM.     2. Seed Redis context.     3. Bui",
+      "file_type": "rationale",
+      "source_file": "backend/orchestrator/planner.py",
+      "source_location": "L37",
+      "id": "orchestrator_planner_rationale_37",
+      "community": 0,
+      "norm_label": "1. extract intent from user query via llm.     2. seed redis context.     3. bui"
+    },
+    {
+      "label": "Returns tasks ordered so dependencies come before dependents.",
+      "file_type": "rationale",
+      "source_file": "backend/orchestrator/planner.py",
+      "source_location": "L68",
+      "id": "orchestrator_planner_rationale_68",
+      "community": 0,
+      "norm_label": "returns tasks ordered so dependencies come before dependents."
+    },
+    {
+      "label": "Autonomously spawn a cheaper hotel search when budget is exceeded.",
+      "file_type": "rationale",
+      "source_file": "backend/orchestrator/planner.py",
+      "source_location": "L90",
+      "id": "orchestrator_planner_rationale_90",
+      "community": 0,
+      "norm_label": "autonomously spawn a cheaper hotel search when budget is exceeded."
+    },
+    {
+      "label": "Called periodically by the API. Checks agent statuses and triggers     follow-up",
+      "file_type": "rationale",
+      "source_file": "backend/orchestrator/planner.py",
+      "source_location": "L105",
+      "id": "orchestrator_planner_rationale_105",
+      "community": 0,
+      "norm_label": "called periodically by the api. checks agent statuses and triggers     follow-up"
+    },
+    {
+      "label": "__init__.py",
+      "file_type": "code",
+      "source_file": "backend/orchestrator/__init__.py",
+      "source_location": "L1",
+      "id": "backend_orchestrator_init_py",
+      "community": 24,
+      "norm_label": "__init__.py"
+    },
+    {
+      "label": "context_compressor.py",
+      "file_type": "code",
+      "source_file": "backend/orchestrator/context_compressor.py",
+      "source_location": "L1",
+      "id": "backend_orchestrator_context_compressor_py",
+      "community": 2,
+      "norm_label": "context_compressor.py"
+    },
+    {
+      "label": "maybe_compress()",
+      "file_type": "code",
+      "source_file": "backend/orchestrator/context_compressor.py",
+      "source_location": "L25",
+      "id": "orchestrator_context_compressor_maybe_compress",
+      "community": 2,
+      "norm_label": "maybe_compress()"
+    },
+    {
+      "label": "str",
+      "file_type": "code",
+      "source_file": "backend/orchestrator/context_compressor.py",
+      "source_location": "L25",
+      "id": "backend_orchestrator_context_compressor_py_str",
+      "community": 2,
+      "norm_label": "str"
+    },
+    {
+      "label": "int",
+      "file_type": "code",
+      "source_file": "backend/orchestrator/context_compressor.py",
+      "source_location": "L25",
+      "id": "backend_orchestrator_context_compressor_py_int",
+      "community": 2,
+      "norm_label": "int"
+    },
+    {
+      "label": "AsyncSession",
+      "file_type": "code",
+      "source_file": "backend/orchestrator/context_compressor.py",
+      "source_location": "L25",
+      "id": "backend_orchestrator_context_compressor_py_asyncsession",
+      "community": 2,
+      "norm_label": "asyncsession"
+    },
+    {
+      "label": "compress_context()",
+      "file_type": "code",
+      "source_file": "backend/orchestrator/context_compressor.py",
+      "source_location": "L31",
+      "id": "orchestrator_context_compressor_compress_context",
+      "community": 2,
+      "norm_label": "compress_context()"
+    },
+    {
+      "label": "Context compression service.  Every N interactions, compress raw trip chat into",
+      "file_type": "rationale",
+      "source_file": "backend/orchestrator/context_compressor.py",
+      "source_location": "L1",
+      "id": "orchestrator_context_compressor_rationale_1",
+      "community": 2,
+      "norm_label": "context compression service.  every n interactions, compress raw trip chat into"
+    },
+    {
+      "label": "Pull active context from Redis, compress via LLM, persist to Postgres,     and u",
+      "file_type": "rationale",
+      "source_file": "backend/orchestrator/context_compressor.py",
+      "source_location": "L32",
+      "id": "orchestrator_context_compressor_rationale_32",
+      "community": 2,
+      "norm_label": "pull active context from redis, compress via llm, persist to postgres,     and u"
+    },
+    {
+      "label": "TripWeave Frontend (Next.js)",
+      "file_type": "code",
+      "source_file": "app/frontend/package.json",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "tripweave_frontend_app",
+      "community": 6,
+      "norm_label": "tripweave frontend (next.js)"
+    },
+    {
+      "label": "TripWeave FastAPI Backend",
+      "file_type": "code",
+      "source_file": "app/backend/main.py",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "tripweave_api_backend",
+      "community": 6,
+      "norm_label": "tripweave fastapi backend"
+    },
+    {
+      "label": "Home Page Component (page.tsx)",
+      "file_type": "code",
+      "source_file": "app/frontend/app/page.tsx",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "page_tsx_component",
+      "community": 6,
+      "norm_label": "home page component (page.tsx)"
+    },
+    {
+      "label": "Root Layout Component (layout.tsx)",
+      "file_type": "code",
+      "source_file": "app/frontend/app/layout.tsx",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "layout_tsx_component",
+      "community": 16,
+      "norm_label": "root layout component (layout.tsx)"
+    },
+    {
+      "label": "Backend Configuration Settings",
+      "file_type": "code",
+      "source_file": "app/backend/config.py",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "config_py_settings",
+      "community": 6,
+      "norm_label": "backend configuration settings"
+    },
+    {
+      "label": "Redis Client (Task Streams & Context)",
+      "file_type": "code",
+      "source_file": "app/backend/cache/redis_client.py",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "redis_client_module",
+      "community": 6,
+      "norm_label": "redis client (task streams & context)"
+    },
+    {
+      "label": "Elasticsearch Search Client",
+      "file_type": "code",
+      "source_file": "app/backend/search/es_client.py",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "elasticsearch_client_module",
+      "community": 6,
+      "norm_label": "elasticsearch search client"
+    },
+    {
+      "label": "Database Models (Trip, TaskRecord, Itinerary)",
+      "file_type": "code",
+      "source_file": "app/backend/db/models.py",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "database_models_module",
+      "community": 6,
+      "norm_label": "database models (trip, taskrecord, itinerary)"
+    },
+    {
+      "label": "Worker Runner (Task Processor)",
+      "file_type": "code",
+      "source_file": "app/backend/worker_runner.py",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "worker_runner_module",
+      "community": 6,
+      "norm_label": "worker runner (task processor)"
+    },
+    {
+      "label": "Trips API Router",
+      "file_type": "code",
+      "source_file": "app/backend/api/trips.py",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "trips_router_module",
+      "community": 6,
+      "norm_label": "trips api router"
+    },
+    {
+      "label": "WebSocket Router",
+      "file_type": "code",
+      "source_file": "app/backend/api/websocket.py",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "websocket_router_module",
+      "community": 6,
+      "norm_label": "websocket router"
+    },
+    {
+      "label": "Next.js Configuration",
+      "file_type": "code",
+      "source_file": "app/frontend/next.config.js",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "next_config_module",
+      "community": 6,
+      "norm_label": "next.js configuration"
+    },
+    {
+      "label": "Tailwind CSS Configuration",
+      "file_type": "code",
+      "source_file": "app/frontend/tailwind.config.js",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "tailwind_config_module",
+      "community": 16,
+      "norm_label": "tailwind css configuration"
+    },
+    {
+      "label": "OpenAI API Integration",
+      "file_type": "rationale",
+      "source_file": "app/backend/config.py",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "openai_integration",
+      "community": 6,
+      "norm_label": "openai api integration"
+    },
+    {
+      "label": "Google Places API Integration",
+      "file_type": "rationale",
+      "source_file": "app/backend/config.py",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "google_places_integration",
+      "community": 6,
+      "norm_label": "google places api integration"
+    },
+    {
+      "label": "AsyncSessionLocal Session Factory",
+      "file_type": "code",
+      "source_file": "app/backend/db/database.py",
+      "source_location": "line 8",
+      "id": "database_AsyncSessionLocal",
+      "community": 25,
+      "norm_label": "asyncsessionlocal session factory"
+    },
+    {
+      "label": "SQLAlchemy DeclarativeBase",
+      "file_type": "code",
+      "source_file": "app/backend/db/database.py",
+      "source_location": "line 16",
+      "id": "database_Base",
+      "community": 26,
+      "norm_label": "sqlalchemy declarativebase"
+    },
+    {
+      "label": "get_db Async Session Dependency",
+      "file_type": "code",
+      "source_file": "app/backend/db/database.py",
+      "source_location": "line 20",
+      "id": "database_get_db",
+      "community": 4,
+      "norm_label": "get_db async session dependency"
+    },
+    {
+      "label": "trip_websocket Real-Time Event Stream",
+      "file_type": "code",
+      "source_file": "app/backend/api/websocket.py",
+      "source_location": "line 14",
+      "id": "websocket_trip_websocket",
+      "community": 4,
+      "norm_label": "trip_websocket real-time event stream"
+    },
+    {
+      "label": "start_trip Create Trip Session",
+      "file_type": "code",
+      "source_file": "app/backend/api/trips.py",
+      "source_location": "line 22",
+      "id": "trips_start_trip",
+      "community": 4,
+      "norm_label": "start_trip create trip session"
+    },
+    {
+      "label": "get_context Retrieve Session Context",
+      "file_type": "code",
+      "source_file": "app/backend/api/trips.py",
+      "source_location": "line 36",
+      "id": "trips_get_context",
+      "community": 4,
+      "norm_label": "get_context retrieve session context"
+    },
+    {
+      "label": "replan Trigger Replanning",
+      "file_type": "code",
+      "source_file": "app/backend/api/trips.py",
+      "source_location": "line 43",
+      "id": "trips_replan",
+      "community": 4,
+      "norm_label": "replan trigger replanning"
+    },
+    {
+      "label": "run_worker Dynamic Task Consumer",
+      "file_type": "code",
+      "source_file": "app/backend/workers/worker.py",
+      "source_location": "line 33",
+      "id": "worker_run_worker",
+      "community": 4,
+      "norm_label": "run_worker dynamic task consumer"
+    },
+    {
+      "label": "_dependencies_satisfied Check Task Dependencies",
+      "file_type": "code",
+      "source_file": "app/backend/workers/worker.py",
+      "source_location": "line 19",
+      "id": "worker_dependencies_satisfied",
+      "community": 4,
+      "norm_label": "_dependencies_satisfied check task dependencies"
+    },
+    {
+      "label": "places_search Cache-First Search Handler",
+      "file_type": "code",
+      "source_file": "app/backend/workers/tools.py",
+      "source_location": "line 13",
+      "id": "tools_places_search",
+      "community": 8,
+      "norm_label": "places_search cache-first search handler"
+    },
+    {
+      "label": "destination_research Task Handler",
+      "file_type": "code",
+      "source_file": "app/backend/workers/tools.py",
+      "source_location": "line 38",
+      "id": "tools_destination_research",
+      "community": 8,
+      "norm_label": "destination_research task handler"
+    },
+    {
+      "label": "transport_planning Task Handler",
+      "file_type": "code",
+      "source_file": "app/backend/workers/tools.py",
+      "source_location": "line 44",
+      "id": "tools_transport_planning",
+      "community": 8,
+      "norm_label": "transport_planning task handler"
+    },
+    {
+      "label": "hotel_planning Task Handler",
+      "file_type": "code",
+      "source_file": "app/backend/workers/tools.py",
+      "source_location": "line 50",
+      "id": "tools_hotel_planning",
+      "community": 8,
+      "norm_label": "hotel_planning task handler"
+    },
+    {
+      "label": "food_discovery Task Handler",
+      "file_type": "code",
+      "source_file": "app/backend/workers/tools.py",
+      "source_location": "line 58",
+      "id": "tools_food_discovery",
+      "community": 8,
+      "norm_label": "food_discovery task handler"
+    },
+    {
+      "label": "itinerary_optimization LLM-Driven Handler",
+      "file_type": "code",
+      "source_file": "app/backend/workers/tools.py",
+      "source_location": "line 66",
+      "id": "tools_itinerary_optimization",
+      "community": 27,
+      "norm_label": "itinerary_optimization llm-driven handler"
+    },
+    {
+      "label": "TOOL_REGISTRY Task Type Mapping",
+      "file_type": "code",
+      "source_file": "app/backend/workers/tools.py",
+      "source_location": "line 85",
+      "id": "tools_TOOL_REGISTRY",
+      "community": 4,
+      "norm_label": "tool_registry task type mapping"
+    },
+    {
+      "label": "plan_trip Generate Task DAG",
+      "file_type": "code",
+      "source_file": "app/backend/orchestrator/planner.py",
+      "source_location": "line 24",
+      "id": "planner_plan_trip",
+      "community": 4,
+      "norm_label": "plan_trip generate task dag"
+    },
+    {
+      "label": "_extract_intent Parse User Query via LLM",
+      "file_type": "code",
+      "source_file": "app/backend/orchestrator/planner.py",
+      "source_location": "line 40",
+      "id": "planner_extract_intent",
+      "community": 4,
+      "norm_label": "_extract_intent parse user query via llm"
+    },
+    {
+      "label": "_build_dag Create Ordered Task List",
+      "file_type": "code",
+      "source_file": "app/backend/orchestrator/planner.py",
+      "source_location": "line 50",
+      "id": "planner_build_dag",
+      "community": 4,
+      "norm_label": "_build_dag create ordered task list"
+    },
+    {
+      "label": "TASK_DEPENDENCY_MAP Task Ordering",
+      "file_type": "code",
+      "source_file": "app/backend/orchestrator/planner.py",
+      "source_location": "line 16",
+      "id": "planner_TASK_DEPENDENCY_MAP",
+      "community": 4,
+      "norm_label": "task_dependency_map task ordering"
+    },
+    {
+      "label": "monitor_and_replan Autonomous Replanning",
+      "file_type": "code",
+      "source_file": "app/backend/orchestrator/planner.py",
+      "source_location": "line 87",
+      "id": "planner_monitor_and_replan",
+      "community": 4,
+      "norm_label": "monitor_and_replan autonomous replanning"
+    },
+    {
+      "label": "handle_budget_exceeded Spawn Cheaper Hotels",
+      "file_type": "code",
+      "source_file": "app/backend/orchestrator/planner.py",
+      "source_location": "line 75",
+      "id": "planner_handle_budget_exceeded",
+      "community": 4,
+      "norm_label": "handle_budget_exceeded spawn cheaper hotels"
+    },
+    {
+      "label": "compress_context Summarize and Persist",
+      "file_type": "code",
+      "source_file": "app/backend/orchestrator/context_compressor.py",
+      "source_location": "line 23",
+      "id": "compressor_compress_context",
+      "community": 8,
+      "norm_label": "compress_context summarize and persist"
+    },
+    {
+      "label": "maybe_compress Periodic Compression",
+      "file_type": "code",
+      "source_file": "app/backend/orchestrator/context_compressor.py",
+      "source_location": "line 16",
+      "id": "compressor_maybe_compress",
+      "community": 8,
+      "norm_label": "maybe_compress periodic compression"
+    },
+    {
+      "label": "Dynamic Worker Model Pattern",
+      "file_type": "rationale",
+      "source_file": "README.md",
+      "rationale": "Ephemeral workers spawned on demand, each handles one task, checks dependencies via Redis agent statuses, executes via tool registry, exits after completion. Prevents predefined agent brittleness and enables horizontal scaling.",
+      "id": "arch_dynamic_worker_model",
+      "community": 4,
+      "norm_label": "dynamic worker model pattern"
+    },
+    {
+      "label": "Cache-First Search Pattern",
+      "file_type": "rationale",
+      "source_file": "app/backend/workers/tools.py",
+      "rationale": "Query Elasticsearch semantic index first (places/cafes/hotels sharded by region), fall back to Google Places API only on cache miss, re-index results. Reduces API costs and latency for repeated queries.",
+      "id": "arch_cache_first_search",
+      "community": 8,
+      "norm_label": "cache-first search pattern"
+    },
+    {
+      "label": "Autonomous Replanning Pattern",
+      "file_type": "rationale",
+      "source_file": "app/backend/orchestrator/planner.py",
+      "rationale": "When estimated_cost exceeds budget_inr, system autonomously spawns hotel_planning task with budget_constraint='cheaper'. No human intervention required. Enables graceful adaptation to constraints discovered during execution.",
+      "id": "arch_autonomous_replanning",
+      "community": 4,
+      "norm_label": "autonomous replanning pattern"
+    },
+    {
+      "label": "Three-Layer Memory Architecture",
+      "file_type": "rationale",
+      "source_file": "README.md",
+      "rationale": "Layer 1: Redis Hashes for active runtime context (6h TTL). Layer 2: PostgreSQL for compressed context and user preferences. Layer 3: Elasticsearch for semantic knowledge (places, hotels, cafes, transport). Prevents context explosion while maintaining semantic retrieval.",
+      "id": "arch_three_layer_memory",
+      "community": 8,
+      "norm_label": "three-layer memory architecture"
+    },
+    {
+      "label": "Task DAG with Explicit Dependencies",
+      "file_type": "rationale",
+      "source_file": "app/backend/orchestrator/planner.py",
+      "rationale": "destination_research has no dependencies, transport/hotel/food depend on destination_research, itinerary_optimization depends on all three. Workers check depends_on list against Redis agent statuses before executing. Enables parallel execution within dependency boundaries.",
+      "id": "arch_task_dag_with_deps",
+      "community": 4,
+      "norm_label": "task dag with explicit dependencies"
+    },
+    {
+      "label": "Redis Streams Task Bus",
+      "file_type": "code",
+      "source_file": "docker-compose.yml",
+      "source_location": "service: redis",
+      "id": "stack_redis_streams",
+      "community": 4,
+      "norm_label": "redis streams task bus"
+    },
+    {
+      "label": "PostgreSQL Persistent Store",
+      "file_type": "code",
+      "source_file": "docker-compose.yml",
+      "source_location": "service: postgres",
+      "id": "stack_postgresql",
+      "community": 8,
+      "norm_label": "postgresql persistent store"
+    },
+    {
+      "label": "Elasticsearch Semantic Knowledge Store",
+      "file_type": "code",
+      "source_file": "docker-compose.yml",
+      "source_location": "service: elasticsearch",
+      "id": "stack_elasticsearch",
+      "community": 8,
+      "norm_label": "elasticsearch semantic knowledge store"
+    }
+  ],
+  "links": [
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/next.config.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "frontend_next_config_js",
+      "target": "frontend_next_config_nextconfig",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/package.json",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "frontend_package_json",
+      "target": "frontend_package_dependencies",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/package.json",
+      "source_location": "L15",
+      "weight": 1.0,
+      "source": "frontend_package_json",
+      "target": "frontend_package_devdependencies",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/package.json",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "frontend_package_json",
+      "target": "frontend_package_name",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/package.json",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "frontend_package_json",
+      "target": "frontend_package_private",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/package.json",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "frontend_package_json",
+      "target": "frontend_package_scripts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/package.json",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "frontend_package_json",
+      "target": "frontend_package_version",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/package.json",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "frontend_package_scripts",
+      "target": "frontend_package_scripts_build",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/package.json",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "frontend_package_scripts",
+      "target": "frontend_package_scripts_dev",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/package.json",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "frontend_package_scripts",
+      "target": "frontend_package_scripts_start",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/package.json",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "frontend_package_dependencies",
+      "target": "frontend_package_dependencies_next",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/package.json",
+      "source_location": "L12",
+      "weight": 1.0,
+      "source": "frontend_package_dependencies",
+      "target": "frontend_package_dependencies_react",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/package.json",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "frontend_package_dependencies",
+      "target": "frontend_package_dependencies_react_dom",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/package.json",
+      "source_location": "L18",
+      "weight": 1.0,
+      "source": "frontend_package_devdependencies",
+      "target": "frontend_package_devdependencies_autoprefixer",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/package.json",
+      "source_location": "L19",
+      "weight": 1.0,
+      "source": "frontend_package_devdependencies",
+      "target": "frontend_package_devdependencies_postcss",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/package.json",
+      "source_location": "L20",
+      "weight": 1.0,
+      "source": "frontend_package_devdependencies",
+      "target": "frontend_package_devdependencies_tailwindcss",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/package.json",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "frontend_package_devdependencies",
+      "target": "frontend_package_devdependencies_types_node",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/package.json",
+      "source_location": "L17",
+      "weight": 1.0,
+      "source": "frontend_package_devdependencies",
+      "target": "frontend_package_devdependencies_types_react",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/package.json",
+      "source_location": "L21",
+      "weight": 1.0,
+      "source": "frontend_package_devdependencies",
+      "target": "frontend_package_devdependencies_typescript",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/tsconfig.json",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "frontend_tsconfig_json",
+      "target": "frontend_tsconfig_compileroptions",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/tsconfig.json",
+      "source_location": "L20",
+      "weight": 1.0,
+      "source": "frontend_tsconfig_json",
+      "target": "frontend_tsconfig_exclude",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/tsconfig.json",
+      "source_location": "L19",
+      "weight": 1.0,
+      "source": "frontend_tsconfig_json",
+      "target": "frontend_tsconfig_include",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/tsconfig.json",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "frontend_tsconfig_compileroptions",
+      "target": "frontend_tsconfig_compileroptions_allowjs",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/tsconfig.json",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "frontend_tsconfig_compileroptions",
+      "target": "frontend_tsconfig_compileroptions_esmoduleinterop",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/tsconfig.json",
+      "source_location": "L15",
+      "weight": 1.0,
+      "source": "frontend_tsconfig_compileroptions",
+      "target": "frontend_tsconfig_compileroptions_incremental",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/tsconfig.json",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "frontend_tsconfig_compileroptions",
+      "target": "frontend_tsconfig_compileroptions_isolatedmodules",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/tsconfig.json",
+      "source_location": "L14",
+      "weight": 1.0,
+      "source": "frontend_tsconfig_compileroptions",
+      "target": "frontend_tsconfig_compileroptions_jsx",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/tsconfig.json",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "frontend_tsconfig_compileroptions",
+      "target": "frontend_tsconfig_compileroptions_lib",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/tsconfig.json",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "frontend_tsconfig_compileroptions",
+      "target": "frontend_tsconfig_compileroptions_module",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/tsconfig.json",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "frontend_tsconfig_compileroptions",
+      "target": "frontend_tsconfig_compileroptions_moduleresolution",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/tsconfig.json",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "frontend_tsconfig_compileroptions",
+      "target": "frontend_tsconfig_compileroptions_noemit",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/tsconfig.json",
+      "source_location": "L17",
+      "weight": 1.0,
+      "source": "frontend_tsconfig_compileroptions",
+      "target": "frontend_tsconfig_compileroptions_paths",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/tsconfig.json",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "frontend_tsconfig_compileroptions",
+      "target": "frontend_tsconfig_compileroptions_plugins",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/tsconfig.json",
+      "source_location": "L12",
+      "weight": 1.0,
+      "source": "frontend_tsconfig_compileroptions",
+      "target": "frontend_tsconfig_compileroptions_resolvejsonmodule",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/tsconfig.json",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "frontend_tsconfig_compileroptions",
+      "target": "frontend_tsconfig_compileroptions_skiplibcheck",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/tsconfig.json",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "frontend_tsconfig_compileroptions",
+      "target": "frontend_tsconfig_compileroptions_strict",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/tsconfig.json",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "frontend_tsconfig_compileroptions",
+      "target": "frontend_tsconfig_compileroptions_target",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/tsconfig.json",
+      "source_location": "L17",
+      "weight": 1.0,
+      "source": "frontend_tsconfig_compileroptions_paths",
+      "target": "frontend_tsconfig_paths",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/app/layout.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "frontend_app_layout_tsx",
+      "target": "app_layout_metadata",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/app/layout.tsx",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "frontend_app_layout_tsx",
+      "target": "app_layout_rootlayout",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/app/page.tsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "frontend_app_page_tsx",
+      "target": "app_page_agentevent",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/app/page.tsx",
+      "source_location": "L25",
+      "weight": 1.0,
+      "source": "frontend_app_page_tsx",
+      "target": "app_page_home",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/app/page.tsx",
+      "source_location": "L17",
+      "weight": 1.0,
+      "source": "frontend_app_page_tsx",
+      "target": "app_page_status_icon",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/config.py",
+      "source_location": "L15",
+      "weight": 1.0,
+      "source": "backend_config_py",
+      "target": "backend_config_config",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/config.py",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "backend_config_py",
+      "target": "backend_config_settings",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "inherits",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/config.py",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "backend_config_settings",
+      "target": "basesettings",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/worker_runner.py",
+      "source_location": "L12",
+      "weight": 1.0,
+      "source": "backend_worker_runner_py",
+      "target": "backend_worker_runner_main",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/worker_runner.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "backend_worker_runner_rationale_1",
+      "target": "backend_worker_runner_py",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "backend/worker_runner.py",
+      "source_location": "L15",
+      "weight": 1.0,
+      "source": "backend_worker_runner_main",
+      "target": "workers_worker_run_worker"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/main.py",
+      "source_location": "L39",
+      "weight": 1.0,
+      "source": "backend_main_py",
+      "target": "backend_main_health",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/main.py",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "backend_main_py",
+      "target": "backend_main_lifespan",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/main.py",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "backend_main_py",
+      "target": "fastapi",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/main.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "backend_main_rationale_1",
+      "target": "backend_main_py",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/main.py",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "backend_main_lifespan",
+      "target": "fastapi",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "backend/main.py",
+      "source_location": "L21",
+      "weight": 1.0,
+      "source": "backend_main_lifespan",
+      "target": "search_es_client_setup_indexes"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/api/trips.py",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "backend_api_trips_py",
+      "target": "fastapi",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/api/websocket.py",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "backend_api_websocket_py",
+      "target": "fastapi",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "backend/main.py",
+      "source_location": "L11",
+      "weight": 0.8,
+      "source": "fastapi",
+      "target": "db_database_base",
+      "confidence_score": 0.5
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/cache/redis_client.py",
+      "source_location": "L83",
+      "weight": 1.0,
+      "source": "backend_cache_redis_client_py",
+      "target": "cache_redis_client_ack_task",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/cache/redis_client.py",
+      "source_location": "L63",
+      "weight": 1.0,
+      "source": "backend_cache_redis_client_py",
+      "target": "cache_redis_client_ensure_consumer_group",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/cache/redis_client.py",
+      "source_location": "L97",
+      "weight": 1.0,
+      "source": "backend_cache_redis_client_py",
+      "target": "cache_redis_client_get_all_agent_statuses",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/cache/redis_client.py",
+      "source_location": "L17",
+      "weight": 1.0,
+      "source": "backend_cache_redis_client_py",
+      "target": "cache_redis_client_get_redis",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/cache/redis_client.py",
+      "source_location": "L36",
+      "weight": 1.0,
+      "source": "backend_cache_redis_client_py",
+      "target": "cache_redis_client_get_trip_context",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/cache/redis_client.py",
+      "source_location": "L104",
+      "weight": 1.0,
+      "source": "backend_cache_redis_client_py",
+      "target": "cache_redis_client_publish_event",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/cache/redis_client.py",
+      "source_location": "L56",
+      "weight": 1.0,
+      "source": "backend_cache_redis_client_py",
+      "target": "cache_redis_client_publish_task",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/cache/redis_client.py",
+      "source_location": "L71",
+      "weight": 1.0,
+      "source": "backend_cache_redis_client_py",
+      "target": "cache_redis_client_read_tasks",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/cache/redis_client.py",
+      "source_location": "L90",
+      "weight": 1.0,
+      "source": "backend_cache_redis_client_py",
+      "target": "cache_redis_client_set_agent_status",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/cache/redis_client.py",
+      "source_location": "L29",
+      "weight": 1.0,
+      "source": "backend_cache_redis_client_py",
+      "target": "cache_redis_client_set_trip_context",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/cache/redis_client.py",
+      "source_location": "L43",
+      "weight": 1.0,
+      "source": "backend_cache_redis_client_py",
+      "target": "cache_redis_client_update_trip_context",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/cache/redis_client.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "cache_redis_client_rationale_1",
+      "target": "backend_cache_redis_client_py",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "backend/api/websocket.py",
+      "source_location": "L20",
+      "weight": 1.0,
+      "source": "api_websocket_trip_websocket",
+      "target": "cache_redis_client_get_redis"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/cache/redis_client.py",
+      "source_location": "L84",
+      "weight": 1.0,
+      "source": "cache_redis_client_ack_task",
+      "target": "cache_redis_client_get_redis",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/cache/redis_client.py",
+      "source_location": "L64",
+      "weight": 1.0,
+      "source": "cache_redis_client_ensure_consumer_group",
+      "target": "cache_redis_client_get_redis",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/cache/redis_client.py",
+      "source_location": "L98",
+      "weight": 1.0,
+      "source": "cache_redis_client_get_all_agent_statuses",
+      "target": "cache_redis_client_get_redis",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "context": "return_type",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/cache/redis_client.py",
+      "source_location": "L17",
+      "weight": 1.0,
+      "source": "cache_redis_client_get_redis",
+      "target": "redis",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/cache/redis_client.py",
+      "source_location": "L37",
+      "weight": 1.0,
+      "source": "cache_redis_client_get_trip_context",
+      "target": "cache_redis_client_get_redis",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/cache/redis_client.py",
+      "source_location": "L105",
+      "weight": 1.0,
+      "source": "cache_redis_client_publish_event",
+      "target": "cache_redis_client_get_redis",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/cache/redis_client.py",
+      "source_location": "L58",
+      "weight": 1.0,
+      "source": "cache_redis_client_publish_task",
+      "target": "cache_redis_client_get_redis",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/cache/redis_client.py",
+      "source_location": "L72",
+      "weight": 1.0,
+      "source": "cache_redis_client_read_tasks",
+      "target": "cache_redis_client_get_redis",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/cache/redis_client.py",
+      "source_location": "L91",
+      "weight": 1.0,
+      "source": "cache_redis_client_set_agent_status",
+      "target": "cache_redis_client_get_redis",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/cache/redis_client.py",
+      "source_location": "L30",
+      "weight": 1.0,
+      "source": "cache_redis_client_set_trip_context",
+      "target": "cache_redis_client_get_redis",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/cache/redis_client.py",
+      "source_location": "L44",
+      "weight": 1.0,
+      "source": "cache_redis_client_update_trip_context",
+      "target": "cache_redis_client_get_redis",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/cache/redis_client.py",
+      "source_location": "L29",
+      "weight": 1.0,
+      "source": "cache_redis_client_set_trip_context",
+      "target": "backend_cache_redis_client_py_str",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "backend/orchestrator/planner.py",
+      "source_location": "L44",
+      "weight": 1.0,
+      "source": "orchestrator_planner_plan_trip",
+      "target": "cache_redis_client_set_trip_context"
+    },
+    {
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/cache/redis_client.py",
+      "source_location": "L83",
+      "weight": 1.0,
+      "source": "cache_redis_client_ack_task",
+      "target": "backend_cache_redis_client_py_str",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/cache/redis_client.py",
+      "source_location": "L97",
+      "weight": 1.0,
+      "source": "cache_redis_client_get_all_agent_statuses",
+      "target": "backend_cache_redis_client_py_str",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/cache/redis_client.py",
+      "source_location": "L36",
+      "weight": 1.0,
+      "source": "cache_redis_client_get_trip_context",
+      "target": "backend_cache_redis_client_py_str",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/cache/redis_client.py",
+      "source_location": "L104",
+      "weight": 1.0,
+      "source": "cache_redis_client_publish_event",
+      "target": "backend_cache_redis_client_py_str",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "context": "return_type",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/cache/redis_client.py",
+      "source_location": "L56",
+      "weight": 1.0,
+      "source": "cache_redis_client_publish_task",
+      "target": "backend_cache_redis_client_py_str",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/cache/redis_client.py",
+      "source_location": "L71",
+      "weight": 1.0,
+      "source": "cache_redis_client_read_tasks",
+      "target": "backend_cache_redis_client_py_str",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/cache/redis_client.py",
+      "source_location": "L90",
+      "weight": 1.0,
+      "source": "cache_redis_client_set_agent_status",
+      "target": "backend_cache_redis_client_py_str",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/cache/redis_client.py",
+      "source_location": "L43",
+      "weight": 1.0,
+      "source": "cache_redis_client_update_trip_context",
+      "target": "backend_cache_redis_client_py_str",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "backend/api/trips.py",
+      "source_location": "L47",
+      "weight": 1.0,
+      "source": "api_trips_get_context",
+      "target": "cache_redis_client_get_trip_context"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "backend/orchestrator/context_compressor.py",
+      "source_location": "L36",
+      "weight": 1.0,
+      "source": "orchestrator_context_compressor_compress_context",
+      "target": "cache_redis_client_get_trip_context"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "backend/orchestrator/planner.py",
+      "source_location": "L91",
+      "weight": 1.0,
+      "source": "orchestrator_planner_handle_budget_exceeded",
+      "target": "cache_redis_client_get_trip_context"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "backend/orchestrator/planner.py",
+      "source_location": "L110",
+      "weight": 1.0,
+      "source": "orchestrator_planner_monitor_and_replan",
+      "target": "cache_redis_client_get_trip_context"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "backend/workers/tools.py",
+      "source_location": "L101",
+      "weight": 1.0,
+      "source": "workers_tools_itinerary_optimization",
+      "target": "cache_redis_client_get_trip_context"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "backend/orchestrator/context_compressor.py",
+      "source_location": "L59",
+      "weight": 1.0,
+      "source": "orchestrator_context_compressor_compress_context",
+      "target": "cache_redis_client_update_trip_context"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "backend/workers/tools.py",
+      "source_location": "L65",
+      "weight": 1.0,
+      "source": "workers_tools_destination_research",
+      "target": "cache_redis_client_update_trip_context"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "backend/workers/tools.py",
+      "source_location": "L93",
+      "weight": 1.0,
+      "source": "workers_tools_food_discovery",
+      "target": "cache_redis_client_update_trip_context"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "backend/workers/tools.py",
+      "source_location": "L83",
+      "weight": 1.0,
+      "source": "workers_tools_hotel_planning",
+      "target": "cache_redis_client_update_trip_context"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "backend/workers/tools.py",
+      "source_location": "L114",
+      "weight": 1.0,
+      "source": "workers_tools_itinerary_optimization",
+      "target": "cache_redis_client_update_trip_context"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "backend/workers/tools.py",
+      "source_location": "L73",
+      "weight": 1.0,
+      "source": "workers_tools_transport_planning",
+      "target": "cache_redis_client_update_trip_context"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/cache/redis_client.py",
+      "source_location": "L57",
+      "weight": 1.0,
+      "source": "cache_redis_client_rationale_57",
+      "target": "cache_redis_client_publish_task",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "backend/orchestrator/planner.py",
+      "source_location": "L100",
+      "weight": 1.0,
+      "source": "orchestrator_planner_handle_budget_exceeded",
+      "target": "cache_redis_client_publish_task"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "backend/orchestrator/planner.py",
+      "source_location": "L48",
+      "weight": 1.0,
+      "source": "orchestrator_planner_plan_trip",
+      "target": "cache_redis_client_publish_task"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "backend/workers/worker.py",
+      "source_location": "L39",
+      "weight": 1.0,
+      "source": "workers_worker_run_worker",
+      "target": "cache_redis_client_ensure_consumer_group"
+    },
+    {
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/cache/redis_client.py",
+      "source_location": "L71",
+      "weight": 1.0,
+      "source": "cache_redis_client_read_tasks",
+      "target": "backend_cache_redis_client_py_int",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "backend/workers/worker.py",
+      "source_location": "L43",
+      "weight": 1.0,
+      "source": "workers_worker_run_worker",
+      "target": "cache_redis_client_read_tasks"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "backend/workers/worker.py",
+      "source_location": "L90",
+      "weight": 1.0,
+      "source": "workers_worker_run_worker",
+      "target": "cache_redis_client_ack_task"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "backend/workers/worker.py",
+      "source_location": "L62",
+      "weight": 1.0,
+      "source": "workers_worker_run_worker",
+      "target": "cache_redis_client_set_agent_status"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "backend/orchestrator/planner.py",
+      "source_location": "L109",
+      "weight": 1.0,
+      "source": "orchestrator_planner_monitor_and_replan",
+      "target": "cache_redis_client_get_all_agent_statuses"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "backend/workers/worker.py",
+      "source_location": "L33",
+      "weight": 1.0,
+      "source": "workers_worker_dependencies_satisfied",
+      "target": "cache_redis_client_get_all_agent_statuses"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "backend/orchestrator/planner.py",
+      "source_location": "L101",
+      "weight": 1.0,
+      "source": "orchestrator_planner_handle_budget_exceeded",
+      "target": "cache_redis_client_publish_event"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "backend/orchestrator/planner.py",
+      "source_location": "L50",
+      "weight": 1.0,
+      "source": "orchestrator_planner_plan_trip",
+      "target": "cache_redis_client_publish_event"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "backend/workers/worker.py",
+      "source_location": "L63",
+      "weight": 1.0,
+      "source": "workers_worker_run_worker",
+      "target": "cache_redis_client_publish_event"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/search/es_client.py",
+      "source_location": "L33",
+      "weight": 1.0,
+      "source": "backend_search_es_client_py",
+      "target": "search_es_client_get_es",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/search/es_client.py",
+      "source_location": "L92",
+      "weight": 1.0,
+      "source": "backend_search_es_client_py",
+      "target": "search_es_client_index_result",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/search/es_client.py",
+      "source_location": "L40",
+      "weight": 1.0,
+      "source": "backend_search_es_client_py",
+      "target": "search_es_client_region_for",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/search/es_client.py",
+      "source_location": "L67",
+      "weight": 1.0,
+      "source": "backend_search_es_client_py",
+      "target": "search_es_client_search_knowledge",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/search/es_client.py",
+      "source_location": "L44",
+      "weight": 1.0,
+      "source": "backend_search_es_client_py",
+      "target": "search_es_client_setup_indexes",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/search/es_client.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "search_es_client_rationale_1",
+      "target": "backend_search_es_client_py",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "context": "return_type",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/search/es_client.py",
+      "source_location": "L33",
+      "weight": 1.0,
+      "source": "search_es_client_get_es",
+      "target": "asyncelasticsearch",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/search/es_client.py",
+      "source_location": "L94",
+      "weight": 1.0,
+      "source": "search_es_client_index_result",
+      "target": "search_es_client_get_es",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/search/es_client.py",
+      "source_location": "L71",
+      "weight": 1.0,
+      "source": "search_es_client_search_knowledge",
+      "target": "search_es_client_get_es",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/search/es_client.py",
+      "source_location": "L46",
+      "weight": 1.0,
+      "source": "search_es_client_setup_indexes",
+      "target": "search_es_client_get_es",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/search/es_client.py",
+      "source_location": "L95",
+      "weight": 1.0,
+      "source": "search_es_client_index_result",
+      "target": "search_es_client_region_for",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "context": "return_type",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/search/es_client.py",
+      "source_location": "L40",
+      "weight": 1.0,
+      "source": "search_es_client_region_for",
+      "target": "backend_search_es_client_py_str",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/search/es_client.py",
+      "source_location": "L72",
+      "weight": 1.0,
+      "source": "search_es_client_search_knowledge",
+      "target": "search_es_client_region_for",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/search/es_client.py",
+      "source_location": "L92",
+      "weight": 1.0,
+      "source": "search_es_client_index_result",
+      "target": "backend_search_es_client_py_str",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/search/es_client.py",
+      "source_location": "L67",
+      "weight": 1.0,
+      "source": "search_es_client_search_knowledge",
+      "target": "backend_search_es_client_py_str",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/search/es_client.py",
+      "source_location": "L45",
+      "weight": 1.0,
+      "source": "search_es_client_rationale_45",
+      "target": "search_es_client_setup_indexes",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/search/es_client.py",
+      "source_location": "L68",
+      "weight": 1.0,
+      "source": "search_es_client_rationale_68",
+      "target": "search_es_client_search_knowledge",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/search/es_client.py",
+      "source_location": "L67",
+      "weight": 1.0,
+      "source": "search_es_client_search_knowledge",
+      "target": "backend_search_es_client_py_int",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "backend/workers/tools.py",
+      "source_location": "L28",
+      "weight": 1.0,
+      "source": "workers_tools_places_search",
+      "target": "search_es_client_search_knowledge"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/search/es_client.py",
+      "source_location": "L93",
+      "weight": 1.0,
+      "source": "search_es_client_rationale_93",
+      "target": "search_es_client_index_result",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "backend/workers/tools.py",
+      "source_location": "L35",
+      "weight": 1.0,
+      "source": "workers_tools_places_search",
+      "target": "search_es_client_index_result"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/db/models.py",
+      "source_location": "L34",
+      "weight": 1.0,
+      "source": "backend_db_models_py",
+      "target": "db_models_itinerary",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/db/models.py",
+      "source_location": "L22",
+      "weight": 1.0,
+      "source": "backend_db_models_py",
+      "target": "db_models_taskrecord",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/db/models.py",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "backend_db_models_py",
+      "target": "db_models_trip",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "backend/api/trips.py",
+      "source_location": "L32",
+      "weight": 1.0,
+      "source": "api_trips_start_trip",
+      "target": "db_models_trip"
+    },
+    {
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "backend/api/trips.py",
+      "source_location": "L12",
+      "weight": 0.8,
+      "source": "api_trips_starttriprequest",
+      "target": "db_models_trip",
+      "confidence_score": 0.5
+    },
+    {
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "backend/api/trips.py",
+      "source_location": "L12",
+      "weight": 0.8,
+      "source": "api_trips_starttripresponse",
+      "target": "db_models_trip",
+      "confidence_score": 0.5
+    },
+    {
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "backend/api/trips.py",
+      "source_location": "L12",
+      "weight": 0.8,
+      "source": "backend_api_trips_py_asyncsession",
+      "target": "db_models_trip",
+      "confidence_score": 0.5
+    },
+    {
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "backend/api/trips.py",
+      "source_location": "L12",
+      "weight": 0.8,
+      "source": "backend_api_trips_py_str",
+      "target": "db_models_trip",
+      "confidence_score": 0.5
+    },
+    {
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "backend/orchestrator/context_compressor.py",
+      "source_location": "L18",
+      "weight": 0.8,
+      "source": "backend_orchestrator_context_compressor_py_asyncsession",
+      "target": "db_models_trip",
+      "confidence_score": 0.5
+    },
+    {
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "backend/orchestrator/context_compressor.py",
+      "source_location": "L18",
+      "weight": 0.8,
+      "source": "backend_orchestrator_context_compressor_py_int",
+      "target": "db_models_trip",
+      "confidence_score": 0.5
+    },
+    {
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "backend/orchestrator/context_compressor.py",
+      "source_location": "L18",
+      "weight": 0.8,
+      "source": "backend_orchestrator_context_compressor_py_str",
+      "target": "db_models_trip",
+      "confidence_score": 0.5
+    },
+    {
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "backend/db/models.py",
+      "source_location": "L6",
+      "weight": 0.8,
+      "source": "db_models_trip",
+      "target": "db_database_base",
+      "confidence_score": 0.5
+    },
+    {
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "backend/db/models.py",
+      "source_location": "L6",
+      "weight": 0.8,
+      "source": "db_models_taskrecord",
+      "target": "db_database_base",
+      "confidence_score": 0.5
+    },
+    {
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "backend/db/models.py",
+      "source_location": "L6",
+      "weight": 0.8,
+      "source": "db_models_itinerary",
+      "target": "db_database_base",
+      "confidence_score": 0.5
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/db/database.py",
+      "source_location": "L15",
+      "weight": 1.0,
+      "source": "backend_db_database_py",
+      "target": "db_database_base",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/db/database.py",
+      "source_location": "L19",
+      "weight": 1.0,
+      "source": "backend_db_database_py",
+      "target": "db_database_get_db",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "inherits",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/db/database.py",
+      "source_location": "L15",
+      "weight": 1.0,
+      "source": "db_database_base",
+      "target": "declarativebase",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/api/websocket.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "api_websocket_rationale_1",
+      "target": "backend_api_websocket_py",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/api/websocket.py",
+      "source_location": "L18",
+      "weight": 1.0,
+      "source": "backend_api_websocket_py",
+      "target": "api_websocket_trip_websocket",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/api/websocket.py",
+      "source_location": "L18",
+      "weight": 1.0,
+      "source": "api_websocket_trip_websocket",
+      "target": "backend_api_websocket_py_str",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/api/websocket.py",
+      "source_location": "L18",
+      "weight": 1.0,
+      "source": "api_websocket_trip_websocket",
+      "target": "websocket",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/api/trips.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "api_trips_rationale_1",
+      "target": "backend_api_trips_py",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/api/trips.py",
+      "source_location": "L46",
+      "weight": 1.0,
+      "source": "backend_api_trips_py",
+      "target": "api_trips_get_context",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/api/trips.py",
+      "source_location": "L54",
+      "weight": 1.0,
+      "source": "backend_api_trips_py",
+      "target": "api_trips_replan",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/api/trips.py",
+      "source_location": "L29",
+      "weight": 1.0,
+      "source": "backend_api_trips_py",
+      "target": "api_trips_start_trip",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/api/trips.py",
+      "source_location": "L18",
+      "weight": 1.0,
+      "source": "backend_api_trips_py",
+      "target": "api_trips_starttriprequest",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/api/trips.py",
+      "source_location": "L22",
+      "weight": 1.0,
+      "source": "backend_api_trips_py",
+      "target": "api_trips_starttripresponse",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/api/trips.py",
+      "source_location": "L29",
+      "weight": 1.0,
+      "source": "api_trips_start_trip",
+      "target": "api_trips_starttriprequest",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "inherits",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/api/trips.py",
+      "source_location": "L18",
+      "weight": 1.0,
+      "source": "api_trips_starttriprequest",
+      "target": "basemodel",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "inherits",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/api/trips.py",
+      "source_location": "L22",
+      "weight": 1.0,
+      "source": "api_trips_starttripresponse",
+      "target": "basemodel",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/api/trips.py",
+      "source_location": "L38",
+      "weight": 1.0,
+      "source": "api_trips_start_trip",
+      "target": "api_trips_starttripresponse",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/api/trips.py",
+      "source_location": "L29",
+      "weight": 1.0,
+      "source": "api_trips_start_trip",
+      "target": "backend_api_trips_py_asyncsession",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "backend/api/trips.py",
+      "source_location": "L36",
+      "weight": 1.0,
+      "source": "api_trips_start_trip",
+      "target": "orchestrator_planner_plan_trip"
+    },
+    {
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/api/trips.py",
+      "source_location": "L46",
+      "weight": 1.0,
+      "source": "api_trips_get_context",
+      "target": "backend_api_trips_py_str",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/api/trips.py",
+      "source_location": "L54",
+      "weight": 1.0,
+      "source": "api_trips_replan",
+      "target": "backend_api_trips_py_str",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "backend/api/trips.py",
+      "source_location": "L55",
+      "weight": 1.0,
+      "source": "api_trips_replan",
+      "target": "orchestrator_planner_monitor_and_replan"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/workers/worker.py",
+      "source_location": "L28",
+      "weight": 1.0,
+      "source": "backend_workers_worker_py",
+      "target": "workers_worker_dependencies_satisfied",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/workers/worker.py",
+      "source_location": "L37",
+      "weight": 1.0,
+      "source": "backend_workers_worker_py",
+      "target": "workers_worker_run_worker",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/workers/worker.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "workers_worker_rationale_1",
+      "target": "backend_workers_worker_py",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "context": "return_type",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/workers/worker.py",
+      "source_location": "L28",
+      "weight": 1.0,
+      "source": "workers_worker_dependencies_satisfied",
+      "target": "bool",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/workers/worker.py",
+      "source_location": "L56",
+      "weight": 1.0,
+      "source": "workers_worker_run_worker",
+      "target": "workers_worker_dependencies_satisfied",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/workers/worker.py",
+      "source_location": "L37",
+      "weight": 1.0,
+      "source": "workers_worker_run_worker",
+      "target": "backend_workers_worker_py_str",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/workers/tools.py",
+      "source_location": "L61",
+      "weight": 1.0,
+      "source": "backend_workers_tools_py",
+      "target": "workers_tools_destination_research",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/workers/tools.py",
+      "source_location": "L87",
+      "weight": 1.0,
+      "source": "backend_workers_tools_py",
+      "target": "workers_tools_food_discovery",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/workers/tools.py",
+      "source_location": "L40",
+      "weight": 1.0,
+      "source": "backend_workers_tools_py",
+      "target": "workers_tools_google_places_search",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/workers/tools.py",
+      "source_location": "L77",
+      "weight": 1.0,
+      "source": "backend_workers_tools_py",
+      "target": "workers_tools_hotel_planning",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/workers/tools.py",
+      "source_location": "L97",
+      "weight": 1.0,
+      "source": "backend_workers_tools_py",
+      "target": "workers_tools_itinerary_optimization",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/workers/tools.py",
+      "source_location": "L18",
+      "weight": 1.0,
+      "source": "backend_workers_tools_py",
+      "target": "workers_tools_places_search",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/workers/tools.py",
+      "source_location": "L69",
+      "weight": 1.0,
+      "source": "backend_workers_tools_py",
+      "target": "workers_tools_transport_planning",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/workers/tools.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "workers_tools_rationale_1",
+      "target": "backend_workers_tools_py",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/workers/tools.py",
+      "source_location": "L64",
+      "weight": 1.0,
+      "source": "workers_tools_destination_research",
+      "target": "workers_tools_places_search",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/workers/tools.py",
+      "source_location": "L92",
+      "weight": 1.0,
+      "source": "workers_tools_food_discovery",
+      "target": "workers_tools_places_search",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/workers/tools.py",
+      "source_location": "L82",
+      "weight": 1.0,
+      "source": "workers_tools_hotel_planning",
+      "target": "workers_tools_places_search",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/workers/tools.py",
+      "source_location": "L32",
+      "weight": 1.0,
+      "source": "workers_tools_places_search",
+      "target": "workers_tools_google_places_search",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/workers/tools.py",
+      "source_location": "L19",
+      "weight": 1.0,
+      "source": "workers_tools_rationale_19",
+      "target": "workers_tools_places_search",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/workers/tools.py",
+      "source_location": "L72",
+      "weight": 1.0,
+      "source": "workers_tools_transport_planning",
+      "target": "workers_tools_places_search",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/workers/tools.py",
+      "source_location": "L40",
+      "weight": 1.0,
+      "source": "workers_tools_google_places_search",
+      "target": "backend_workers_tools_py_str",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/orchestrator/planner.py",
+      "source_location": "L67",
+      "weight": 1.0,
+      "source": "backend_orchestrator_planner_py",
+      "target": "orchestrator_planner_build_dag",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/orchestrator/planner.py",
+      "source_location": "L54",
+      "weight": 1.0,
+      "source": "backend_orchestrator_planner_py",
+      "target": "orchestrator_planner_extract_intent",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/orchestrator/planner.py",
+      "source_location": "L89",
+      "weight": 1.0,
+      "source": "backend_orchestrator_planner_py",
+      "target": "orchestrator_planner_handle_budget_exceeded",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/orchestrator/planner.py",
+      "source_location": "L104",
+      "weight": 1.0,
+      "source": "backend_orchestrator_planner_py",
+      "target": "orchestrator_planner_monitor_and_replan",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/orchestrator/planner.py",
+      "source_location": "L36",
+      "weight": 1.0,
+      "source": "backend_orchestrator_planner_py",
+      "target": "orchestrator_planner_plan_trip",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/orchestrator/planner.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "orchestrator_planner_rationale_1",
+      "target": "backend_orchestrator_planner_py",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/orchestrator/planner.py",
+      "source_location": "L36",
+      "weight": 1.0,
+      "source": "orchestrator_planner_plan_trip",
+      "target": "backend_orchestrator_planner_py_str",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/orchestrator/planner.py",
+      "source_location": "L46",
+      "weight": 1.0,
+      "source": "orchestrator_planner_plan_trip",
+      "target": "orchestrator_planner_build_dag",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/orchestrator/planner.py",
+      "source_location": "L43",
+      "weight": 1.0,
+      "source": "orchestrator_planner_plan_trip",
+      "target": "orchestrator_planner_extract_intent",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/orchestrator/planner.py",
+      "source_location": "L37",
+      "weight": 1.0,
+      "source": "orchestrator_planner_rationale_37",
+      "target": "orchestrator_planner_plan_trip",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/orchestrator/planner.py",
+      "source_location": "L67",
+      "weight": 1.0,
+      "source": "orchestrator_planner_build_dag",
+      "target": "backend_orchestrator_planner_py_str",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/orchestrator/planner.py",
+      "source_location": "L54",
+      "weight": 1.0,
+      "source": "orchestrator_planner_extract_intent",
+      "target": "backend_orchestrator_planner_py_str",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/orchestrator/planner.py",
+      "source_location": "L89",
+      "weight": 1.0,
+      "source": "orchestrator_planner_handle_budget_exceeded",
+      "target": "backend_orchestrator_planner_py_str",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/orchestrator/planner.py",
+      "source_location": "L104",
+      "weight": 1.0,
+      "source": "orchestrator_planner_monitor_and_replan",
+      "target": "backend_orchestrator_planner_py_str",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/orchestrator/planner.py",
+      "source_location": "L68",
+      "weight": 1.0,
+      "source": "orchestrator_planner_rationale_68",
+      "target": "orchestrator_planner_build_dag",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/orchestrator/planner.py",
+      "source_location": "L117",
+      "weight": 1.0,
+      "source": "orchestrator_planner_monitor_and_replan",
+      "target": "orchestrator_planner_handle_budget_exceeded",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/orchestrator/planner.py",
+      "source_location": "L90",
+      "weight": 1.0,
+      "source": "orchestrator_planner_rationale_90",
+      "target": "orchestrator_planner_handle_budget_exceeded",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/orchestrator/planner.py",
+      "source_location": "L105",
+      "weight": 1.0,
+      "source": "orchestrator_planner_rationale_105",
+      "target": "orchestrator_planner_monitor_and_replan",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/orchestrator/context_compressor.py",
+      "source_location": "L31",
+      "weight": 1.0,
+      "source": "backend_orchestrator_context_compressor_py",
+      "target": "orchestrator_context_compressor_compress_context",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/orchestrator/context_compressor.py",
+      "source_location": "L25",
+      "weight": 1.0,
+      "source": "backend_orchestrator_context_compressor_py",
+      "target": "orchestrator_context_compressor_maybe_compress",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/orchestrator/context_compressor.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "orchestrator_context_compressor_rationale_1",
+      "target": "backend_orchestrator_context_compressor_py",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/orchestrator/context_compressor.py",
+      "source_location": "L25",
+      "weight": 1.0,
+      "source": "orchestrator_context_compressor_maybe_compress",
+      "target": "backend_orchestrator_context_compressor_py_asyncsession",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/orchestrator/context_compressor.py",
+      "source_location": "L25",
+      "weight": 1.0,
+      "source": "orchestrator_context_compressor_maybe_compress",
+      "target": "backend_orchestrator_context_compressor_py_int",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/orchestrator/context_compressor.py",
+      "source_location": "L25",
+      "weight": 1.0,
+      "source": "orchestrator_context_compressor_maybe_compress",
+      "target": "backend_orchestrator_context_compressor_py_str",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/orchestrator/context_compressor.py",
+      "source_location": "L28",
+      "weight": 1.0,
+      "source": "orchestrator_context_compressor_maybe_compress",
+      "target": "orchestrator_context_compressor_compress_context",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/orchestrator/context_compressor.py",
+      "source_location": "L31",
+      "weight": 1.0,
+      "source": "orchestrator_context_compressor_compress_context",
+      "target": "backend_orchestrator_context_compressor_py_str",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/orchestrator/context_compressor.py",
+      "source_location": "L31",
+      "weight": 1.0,
+      "source": "orchestrator_context_compressor_compress_context",
+      "target": "backend_orchestrator_context_compressor_py_asyncsession",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/orchestrator/context_compressor.py",
+      "source_location": "L32",
+      "weight": 1.0,
+      "source": "orchestrator_context_compressor_rationale_32",
+      "target": "orchestrator_context_compressor_compress_context",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "app/frontend/next.config.js",
+      "source_location": "NEXT_PUBLIC_API_URL and NEXT_PUBLIC_WS_URL environment variables point to backend",
+      "weight": 1.0,
+      "source": "tripweave_frontend_app",
+      "target": "tripweave_api_backend"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app/backend/main.py",
+      "source_location": "await conn.run_sync(Base.metadata.create_all)",
+      "weight": 1.0,
+      "source": "tripweave_api_backend",
+      "target": "database_models_module"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app/backend/main.py",
+      "source_location": "await setup_indexes()",
+      "weight": 1.0,
+      "source": "tripweave_api_backend",
+      "target": "elasticsearch_client_module"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app/backend/main.py",
+      "source_location": "app.include_router(trips_router)",
+      "weight": 1.0,
+      "source": "tripweave_api_backend",
+      "target": "trips_router_module"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app/backend/main.py",
+      "source_location": "app.include_router(ws_router)",
+      "weight": 1.0,
+      "source": "tripweave_api_backend",
+      "target": "websocket_router_module"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 0.9,
+      "source_file": "app/frontend/app/page.tsx",
+      "source_location": "process.env.NEXT_PUBLIC_API_URL, process.env.NEXT_PUBLIC_WS_URL",
+      "weight": 1.0,
+      "source": "page_tsx_component",
+      "target": "next_config_module"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 0.95,
+      "source_file": "app/frontend/app/page.tsx",
+      "source_location": "fetch(`${API}/api/trips/start`)",
+      "weight": 1.0,
+      "source": "page_tsx_component",
+      "target": "trips_router_module"
+    },
+    {
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.7,
+      "source_file": "app/frontend/app/page.tsx",
+      "source_location": "Both handle real-time event streaming and state updates",
+      "weight": 1.0,
+      "source": "page_tsx_component",
+      "target": "websocket_router_module"
+    },
+    {
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "app/frontend/app/layout.tsx",
+      "source_location": "globals.css import applies Tailwind styles",
+      "weight": 1.0,
+      "source": "layout_tsx_component",
+      "target": "tailwind_config_module"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 0.95,
+      "source_file": "app/backend/search/es_client.py",
+      "source_location": "from config import settings; settings.elasticsearch_url",
+      "weight": 1.0,
+      "source": "config_py_settings",
+      "target": "elasticsearch_client_module"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 0.9,
+      "source_file": "app/backend/config.py",
+      "source_location": "google_places_api_key field in Settings",
+      "weight": 1.0,
+      "source": "config_py_settings",
+      "target": "google_places_integration"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 0.9,
+      "source_file": "app/backend/config.py",
+      "source_location": "openai_api_key field in Settings",
+      "weight": 1.0,
+      "source": "config_py_settings",
+      "target": "openai_integration"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 0.95,
+      "source_file": "app/backend/cache/redis_client.py",
+      "source_location": "from config import settings; settings.redis_url",
+      "weight": 1.0,
+      "source": "config_py_settings",
+      "target": "redis_client_module"
+    },
+    {
+      "relation": "shares_data_with",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "app/backend/search/es_client.py",
+      "source_location": "Both cache and serve search results with freshness validation (7-day cache)",
+      "weight": 1.0,
+      "source": "elasticsearch_client_module",
+      "target": "redis_client_module"
+    },
+    {
+      "relation": "shares_data_with",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "app/backend/cache/redis_client.py",
+      "source_location": "Trip context stored in Redis with TTL, mirrors database structure",
+      "weight": 1.0,
+      "source": "redis_client_module",
+      "target": "database_models_module"
+    },
+    {
+      "relation": "calls",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "app/backend/worker_runner.py",
+      "source_location": "Worker runner processes tasks from Redis Stream",
+      "weight": 1.0,
+      "source": "worker_runner_module",
+      "target": "redis_client_module"
+    },
+    {
+      "relation": "calls",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "app/backend/api/trips.py",
+      "source": "trips_get_context",
+      "target": "database_get_db"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 0.95,
+      "source_file": "app/backend/api/trips.py",
+      "source_location": "line 22",
+      "source": "trips_start_trip",
+      "target": "database_get_db"
+    },
+    {
+      "relation": "shares_data_with",
+      "confidence": "EXTRACTED",
+      "confidence_score": 0.95,
+      "source_file": "app/backend/api/websocket.py",
+      "source_location": "line 18",
+      "source": "websocket_trip_websocket",
+      "target": "stack_redis_streams"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 0.95,
+      "source_file": "app/backend/api/trips.py",
+      "source_location": "line 28",
+      "source": "trips_start_trip",
+      "target": "planner_plan_trip"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 0.95,
+      "source_file": "app/backend/api/trips.py",
+      "source_location": "line 44",
+      "source": "trips_replan",
+      "target": "planner_monitor_and_replan"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 0.95,
+      "source_file": "app/backend/workers/worker.py",
+      "source": "arch_dynamic_worker_model",
+      "target": "worker_run_worker"
+    },
+    {
+      "relation": "shares_data_with",
+      "confidence": "EXTRACTED",
+      "confidence_score": 0.95,
+      "source_file": "app/backend/workers/worker.py",
+      "source_location": "line 34",
+      "source": "worker_run_worker",
+      "target": "stack_redis_streams"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 0.95,
+      "source_file": "app/backend/workers/worker.py",
+      "source_location": "line 51",
+      "source": "worker_run_worker",
+      "target": "tools_TOOL_REGISTRY"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 0.95,
+      "source_file": "app/backend/workers/worker.py",
+      "source_location": "line 46",
+      "source": "worker_run_worker",
+      "target": "worker_dependencies_satisfied"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 0.95,
+      "source_file": "app/backend/workers/tools.py",
+      "source": "arch_cache_first_search",
+      "target": "tools_places_search"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 0.95,
+      "source_file": "app/backend/workers/tools.py",
+      "source_location": "line 40",
+      "source": "tools_destination_research",
+      "target": "tools_places_search"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 0.95,
+      "source_file": "app/backend/workers/tools.py",
+      "source_location": "line 63",
+      "source": "tools_food_discovery",
+      "target": "tools_places_search"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 0.95,
+      "source_file": "app/backend/workers/tools.py",
+      "source_location": "line 55",
+      "source": "tools_hotel_planning",
+      "target": "tools_places_search"
+    },
+    {
+      "relation": "shares_data_with",
+      "confidence": "EXTRACTED",
+      "confidence_score": 0.95,
+      "source_file": "app/backend/workers/tools.py",
+      "source_location": "line 25",
+      "source": "tools_places_search",
+      "target": "stack_elasticsearch"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 0.95,
+      "source_file": "app/backend/workers/tools.py",
+      "source_location": "line 46",
+      "source": "tools_transport_planning",
+      "target": "tools_places_search"
+    },
+    {
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.78,
+      "source_file": "app/backend/workers/tools.py",
+      "source": "tools_destination_research",
+      "target": "tools_food_discovery"
+    },
+    {
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.78,
+      "source_file": "app/backend/workers/tools.py",
+      "source": "tools_destination_research",
+      "target": "tools_hotel_planning"
+    },
+    {
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.78,
+      "source_file": "app/backend/workers/tools.py",
+      "source": "tools_destination_research",
+      "target": "tools_transport_planning"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 0.95,
+      "source_file": "app/backend/orchestrator/planner.py",
+      "source_location": "line 33",
+      "source": "planner_plan_trip",
+      "target": "planner_build_dag"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 0.95,
+      "source_file": "app/backend/orchestrator/planner.py",
+      "source_location": "line 30",
+      "source": "planner_plan_trip",
+      "target": "planner_extract_intent"
+    },
+    {
+      "relation": "shares_data_with",
+      "confidence": "EXTRACTED",
+      "confidence_score": 0.95,
+      "source_file": "app/backend/orchestrator/planner.py",
+      "source_location": "line 34",
+      "source": "planner_plan_trip",
+      "target": "stack_redis_streams"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 0.95,
+      "source_file": "app/backend/orchestrator/planner.py",
+      "source_location": "line 57",
+      "source": "planner_build_dag",
+      "target": "planner_TASK_DEPENDENCY_MAP"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 0.95,
+      "source_file": "app/backend/orchestrator/planner.py",
+      "source": "arch_task_dag_with_deps",
+      "target": "planner_TASK_DEPENDENCY_MAP"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 0.95,
+      "source_file": "app/backend/orchestrator/planner.py",
+      "source_location": "line 110",
+      "source": "planner_monitor_and_replan",
+      "target": "planner_handle_budget_exceeded"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 0.95,
+      "source_file": "app/backend/orchestrator/planner.py",
+      "source": "arch_autonomous_replanning",
+      "target": "planner_handle_budget_exceeded"
+    },
+    {
+      "relation": "shares_data_with",
+      "confidence": "EXTRACTED",
+      "confidence_score": 0.95,
+      "source_file": "app/backend/orchestrator/planner.py",
+      "source_location": "line 83",
+      "source": "planner_handle_budget_exceeded",
+      "target": "stack_redis_streams"
+    },
+    {
+      "relation": "implements",
+      "confidence": "INFERRED",
+      "confidence_score": 0.9,
+      "source_file": "app/backend/orchestrator/context_compressor.py",
+      "source": "compressor_compress_context",
+      "target": "compressor_maybe_compress"
+    },
+    {
+      "relation": "shares_data_with",
+      "confidence": "EXTRACTED",
+      "confidence_score": 0.95,
+      "source_file": "app/backend/orchestrator/context_compressor.py",
+      "source_location": "line 35",
+      "source": "compressor_compress_context",
+      "target": "stack_postgresql"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 0.9,
+      "source_file": "README.md",
+      "source": "arch_three_layer_memory",
+      "target": "stack_elasticsearch"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 0.9,
+      "source_file": "README.md",
+      "source": "arch_three_layer_memory",
+      "target": "stack_postgresql"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 0.9,
+      "source_file": "README.md",
+      "source": "arch_three_layer_memory",
+      "target": "stack_redis_streams"
+    }
+  ],
+  "hyperedges": [
+    {
+      "id": "async_task_pipeline",
+      "label": "Asynchronous Task Processing Pipeline",
+      "nodes": [
+        "page_tsx_component",
+        "trips_router_module",
+        "redis_client_module",
+        "worker_runner_module"
+      ],
+      "relation": "participate_in",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "app/backend/worker_runner.py"
+    },
+    {
+      "id": "search_knowledge_layer",
+      "label": "Search & Knowledge Discovery Layer",
+      "nodes": [
+        "elasticsearch_client_module",
+        "redis_client_module",
+        "database_models_module"
+      ],
+      "relation": "participate_in",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "app/backend/search/es_client.py"
+    },
+    {
+      "id": "realtime_event_system",
+      "label": "Real-Time Event Streaming System",
+      "nodes": [
+        "page_tsx_component",
+        "websocket_router_module",
+        "redis_client_module"
+      ],
+      "relation": "participate_in",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "app/frontend/app/page.tsx"
+    },
+    {
+      "id": "trip_execution_pipeline",
+      "label": "Trip Execution Pipeline: API \u2192 Planner \u2192 Workers \u2192 Results",
+      "nodes": [
+        "trips_start_trip",
+        "planner_plan_trip",
+        "worker_run_worker",
+        "stack_redis_streams"
+      ],
+      "relation": "participate_in",
+      "confidence": "EXTRACTED",
+      "confidence_score": 0.95,
+      "source_file": "README.md"
+    },
+    {
+      "id": "search_and_context_flow",
+      "label": "Search-Context Flow: Tool handlers \u2192 Cache-First Search \u2192 Elasticsearch \u2192 Result Update",
+      "nodes": [
+        "tools_places_search",
+        "stack_elasticsearch",
+        "tools_destination_research",
+        "tools_transport_planning",
+        "tools_hotel_planning",
+        "tools_food_discovery"
+      ],
+      "relation": "form",
+      "confidence": "EXTRACTED",
+      "confidence_score": 0.9,
+      "source_file": "app/backend/workers/tools.py"
+    },
+    {
+      "id": "memory_persistence_layer",
+      "label": "Memory Persistence: Active Context \u2192 Compression \u2192 Storage",
+      "nodes": [
+        "compressor_maybe_compress",
+        "compressor_compress_context",
+        "stack_postgresql",
+        "stack_redis_streams"
+      ],
+      "relation": "implement",
+      "confidence": "EXTRACTED",
+      "confidence_score": 0.92,
+      "source_file": "app/backend/orchestrator/context_compressor.py"
+    }
+  ]
+}
