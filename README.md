@@ -21,6 +21,28 @@ Autonomous multi-agent travel planning with DAG orchestration, live progress ove
 - Graphify graph data: [graphify-out/graph.json](graphify-out/graph.json)
 - Graphify manifest: [graphify-out/manifest.json](graphify-out/manifest.json)
 
+## Screenshots
+
+#### Docker — all 6 services running
+
+![Docker Desktop showing 6 built images: redis, postgres, elasticsearch, frontend, api, worker](image/README/1780051006845.png)
+
+#### Trip planning — clarification questions + custom agents panel
+
+![Trip planning form with clarification questions and custom agents sidebar](image/README/1780051341826.png)
+
+#### Custom agent editor — Python sandbox with AI-assist
+
+![Custom agent editor showing system prompt, sandboxed Python code, API key injection, and live test output](image/README/1780051218789.png)
+
+#### Live DAG — tasks executing in real time
+
+![Agent pipeline DAG mid-execution: Itinerary synthesizing, Budget Optimizer and custom weather advisor waiting](image/README/1780051401909.png)
+
+#### Completed run — full event log
+
+![Completed planning run with full DAG (all DONE) and real-time event log on the right](image/README/1780051439626.png)
+
 ## System Architecture
 
 > For the full styled diagram open the [interactive architecture doc](https://htmlpreview.github.io/?https://github.com/SaptarshiBorgohain/multiAgent-spawn/blob/main/architecture.html).
@@ -172,33 +194,33 @@ flowchart LR
 
 ## Tech Stack
 
-| Layer | Technology |
-|---|---|
-| Frontend | Next.js 16, React 18, TailwindCSS |
-| API | FastAPI, Uvicorn, WebSockets |
-| Queue/Runtime State | Redis Streams + Hash + Pub/Sub |
-| Database | PostgreSQL 15, SQLAlchemy async, asyncpg |
-| Search Cache | Elasticsearch 8 |
-| LLM Client | OpenAI SDK against DeepSeek base URL |
-| External Data | Google Places API |
-| Auth | Magic link + JWT (HS256) |
-| Sandbox | RestrictedPython |
+| Layer               | Technology                               |
+| ------------------- | ---------------------------------------- |
+| Frontend            | Next.js 16, React 18, TailwindCSS        |
+| API                 | FastAPI, Uvicorn, WebSockets             |
+| Queue/Runtime State | Redis Streams + Hash + Pub/Sub           |
+| Database            | PostgreSQL 15, SQLAlchemy async, asyncpg |
+| Search Cache        | Elasticsearch 8                          |
+| LLM Client          | OpenAI SDK against DeepSeek base URL     |
+| External Data       | Google Places API                        |
+| Auth                | Magic link + JWT (HS256)                 |
+| Sandbox             | RestrictedPython                         |
 
 ## Environment Variables
 
 Use `.env.example` as template and create `.env`.
 
-| Variable | Required | Description |
-|---|---|---|
-| DEEPSEEK_API_KEY | Yes | API key for DeepSeek LLM calls |
+| Variable              | Required | Description                                         |
+| --------------------- | -------- | --------------------------------------------------- |
+| DEEPSEEK_API_KEY      | Yes      | API key for DeepSeek LLM calls                      |
 | GOOGLE_PLACES_API_KEY | Optional | Google Places key (fallback sample data if missing) |
-| REDIS_URL | Yes | Redis connection string |
-| DATABASE_URL | Yes | Async PostgreSQL URL |
-| ELASTICSEARCH_URL | Yes | Elasticsearch URL |
-| SECRET_KEY | Yes | JWT signing key |
-| ENVIRONMENT | Optional | App environment label |
-| RESEND_API_KEY | Optional | Enables email delivery for magic links |
-| APP_URL | Optional | Frontend base URL used in email links |
+| REDIS_URL             | Yes      | Redis connection string                             |
+| DATABASE_URL          | Yes      | Async PostgreSQL URL                                |
+| ELASTICSEARCH_URL     | Yes      | Elasticsearch URL                                   |
+| SECRET_KEY            | Yes      | JWT signing key                                     |
+| ENVIRONMENT           | Optional | App environment label                               |
+| RESEND_API_KEY        | Optional | Enables email delivery for magic links              |
+| APP_URL               | Optional | Frontend base URL used in email links               |
 
 ## Quick Start (Docker)
 
